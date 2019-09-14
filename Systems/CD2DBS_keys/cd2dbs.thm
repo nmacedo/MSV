@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<alloy>
+
+<view nodetheme="Martha">
+
+<projection> <type name="Model"/> </projection>
+
+<defaultnode/>
+
+<defaultedge/>
+
+<node>
+   <type name="C1"/>
+   <type name="C2"/>
+   <type name="D1"/>
+   <type name="Int"/>
+   <type name="Model"/>
+   <type name="cd_inst/Association0"/>
+   <type name="cd_inst/Attribute0"/>
+   <type name="cd_inst/Attribute1"/>
+   <type name="cd_inst/Class0"/>
+   <type name="cd_inst/Class1"/>
+   <type name="cd_inst/Class2"/>
+   <type name="cd_inst/Class3"/>
+   <type name="cd_inst/Package0"/>
+   <type name="dbs_inst/Column0"/>
+   <type name="dbs_inst/Column1"/>
+   <type name="dbs_inst/Column2"/>
+   <type name="dbs_inst/Column3"/>
+   <type name="dbs_inst/Column4"/>
+   <type name="dbs_inst/Column5"/>
+   <type name="dbs_inst/FKey0"/>
+   <type name="dbs_inst/PKey0"/>
+   <type name="dbs_inst/Schema0"/>
+   <type name="dbs_inst/Table0"/>
+   <type name="dbs_inst/Table1"/>
+   <type name="dbs_inst/Table2"/>
+   <type name="seq/Int"/>
+   <type name="cd2dbs/CD/Association"/>
+   <type name="cd2dbs/CD/CD"/>
+   <type name="cd2dbs/CD/NamedEntity"/>
+   <type name="cd2dbs/DBS/DBS"/>
+   <type name="cd2dbs/DBS/NamedEntity"/>
+   <set name="persistent" type="cd2dbs/CD/Class"/>
+</node>
+
+<node color="Green">
+   <type name="cd2dbs/CD/Class"/>
+   <type name="cd2dbs/DBS/Table"/>
+</node>
+
+<node shape="Hexagon" color="Blue">
+   <type name="cd2dbs/CD/Attribute"/>
+   <type name="cd2dbs/DBS/Column"/>
+</node>
+
+<node shape="House" color="Gray">
+   <type name="cd2dbs/CD/Package"/>
+   <type name="cd2dbs/DBS/Schema"/>
+</node>
+
+<node shape="Inv Trapezoid" color="Red">
+   <type name="cd2dbs/DBS/FKey"/>
+</node>
+
+<node shape="Trapezoid" color="Red">
+   <type name="cd2dbs/DBS/PKey"/>
+</node>
+
+<node showlabel="no">
+   <set name="Attribute_" type="cd2dbs/CD/Attribute"/>
+   <set name="Class_" type="cd2dbs/CD/Class"/>
+   <set name="Column_" type="cd2dbs/DBS/Column"/>
+   <set name="Package_" type="cd2dbs/CD/Package"/>
+   <set name="Schema_" type="cd2dbs/DBS/Schema"/>
+   <set name="Table_" type="cd2dbs/DBS/Table"/>
+</node>
+
+<node showlabel="no" shape="Trapezoid" color="Red">
+   <set name="Association_" type="cd2dbs/CD/Association"/>
+</node>
+
+<node visible="no">
+   <type name="String"/>
+   <type name="univ"/>
+</node>
+
+<node visible="yes">
+   <type name="cd2dbs/Aux"/>
+</node>
+
+<node visible="yes" showlabel="no">
+   <set name="FKey_" type="cd2dbs/DBS/FKey"/>
+   <set name="NamedEntity_" type="cd2dbs/CD/NamedEntity"/>
+   <set name="NamedEntity_" type="cd2dbs/DBS/NamedEntity"/>
+   <set name="PKey_" type="cd2dbs/DBS/PKey"/>
+</node>
+
+<edge attribute="yes">
+   <relation name="a2c_CD"> <type name="cd2dbs/Aux"/> <type name="cd2dbs/CD/Class"/> <type name="cd2dbs/DBS/Table"/> </relation>
+   <relation name="a2c_DBS"> <type name="cd2dbs/Aux"/> <type name="cd2dbs/CD/Class"/> <type name="cd2dbs/DBS/Table"/> </relation>
+   <relation name="c2t_CD"> <type name="cd2dbs/Aux"/> <type name="cd2dbs/CD/Class"/> <type name="cd2dbs/DBS/Table"/> </relation>
+   <relation name="c2t_DBS"> <type name="cd2dbs/Aux"/> <type name="cd2dbs/CD/Class"/> <type name="cd2dbs/DBS/Table"/> </relation>
+   <relation name="p2s_CD"> <type name="cd2dbs/Aux"/> <type name="cd2dbs/CD/Package"/> <type name="cd2dbs/DBS/Schema"/> </relation>
+   <relation name="p2s_DBS"> <type name="cd2dbs/Aux"/> <type name="cd2dbs/CD/Package"/> <type name="cd2dbs/DBS/Schema"/> </relation>
+</edge>
+
+<edge visible="no" attribute="yes">
+   <relation name="name"> <type name="cd2dbs/CD/NamedEntity"/> <type name="String"/> </relation>
+   <relation name="name"> <type name="cd2dbs/DBS/NamedEntity"/> <type name="String"/> </relation>
+</edge>
+
+</view>
+
+</alloy>

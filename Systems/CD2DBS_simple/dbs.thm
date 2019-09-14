@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<alloy>
+
+<view nodetheme="Martha">
+
+<projection> <type name="Model"/> </projection>
+
+<defaultnode/>
+
+<defaultedge/>
+
+<node>
+   <type name="Column0"/>
+   <type name="Column1"/>
+   <type name="Column2"/>
+   <type name="Column3"/>
+   <type name="Column4"/>
+   <type name="Column5"/>
+   <type name="D1"/>
+   <type name="FKey0"/>
+   <type name="Int"/>
+   <type name="Model"/>
+   <type name="PKey0"/>
+   <type name="Schema0"/>
+   <type name="Table0"/>
+   <type name="Table1"/>
+   <type name="Table2"/>
+   <type name="DBS/DBS"/>
+   <type name="DBS/Table"/>
+   <type name="seq/Int"/>
+</node>
+
+<node shape="Hexagon" color="Blue">
+   <type name="DBS/Column"/>
+</node>
+
+<node shape="House" color="Gray">
+   <type name="DBS/Schema"/>
+</node>
+
+<node shape="Inv Trapezoid" color="Red">
+   <type name="DBS/FKey"/>
+</node>
+
+<node showlabel="no">
+   <set name="Column_" type="DBS/Column"/>
+   <set name="Schema_" type="DBS/Schema"/>
+   <set name="Table_" type="DBS/Table"/>
+</node>
+
+<node visible="no">
+   <type name="String"/>
+   <type name="univ"/>
+   <type name="DBS/NamedEntity"/>
+</node>
+
+<node visible="no" shape="Trapezoid" color="Red">
+   <type name="DBS/PKey"/>
+</node>
+
+<node visible="yes" showlabel="no">
+   <set name="FKey_" type="DBS/FKey"/>
+   <set name="NamedEntity_" type="DBS/NamedEntity"/>
+   <set name="PKey_" type="DBS/PKey"/>
+</node>
+
+<edge visible="no" attribute="yes">
+   <relation name="name"> <type name="DBS/NamedEntity"/> <type name="String"/> </relation>
+</edge>
+
+</view>
+
+</alloy>

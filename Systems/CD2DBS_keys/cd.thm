@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<alloy>
+
+<view nodetheme="Martha">
+
+<projection> <type name="Model"/> </projection>
+
+<defaultnode/>
+
+<defaultedge/>
+
+<node>
+   <type name="Association0"/>
+   <type name="Attribute0"/>
+   <type name="Attribute1"/>
+   <type name="C1"/>
+   <type name="Class0"/>
+   <type name="Class1"/>
+   <type name="Class2"/>
+   <type name="Class3"/>
+   <type name="Int"/>
+   <type name="Model"/>
+   <type name="Package0"/>
+   <type name="univ"/>
+   <type name="CD/CD"/>
+   <type name="seq/Int"/>
+   <set name="persistent" type="CD/Class"/>
+</node>
+
+<node color="Green">
+   <type name="CD/Class"/>
+</node>
+
+<node shape="Hexagon" color="Blue">
+   <type name="CD/Attribute"/>
+</node>
+
+<node shape="House" color="Gray">
+   <type name="CD/Package"/>
+</node>
+
+<node shape="Trapezoid">
+   <type name="CD/Association"/>
+</node>
+
+<node showlabel="no">
+   <set name="Association_" type="CD/Association"/>
+   <set name="Attribute_" type="CD/Attribute"/>
+   <set name="Class_" type="CD/Class"/>
+   <set name="Package_" type="CD/Package"/>
+</node>
+
+<node visible="no">
+   <type name="String"/>
+   <type name="CD/NamedEntity"/>
+</node>
+
+<node visible="yes" showlabel="no">
+   <set name="NamedEntity_" type="CD/NamedEntity"/>
+</node>
+
+<edge visible="no" attribute="yes">
+   <relation name="name"> <type name="CD/NamedEntity"/> <type name="String"/> </relation>
+</edge>
+
+</view>
+
+</alloy>

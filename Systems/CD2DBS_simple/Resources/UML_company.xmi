@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ASCII"?>
+<uml:Package
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:uml="UML"
+    xsi:schemaLocation="UML UML.ecore"
+    name="Company">
+  <classes child="//@classes.1 //@classes.2"
+      name="Person">
+    <attributes
+        name="name"
+        type="String"/>
+  </classes>
+  <classes persistent="true"
+      super="//@classes.0"
+      name="Employee">
+    <attributes
+        name="salary"/>
+  </classes>
+  <classes persistent="true"
+      super="//@classes.0"
+      name="Employer"/>
+</uml:Package>
