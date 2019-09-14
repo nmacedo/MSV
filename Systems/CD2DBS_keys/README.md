@@ -8,12 +8,12 @@ Every persistent Class on the UML class diagram is matched to a Table in the rel
 
 #### Meta-models
 | [UML.ecore](Resources/UML.ecore) for UML class diagrams | [RDBMS.ecore](Resources/RDBMS.ecore) for relational database schemes |
-| --- | --- | --- |
+| --- | --- |
 | <img src="Resources/images/UML_metamodel.png" alt="UML metamodel" width="400px"> | <img src="Resources/images/RDB_metamodel.png" alt="RDBMS metamodel" width="350px"> |
 
 #### Models
 | [UML_Company.xmi](Resources/UML_Company.xmi) | [RDB_Company.xmi](Resources/RDB_Company.xmi) |
-| --- | --- | --- |
+| --- | --- |
 | <img src="Resources/images/UML_Company.png" alt="UML company" width="350px" align="middle"/> | <img src="Resources/images/RDB_Company.png" alt="RDB company" width="450px" align="middle"/> |
 
 
