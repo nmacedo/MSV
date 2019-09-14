@@ -19,7 +19,8 @@ Every persistent Class on the UML class diagram is matched to a Table in the rel
 
 #### History
 * This example is a simplified version of the example illustrating the *MOF 2.0 Query/View/Transformation Specification*. 
-* This example has been used to illustrate the *[Model repair and transformation with Echo](http://nmacedo.github.io/pubs.html#ase13)* paper, by N. Macedo, T. Guimarães and A. Cunha.
+* This example has been used to illustrate the ASE'13 *[Model repair and transformation with Echo](http://nmacedo.github.io/pubs.html#ase13)* paper.
+* A [simplified](../CD2DBS_simple) version has been used to illustrate the SoSyM [Least-change bidirectional model transformation with QVT-R and ATL.</strong> <em>Software and Systems Modeling](http://nmacedo.github.io/pubs.html#sosym16)* and FASE'13 *[Implementing QVT-R bidirectional model transformations using Alloy](http://nmacedo.github.io/pubs.html#fase13)* papers, and N. Macedo's *[PhD Thesis](http://nmacedo.github.io/pubs.html#phd14).
 
 Warning: resource URIs
 
