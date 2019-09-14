@@ -19,7 +19,7 @@ Every persistent Class on the UML class diagram is matched to a Table in the rel
 
 #### History
 * This example is a simplified version of the example illustrating the *MOF 2.0 Query/View/Transformation Specification*. 
-* This example has been used to illustrate the *Model repair and transformation with Echo* paper, by N. Macedo, T. Guimarães and A. Cunha.
+* This example has been used to illustrate the *[Model repair and transformation with Echo](file:///Users/nmm/Documents/page/nmacedo.github.io/pubs.html#ase13)* paper, by N. Macedo, T. Guimarães and A. Cunha.
 
 Warning: resource URIs
 
