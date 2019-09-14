@@ -14,7 +14,7 @@ Every persistent Class on the UML class diagram is matched to a Table in the rel
 #### Models
 | [UML_Company.xmi](Resources/UML_Company.xmi) | [RDB_Company.xmi](Resources/RDB_Company.xmi) |
 | --- | --- |
-| <img src="Resources/images/UML_Company.png" alt="UML company" width="350px" align="middle"/> | <img src="Resources/images/RDB_Company.png" alt="RDB company" width="450px" align="middle"/> |
+| <img src="Resources/images/UML_company.png" alt="UML company" width="350px" align="middle"/> | <img src="Resources/images/RDB_company.png" alt="RDB company" width="450px" align="middle"/> |
 
 #### History
 * This example is a simplified version of the example illustrating the *MOF 2.0 Query/View/Transformation Specification*. 
