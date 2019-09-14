@@ -1,13 +1,27 @@
-# Object-relational mapping (simplified) 
+# Object-relational mapping (without associations/keys) 
 
-This example depicts the bidirectional transformation between class diagramas and relational databases schemas.
+### UML2RDBMS
+The [uml2rdbms_keys.qvtr](uml2rdbms_keys.qvtr) transformation is a (very) simplified version of the classical object-relational mapping, between class diagrams and database schemes, used as a running example in the QVT standard.
 
-It depicts the basic notions behind the papers:
-* Implementing
-* Least-change
+#### Overview
+Every persistent Class on the UML class diagram is matched to a Table in the relational database scheme, with a Column for every Attribute, including those inherited from super-classes.
 
-It also depicts the embedding of models and constraints from
-* Translating
+#### Meta-models
+| [UML.ecore](Resources/UML.ecore) for UML class diagrams | [RDBMS.ecore](Resources/RDBMS.ecore) for relational database schemes |
+| --- | --- |
+| <img src="Resources/images/UML_metamodel.png" alt="UML metamodel" width="400px"> | <img src="Resources/images/RDB_metamodel.png" alt="RDBMS metamodel" width="350px"> |
+
+#### Models
+| [UML_Company.xmi](Resources/UML_Company.xmi) | [RDB_Company.xmi](Resources/RDB_Company.xmi) |
+| --- | --- |
+| <img src="Resources/images/UML_Company.png" alt="UML company" width="350px" align="middle"/> | <img src="Resources/images/RDB_Company.png" alt="RDB company" width="450px" align="middle"/> |
+
+#### History
+* This example is a simplified version of the example illustrating the *MOF 2.0 Query/View/Transformation Specification*. 
+* This example has been used to illustrate the SoSyM *[Least-change bidirectional model transformation with QVT-R and ATL](http://nmacedo.github.io/pubs.html#sosym16)* and FASE'13 *[Implementing QVT-R bidirectional model transformations using Alloy](http://nmacedo.github.io/pubs.html#fase13)* papers, and N. Macedo's *[PhD Thesis](http://nmacedo.github.io/pubs.html#phd14)*.
+* A version with [associations and keys](../CD2DBS_keys) has been used to illustrate the ASE'13 *[Model repair and transformation with Echo](http://nmacedo.github.io/pubs.html#ase13)* paper.
+
+<!-- Warning: resource URIs -->
 
 ---
 
