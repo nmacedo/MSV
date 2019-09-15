@@ -14,7 +14,7 @@ Every person is mapped to a emplyee with the same name, which additionally have 
 | <img src="Resources/images/World_metamodel.png" alt="World metamodel" width="400px"> | <img src="Resources/images/Company_metamodel.png" alt="Company metamodel" width="350px"> |
 
 #### History
-* This example has been used to illustrate the BX'14 *[Towards a framework for multi-directional model transformations](http://nmacedo.github.io/pubs.html#bx14)* paper and N. Macedo's *[PhD Thesis](http://nmacedo.github.io/pubs.html#phd14)*.
+* This example has been used to illustrate the SoSyM *[Least-change bidirectional model transformation with QVT-R and ATL](http://nmacedo.github.io/pubs.html#sosym16)* paper and N. Macedo's *[PhD Thesis](http://nmacedo.github.io/pubs.html#phd14)*.
 
 ---
 
