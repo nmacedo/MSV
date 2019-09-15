@@ -1,21 +1,17 @@
-# FM2CFs
+# Company human resources synchronization (minimal)
 
-A very minimal example related to SPL engineering used to demonstrate SAT-based multidirectional transformations.
+A very minimal example for company human resources synchronization used to demonstrate SAT-based bidirectional transformations.
 
-### UML2RDBMS
-The [fm2cfs.qvtr](Resources/fm2cfs.qvtr) transformation is a (very) simplified SPL scenario between a feature model and 2 system configurations.
+### WorldToCompany
+The [WorldToCompany.atl](Resources/WorldToCompany.atl) transformation is a (very) simplified transformation between person and employees registers.
 
 #### Overview
-Every mandatory feature on the feature model must be present in the configurations, while every feature selected in the configuration must belong to the feature model.
+Every person is mapped to a emplyee with the same name, which additionally have salaries.
 
 #### Meta-models
-| [FM.ecore](Resources/FM.ecore) for feature models | [CF.ecore](Resources/CF.ecore) for the first configuration | [CF.ecore](Resources/CF.ecore) for the second configuration |
-| --- | --- | --- |
-| <img src="Resources/images/FM_metamodel.png" alt="FM metamodel" width="400px"> | <img src="Resources/images/CF_metamodel.png" alt="Configuration metamodel" width="350px"> | <img src="Resources/images/CF_metamodel.png" alt="Configuration metamodel" width="350px"> |
-
-#### Models
-| [FM.xmi](Resources/FM.xmi) | [CF1.xmi](Resources/CF1.xmi) | [CF2.xmi](Resources/CF2.xmi) |
-| --- | --- | --- |
+| [World.ecore](Resources/World.ecore) for world models | [Company.ecore](Resources/Company.ecore) for company models |
+| --- | --- |
+| <img src="Resources/images/World_metamodel.png" alt="World metamodel" width="400px"> | <img src="Resources/images/Company_metamodel.png" alt="Company metamodel" width="350px"> |
 
 #### History
 * This example has been used to illustrate the BX'14 *[Towards a framework for multi-directional model transformations](http://nmacedo.github.io/pubs.html#bx14)* paper and N. Macedo's *[PhD Thesis](http://nmacedo.github.io/pubs.html#phd14)*.
