@@ -1,0 +1,45 @@
+import HSM : 'HSM.ecore' :: HSM;
+import NHSM : 'NHSM.ecore' :: NHSM;
+
+transformation hsm2nhsm (hm : HSM, nm : NHSM) {
+	-- StateMachineToStateMachine
+	top relation M2M { 
+		n:String;
+		domain hm s:StateMachine { name=n };
+		domain nm t:StateMachine { name=n }; 
+	}
+	--StateToState
+	top relation S2S { 
+		domain hm s:State { 
+			opposite(StateMachine::states) = sm:StateMachine{} };
+		domain nm t:State { 
+			opposite(StateMachine::states) = tm:StateMachine{} };
+		when { M2M(sm,tm); }
+		where {
+			if s.container->isEmpty() then TS2S(s,t)
+			else SS2S(s,t) endif;				
+		}
+	}
+	--TopState2State
+	relation TS2S { 
+		n: String; 
+		domain hm s:State { name = n };
+		domain nm t:State { name = n };
+	}
+	--SubState2State
+	relation SS2S { 
+		domain hm s:State {};
+		domain nm t:State {};
+		where { S2S(s.container,t); }
+	}
+	-- TransitionToTransition
+	top relation T2T { 
+		domain hm th:Transition { 
+			target = tsh:State{}, 
+			source = ssh:State{}};
+		domain nm tn:Transition { 
+			target = tsn:State{}, 
+			source = ssn:State{}};
+		where { S2S(tsh,tsn) and S2S(ssh,ssn); }
+	}
+}

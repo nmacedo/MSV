@@ -1,0 +1,36 @@
+-- @atlcompiler atl2006
+-- @nsURI HSM='HSM.ecore'
+-- @nsURI NHSM='NHSM.ecore'
+
+module hsm2nhsm;
+create nhm : NHSM from hsm : HSM;
+
+rule M2M {
+  from
+    hm : HSM!StateMachine () 
+  to 
+    nm : NHSM!StateMachine ( name <- hm.name )
+}
+
+rule S2S {
+  from
+    hs : HSM!State ( hs.container->isEmpty() ) 
+  to 
+    ns : NHSM!State (
+      name    <- hs.name,
+      machine <- hs.machine
+    )
+}
+
+rule T2T {
+  from 
+    ht : HSM!Transition
+  to 
+    nt : NHSM!Transition (
+      source  <- ht.source->closure(x | x.container)->
+        any(s | s.container->isEmpty()),
+      target  <- ht.target->closure(x | x.container)->
+        any(s | s.container->isEmpty()),
+      machine <- ht.machine
+    )
+}
