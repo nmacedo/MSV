@@ -13,7 +13,7 @@ Several versions of the transformation are provided. The [hsm2nhsm_closure_2mm.q
 | <img src="Resources/images/HSM_metamodel.png" alt="HSM metamodel" width="400px"> | <img src="Resources/images/NHM_metamodel.png" alt="NHSM metamodel" width="400px"> |
 
 #### Models
-| [HSM_example.xmi](Resources/HSM_example.xmi) | [NHM_example.xmi](Resources/NHM_example.xmi) |
+| [HSM_expanded.xmi](Resources/HSM_expanded.xmi) | [NHM_example.xmi](Resources/NHM_example.xmi) |
 | --- | --- |
 | <img src="Resources/images/HSM_model.png" alt="HSM model" width="250px" align="middle"/> | <img src="Resources/images/NHM_model.png" alt="NHSM model" width="200px" align="middle"/> |
 
