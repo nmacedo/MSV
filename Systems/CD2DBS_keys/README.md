@@ -6,6 +6,8 @@ The [uml2rdbms_keys.qvtr](Resources/uml2rdbms_keys.qvtr) transformation is a sim
 #### Overview
 Every persistent Class on the UML class diagram is matched to a Table in the relational database scheme, with a Column for every Attribute, including those inherited from super-classes. Associations between classes are mapped to foreign keys.
 
+The Alloy models demonstrate a solver-based apprach to bidirectional transformations.
+
 #### Meta-models
 | [UML.ecore](Resources/UML.ecore) for UML class diagrams | [RDBMS.ecore](Resources/RDBMS.ecore) for relational database schemes |
 | --- | --- |
@@ -27,4 +29,4 @@ Every persistent Class on the UML class diagram is matched to a Table in the rel
 
 * Language: [[Alloy](https://github.com/nmacedo/MSV/wiki/By-Language#alloy)] [Ecore] [QVT]
 * Theme: [[Bidirectional Transformation](https://github.com/nmacedo/MSV/wiki/By-Theme#bidirectional-transformation)] 
-* Venue: [ASE13]
+* Venue: [[ASE13](http://nmacedo.github.io/pubs.html#ase13)]

@@ -1,6 +1,6 @@
 # Expand/collapse hierarchical state machines
 
-The [hsm2nhsm_closure.qvtr](hsm2nhsm_closure.qvtr) transformation specifies the collapse/expansion of state diagrams
+The various HSM2NHSM transformations specify the collapse/expansion of hierarchical state diagrams.
 
 #### Overview
 Every top-level State on the expanded state diagram is matched to a State in the collapsed state diagram with the same name. Transitions at the expanded sate diagram pushed up from nested States to the top-level States at the collapsed state diagram.
@@ -19,10 +19,10 @@ This version of HSM2NHSM relies on the *recursion* to retrieve Transitions from 
 
 #### History
 * This example is based on the running example from the paper *JTL: a bidirectional and change propagating transformation language* by A. Cicchetti, D. Di Ruscio, R. Eramo and A. Pierantonio.
-* This example is used as a running example in the submitted paper *Least-change Bidirectional Model Transformation with QVT-R and ATL* by N. Macedo and A. Cunha.
+* This example has been used to illustrate the SoSyM *[Least-change bidirectional model transformation with QVT-R and ATL](http://nmacedo.github.io/pubs.html#sosym16)* paper and N. Macedo's *[PhD Thesis](http://nmacedo.github.io/pubs.html#phd14)*.
 
 ---
 
-* Language: [[Alloy](https://github.com/nmacedo/MSV/wiki/By-Language#alloy)] [Ecore]
+* Language: [Ecore] [QVT] [ATL]
 * Theme: [[Bidirectional Transformation](https://github.com/nmacedo/MSV/wiki/By-Theme#bidirectional-transformation)] 
-* Venue: [SoSyM16] [PhD]
+* Venue: [[SoSyM16](http://nmacedo.github.io/pubs.html#sosym16)] [[PhD](http://nmacedo.github.io/pubs.html#phd14)]

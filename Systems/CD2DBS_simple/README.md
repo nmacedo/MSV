@@ -28,4 +28,4 @@ Every persistent Class on the UML class diagram is matched to a Table in the rel
 
 * Language: [[Alloy](https://github.com/nmacedo/MSV/wiki/By-Language#alloy)] [Ecore] [QVT]
 * Theme: [[Bidirectional Transformation](https://github.com/nmacedo/MSV/wiki/By-Theme#bidirectional-transformation)] 
-* Venue: [SoSyM16] [PhD] [FASE13]
+* Venue: [[SoSyM16](http://nmacedo.github.io/pubs.html#sosym16)] [[PhD](http://nmacedo.github.io/pubs.html#phd14)] [[FASE13](http://nmacedo.github.io/pubs.html#fase13)]

@@ -1,6 +1,6 @@
 # Company human resources synchronization (minimal)
 
-A very minimal example for company human resources synchronization used to demonstrate SAT-based bidirectional transformations.
+A very minimal example for company human resources synchronization.
 
 ### WorldToCompany
 The [WorldToCompany.atl](Resources/WorldToCompany.atl) transformation is a (very) simplified transformation between person and employees registers.
@@ -18,6 +18,6 @@ Every person is mapped to a emplyee with the same name, which additionally have 
 
 ---
 
-* Language: [[Alloy](https://github.com/nmacedo/MSV/wiki/By-Language#alloy)] [Ecore] [ATL]
+* Language: [Ecore] [ATL]
 * Theme: [[Bidirectional Transformation](https://github.com/nmacedo/MSV/wiki/By-Theme#bidirectional-transformation)] 
-* Venue: [SoSyM16] [PhD]
+* Venue: [[SoSyM16](http://nmacedo.github.io/pubs.html#sosym16)] [[PhD](http://nmacedo.github.io/pubs.html#phd14)]

@@ -1,9 +1,11 @@
-# FM2CFs
+# SPL development (minimal)
 
-A very minimal example related to SPL engineering used to demonstrate SAT-based multidirectional transformations.
+A very minimal example related to SPL engineering.
 
 ### FM2CFs
 The [fm2cfs.qvtr](Resources/fm2cfs.qvtr) transformation is a (very) simplified SPL scenario between a feature model and 2 system configurations.
+
+The Alloy models demonstrate a solver-based apprach to multidirectional transformations.
 
 #### Overview
 Every mandatory feature on the feature model must be present in the configurations, while every feature selected in the configuration must belong to the feature model.
@@ -24,4 +26,4 @@ Every mandatory feature on the feature model must be present in the configuratio
 
 * Language: [[Alloy](https://github.com/nmacedo/MSV/wiki/By-Language#alloy)] [Ecore] [QVT]
 * Theme: [[Bidirectional Transformation](https://github.com/nmacedo/MSV/wiki/By-Theme#bidirectional-transformation)] 
-* Venue: [BX14] [PhD]
+* Venue: [[BX14](http://nmacedo.github.io/pubs.html#bx14)] [[PhD](http://nmacedo.github.io/pubs.html#phd14)]
