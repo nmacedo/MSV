@@ -18,6 +18,6 @@ Every person is mapped to a emplyee with the same name, which additionally have 
 
 ---
 
-* Language: [[Alloy](https://github.com/nmacedo/MSV/wiki/By-Language#ecore)] [[Alloy](https://github.com/nmacedo/MSV/wiki/By-Language#atl)]
+* Language: [[Ecore](https://github.com/nmacedo/MSV/wiki/By-Language#ecore)] [[ATL](https://github.com/nmacedo/MSV/wiki/By-Language#atl)]
 * Theme: [[Bidirectional Transformation](https://github.com/nmacedo/MSV/wiki/By-Theme#bidirectional-transformation)] [MDE]
 * Venue: [[SoSyM16](http://nmacedo.github.io/pubs.html#sosym16)] [[PhD](http://nmacedo.github.io/pubs.html#phd14)]

@@ -27,6 +27,6 @@ The Alloy models demonstrate a solver-based apprach to bidirectional transformat
 
 ---
 
-* Language: [[Alloy](https://github.com/nmacedo/MSV/wiki/By-Language#alloy)] [[Alloy](https://github.com/nmacedo/MSV/wiki/By-Language#ecore)] [[Alloy](https://github.com/nmacedo/MSV/wiki/By-Language#qvt)]
+* Language: [[Alloy](https://github.com/nmacedo/MSV/wiki/By-Language#alloy)] [[Ecore](https://github.com/nmacedo/MSV/wiki/By-Language#ecore)] [[QVT](https://github.com/nmacedo/MSV/wiki/By-Language#qvt)]
 * Theme: [[Bidirectional Transformation](https://github.com/nmacedo/MSV/wiki/By-Theme#bidirectional-transformation)] [MDE]
 * Venue: [[ASE13](http://nmacedo.github.io/pubs.html#ase13)]
