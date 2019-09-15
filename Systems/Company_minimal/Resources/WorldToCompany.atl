@@ -1,0 +1,9 @@
+module employ;
+
+create CP : Company from WD : World;
+
+-- PersonToEmployee
+rule P2E {
+	from p : World!Person
+	to e : Company!Employee ( name <- p.name )
+}
