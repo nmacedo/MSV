@@ -3,7 +3,7 @@
 A very minimal example related to SPL engineering used to demonstrate SAT-based multidirectional transformations.
 
 ### UML2RDBMS
-The [fm2cfs.qvtr](Resources/cm2cfs.qvtr) transformation is a (very) simplified SPL scenario between a feature model and 2 system configurations.
+The [fm2cfs.qvtr](Resources/fm2cfs.qvtr) transformation is a (very) simplified SPL scenario between a feature model and 2 system configurations.
 
 #### Overview
 Every mandatory feature on the feature model must be present in the configurations, while every feature selected in the configuration must belong to the feature model.
