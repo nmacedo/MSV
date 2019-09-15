@@ -23,6 +23,6 @@ Several versions of the transformation are provided. The [hsm2nhsm_closure_2mm.q
 
 ---
 
-* Language: [Ecore] [QVT] [ATL]
-* Theme: [[Bidirectional Transformation](https://github.com/nmacedo/MSV/wiki/By-Theme#bidirectional-transformation)] 
+* Language: [[Alloy](https://github.com/nmacedo/MSV/wiki/By-Language#ecore)] [[Alloy](https://github.com/nmacedo/MSV/wiki/By-Language#qvt)] [[Alloy](https://github.com/nmacedo/MSV/wiki/By-Language#atl)]
+* Theme: [[Bidirectional Transformation](https://github.com/nmacedo/MSV/wiki/By-Theme#bidirectional-transformation)] [MDE] 
 * Venue: [[SoSyM16](http://nmacedo.github.io/pubs.html#sosym16)] [[PhD](http://nmacedo.github.io/pubs.html#phd14)]
