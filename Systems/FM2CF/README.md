@@ -2,7 +2,7 @@
 
 A very minimal example related to SPL engineering used to demonstrate SAT-based multidirectional transformations.
 
-### UML2RDBMS
+### FM2CFs
 The [fm2cfs.qvtr](Resources/fm2cfs.qvtr) transformation is a (very) simplified SPL scenario between a feature model and 2 system configurations.
 
 #### Overview
