@@ -22,6 +22,6 @@ Every mandatory feature on the feature model must be present in the configuratio
 
 ---
 
-* Language: [[Alloy](https://github.com/nmacedo/MSV/wiki/By-Language#alloy)] [Ecore]
+* Language: [[Alloy](https://github.com/nmacedo/MSV/wiki/By-Language#alloy)] [Ecore] [ATL]
 * Theme: [[Bidirectional Transformation](https://github.com/nmacedo/MSV/wiki/By-Theme#bidirectional-transformation)] 
-* Venue: [BX14] [PhD]
+* Venue: [SoSyM16] [PhD]
