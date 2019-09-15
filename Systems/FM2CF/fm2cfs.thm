@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<alloy>
+
+<view>
+
+<defaultnode/>
+
+<defaultedge/>
+
+<node>
+   <type name="Class1"/>
+   <type name="Class2"/>
+   <type name="Feature"/>
+   <type name="Int"/>
+   <type name="univ"/>
+   <type name="seq/Int"/>
+   <set name="this/Mandatory" type="Feature"/>
+</node>
+
+<node visible="no">
+   <type name="String"/>
+</node>
+
+<edge visible="no" attribute="yes">
+   <relation name="name"> <type name="Class1"/> <type name="String"/> </relation>
+   <relation name="name"> <type name="Class2"/> <type name="String"/> </relation>
+   <relation name="name"> <type name="Feature"/> <type name="String"/> </relation>
+</edge>
+
+</view>
+
+</alloy>
