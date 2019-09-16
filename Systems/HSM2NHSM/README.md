@@ -8,14 +8,10 @@ Every top-level State on the expanded state diagram is matched to a State in the
 Several versions of the transformation are provided. The [hsm2nhsm_closure_2mm.qvtr](Resources/hsm2nhsm_closure_2mm.qvtr) transformation provides a QVT-R version that relies on *transitive closure* to retrieve Transitions from nested states. The [hsm2nhsm_recursion_2mm.qvtr](Resources/hsm2nhsm_recursion_2mm.qvtr) transformation relies instead on *recursion*. The [hsm2nhsm_closure_1mm.qvtr](Resources/hsm2nhsm_closure_1mm.qvtr) transformation considers non-hierarchical state diagrams to conform to the same meta-model as the hierarchical ones. Lastly, the [hsm2nhsm_recursion.atl](Resources/hsm2nhsm_recursion.atl) transformation provides a ATL version that relies on *recursion*.
 
 #### Meta-models
-<table style="width:100%">
-  <tr> <td>asd </td> </tr>
-</table>
 
-<table style="width:100%"> <tr>
-  <td style="width:50%"> [HSM.ecore](Resources/HSM.ecore) for expanded (hierarchical) state diagrams </td><td style="width:50%"> [NHSM.ecore](Resources/NHSM.ecore) for collapsed (non-hierarchical) state diagrams </td>
-  </tr><tr>
-  <td style="width:50%"> <img src="Resources/images/HSM_metamodel.png" alt="HSM metamodel" width="80%"> </td><td style="width:50%"> <img src="Resources/images/NHM_metamodel.png" alt="NHSM metamodel" width="80%"> </td>
+| [HSM.ecore](Resources/HSM.ecore) for expanded (hierarchical) state diagrams | [NHSM.ecore](Resources/NHSM.ecore) for collapsed (non-hierarchical) state diagrams |
+| ---- | ---- |
+| <img src="Resources/images/HSM_metamodel.png" alt="HSM metamodel" width="80%"> | <img src="Resources/images/NHM_metamodel.png" alt="NHSM metamodel" width="80%"> |
   </tr></table>
 
 #### Models
