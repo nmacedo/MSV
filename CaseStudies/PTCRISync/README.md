@@ -12,7 +12,18 @@ The employed strategy is described in this [paper](http://nmacedo.github.io/pubs
 
 ## Example scenario
 
-One of the features of the model is the generation of synchronization scenarios (see the [report](http://nmacedo.github.io/pubs.html#inesctec15) for the complete set).
+### Consistent profiles
+Two groups of similar works in the ORCID profile, each matched by a production in the PTCRIS profile.
+
+### ORCID update ($\Rightarrow$\texttt{IMPORT} inconsistency)
+A new work (`Work2`) is introduced in the ORCID profile that connects the two distinct groups of similar works.
+
+| --- | --- |
+|  <img src="Resources/images/imported_s6_p0.png" alt="S6 P0" width="250px" align="middle"/> | <img src="Resources/images/imported_s6_o0.png" alt="S6 O0" width="250px" align="middle"/> |
+| --- | --- |
+
+### `IMPORT` executed
+Since the group of similar works now shares UIDs with both productions at the PTCRIS profile, `IMPORT` creates a modification notification to introduce the missing UIDs for each of the productions.
 
 ## History
 
