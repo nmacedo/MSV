@@ -25,5 +25,5 @@ Every mandatory feature on the feature model must be present in the configuratio
 ---
 
 * Language: [[Alloy](https://github.com/nmacedo/MSV/wiki/By-Language#alloy)] [[Ecore](https://github.com/nmacedo/MSV/wiki/By-Language#ecore)] [[QVT](https://github.com/nmacedo/MSV/wiki/By-Language#qvt)]
-* Theme: [[Bidirectional Transformation](https://github.com/nmacedo/MSV/wiki/By-Theme#bidirectional-transformation)] [[Multidirectional Transformation](https://github.com/nmacedo/MSV/wiki/By-Theme#multidirectional-transformation)] [MDE] 
-* Venue: [[BX14](https://github.com/nmacedo/MSV/wiki/By-Venue#bx14)] [[PhD](https://github.com/nmacedo/MSV/wiki/By-Venue#phd14)]
+* Theme: [[Synchronization](https://github.com/nmacedo/MSV/wiki/By-Theme#synchronization)] [[Multidirectional Transformation](https://github.com/nmacedo/MSV/wiki/By-Theme#multidirectional-transformation)] [[MDE](https://github.com/nmacedo/MSV/wiki/By-Theme#mde)] 
+* Venue: [[BX14](https://github.com/nmacedo/MSV/wiki/By-Venue#bx14)] [[PhD14](https://github.com/nmacedo/MSV/wiki/By-Venue#phd14)]

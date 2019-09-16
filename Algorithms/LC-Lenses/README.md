@@ -7,6 +7,6 @@ N. Macedo, H. Pacheco, A. Cunha and J. N. Oliveira. Composing Least-change Lense
 ---
 
 * Language: [[Alloy](https://github.com/nmacedo/MSV/wiki/By-Language#alloy)] [[Isabelle](https://github.com/nmacedo/MSV/wiki/By-Language#isabelle)]
-* Theme:  [[Bidirectional Transformation](https://github.com/nmacedo/MSV/wiki/By-Theme#bidirectional-transformations)]
-* Venue: [[BX13](https://github.com/nmacedo/MSV/wiki/By-Venue#composing-least-change-lenses)]
+* Theme: [[Synchronization](https://github.com/nmacedo/MSV/wiki/By-Theme#synchronization)]  [[Bidirectional Transformation](https://github.com/nmacedo/MSV/wiki/By-Theme#bidirectional-transformations)]
+* Venue: [[BX13](https://github.com/nmacedo/MSV/wiki/By-Venue#bx13)]
 

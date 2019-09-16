@@ -13,5 +13,5 @@ All models have been developed and analyzed under the Alloy Analyzer 4.2_2015-02
 ---
 
 * Language: [[Alloy](https://github.com/nmacedo/MSV/wiki/By-Language#alloy)]
-* Theme: [[Synchronization](https://github.com/nmacedo/MSV/wiki/By-Theme#synchronization)]
-* Venue: [[F1000Research15](https://github.com/nmacedo/MSV/wiki/By-Venue#an-orcid-based-synchronization-framework-for-a-national-cris-ecosystem)] [[INESCTEC15](https://github.com/nmacedo/MSV/wiki/By-Venue#ptcrisync-specification-an-orcid-based-synchronization-framework-for-ptcris)]
+* Theme: [[Synchronization](https://github.com/nmacedo/MSV/wiki/By-Theme#synchronization)] [[CRIS](https://github.com/nmacedo/MSV/wiki/By-Theme#cris)]
+* Venue: [[F1000R15](https://github.com/nmacedo/MSV/wiki/By-Venue#f1000r15)] [[INESCTEC15](https://github.com/nmacedo/MSV/wiki/By-Venue#inesctec15)]
