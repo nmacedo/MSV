@@ -1,0 +1,175 @@
+<?xml version="1.0"?>
+<alloy>
+
+<view nodetheme="Martha" edgetheme="Martha">
+
+<projection> <type name="Repository"/> </projection>
+
+<defaultnode/>
+
+<defaultedge/>
+
+<node>
+   <type name="Int"/>
+   <type name="Key0"/>
+   <type name="Key1"/>
+   <type name="Key2"/>
+   <type name="Metadata0"/>
+   <type name="Metadata1"/>
+   <type name="Metadata2"/>
+   <type name="ORCID"/>
+   <type name="Production0"/>
+   <type name="Production1"/>
+   <type name="Production2"/>
+   <type name="PTCRIS"/>
+   <type name="PTCris"/>
+   <type name="Putcode0"/>
+   <type name="Putcode1"/>
+   <type name="Putcode2"/>
+   <type name="Putcode3"/>
+   <type name="Putcode4"/>
+   <type name="Repository"/>
+   <type name="Scopus"/>
+   <type name="univ"/>
+   <type name="User"/>
+   <type name="Work0"/>
+   <type name="Work1"/>
+   <type name="Work2"/>
+   <type name="Work3"/>
+   <type name="Work4"/>
+   <type name="Work5"/>
+   <type name="seq/Int"/>
+   <set name="$IMPORTED_S4_o" type="ORCID"/>
+   <set name="$IMPORTED_S4_o&apos;" type="ORCID"/>
+   <set name="$IMPORTED_S4_p" type="PTCris"/>
+   <set name="$IMPORTED_S4_p&apos;" type="PTCris"/>
+   <set name="First" type="open$3/Ord"/>
+   <set name="First" type="ordering/Ord"/>
+   <set name="Next" type="open$3/Ord"/>
+   <set name="Next" type="ordering/Ord"/>
+</node>
+
+<node color="Green">
+   <type name="Work"/>
+</node>
+
+<node color="Yellow">
+   <type name="Production"/>
+</node>
+
+<node label="DOI0">
+   <type name="UID2"/>
+</node>
+
+<node label="DOI1">
+   <type name="UID0"/>
+</node>
+
+<node label="EID1">
+   <type name="UID1"/>
+</node>
+
+<node label="Handle0">
+   <type name="UID4"/>
+</node>
+
+<node label="Handle1">
+   <type name="UID3"/>
+</node>
+
+<node shape="Box">
+   <type name="Creation"/>
+   <type name="Modification"/>
+</node>
+
+<node showlabel="no">
+   <set name="$IMPORTED_S4_p1" type="Production0"/>
+   <set name="$IMPORTED_S4_pre_p1" type="Production0"/>
+   <set name="$IMPORTED_S4_pre_w1" type="Work0"/>
+   <set name="$IMPORTED_S4_pre_w2" type="Work1"/>
+   <set name="$IMPORTED_S4_pre_w3" type="Work2"/>
+   <set name="$IMPORTED_S4_pre_w4" type="Work3"/>
+   <set name="$IMPORTED_S4_w1" type="Work0"/>
+   <set name="$IMPORTED_S4_w3" type="Work2"/>
+   <set name="$IMPORTED_S4_w4" type="Work3"/>
+   <set name="productions" type="Production"/>
+   <set name="works" type="Work"/>
+</node>
+
+<node showlabel="no" shape="Ellipse">
+   <set name="preferred" type="Work"/>
+</node>
+
+<node showlabel="no" style="Bold">
+   <set name="exported" type="Production"/>
+</node>
+
+<node visible="no">
+   <type name="Source"/>
+   <type name="String"/>
+   <type name="open$3/Ord"/>
+   <type name="open$4/Ord"/>
+   <type name="ordering/Ord"/>
+</node>
+
+<node visible="no" color="Black">
+   <type name="UID"/>
+</node>
+
+<node visible="no" shape="Box" color="Blue">
+   <type name="Metadata"/>
+</node>
+
+<node visible="no" shape="Box" color="Gray">
+   <type name="Output"/>
+</node>
+
+<node visible="no" shape="Hexagon" color="White">
+   <type name="Putcode"/>
+</node>
+
+<node visible="no" shape="Hexagon" color="Yellow">
+   <type name="Notification"/>
+</node>
+
+<node visible="no" shape="Parallelogram" color="Green">
+   <type name="Key"/>
+</node>
+
+<node visible="yes" showlabel="no">
+   <set name="outputs" type="Output"/>
+</node>
+
+<node visible="yes" showlabel="no" style="Dashed">
+   <set name="notifications" type="Notification"/>
+</node>
+
+<edge color="Blue" style="Dashed" label="similar">
+   <relation name="$_similar"> <type name="Work"/> <type name="Work"/> </relation>
+</edge>
+
+<edge color="Gray" constraint="no">
+   <relation name="Next"> <type name="open$4/Ord"/> <type name="Source"/> <type name="Source"/> </relation>
+</edge>
+
+<edge color="Gray" visible="no" attribute="yes" constraint="no">
+   <relation name="First"> <type name="open$4/Ord"/> <type name="Source"/> </relation>
+   <relation name="source"> <type name="Work"/> <type name="Source"/> </relation>
+</edge>
+
+<edge visible="no" attribute="yes">
+   <relation name="key"> <type name="Notification"/> <type name="Key"/> </relation>
+   <relation name="key"> <type name="Production"/> <type name="Key"/> </relation>
+   <relation name="metadata"> <type name="Creation"/> <type name="Metadata"/> </relation>
+   <relation name="metadata"> <type name="Production"/> <type name="Metadata"/> </relation>
+   <relation name="metadata"> <type name="Work"/> <type name="Metadata"/> </relation>
+   <relation name="putcode"> <type name="Work"/> <type name="Putcode"/> </relation>
+</edge>
+
+<edge visible="no" attribute="yes" constraint="no">
+   <relation name="uids"> <type name="Output"/> <type name="UID"/> </relation>
+</edge>
+
+</view>
+
+</alloy>

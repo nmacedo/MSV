@@ -1,0 +1,121 @@
+<?xml version="1.0"?>
+<alloy>
+
+<view nodetheme="Martha" edgetheme="Martha">
+
+<projection> <type name="State"/> </projection>
+
+<defaultnode showlabel="no"/>
+
+<defaultedge visible="no"/>
+
+<node>
+   <type name="Book"/>
+   <type name="Conference"/>
+   <type name="DeGois"/>
+   <type name="EID"/>
+   <type name="Id1"/>
+   <type name="Id2"/>
+   <type name="Id3"/>
+   <type name="Int"/>
+   <type name="ISBN"/>
+   <type name="Journal"/>
+   <type name="Recaap"/>
+   <type name="Scopus"/>
+   <type name="State"/>
+   <type name="String"/>
+   <type name="Title1"/>
+   <type name="Title2"/>
+   <type name="univ"/>
+   <type name="User"/>
+   <type name="Year1"/>
+   <type name="Year2"/>
+   <type name="open$3/Ord"/>
+   <type name="open$4/Ord"/>
+   <type name="open$5/Ord"/>
+   <type name="ordering/Ord"/>
+   <type name="seq/Int"/>
+   <set name="$E7c_p" type="Production"/>
+   <set name="$E7c_s" type="State"/>
+   <set name="$E7c_s&apos;" type="State"/>
+   <set name="$E7c_w" type="Work"/>
+   <set name="First" type="ordering/Ord"/>
+   <set name="Next" type="ordering/Ord"/>
+</node>
+
+<node shape="Ellipse">
+   <set name="selected" type="Work"/>
+</node>
+
+<node style="Bold">
+   <set name="$preferred" type="Work"/>
+</node>
+
+<node style="Dotted">
+   <set name="$mods" type="Production"/>
+</node>
+
+<node visible="no">
+   <type name="DOI"/>
+   <type name="Id"/>
+   <type name="Source"/>
+   <type name="Title"/>
+   <type name="Type"/>
+   <type name="UniqueId"/>
+   <type name="Year"/>
+</node>
+
+<node visible="no" numberatoms="no" color="Blue" label="">
+   <type name="Production"/>
+</node>
+
+<node visible="no" numberatoms="no" color="Green" label="">
+   <type name="Work"/>
+</node>
+
+<node visible="no" numberatoms="yes">
+   <type name="Paper"/>
+</node>
+
+<node visible="yes" showlabel="no">
+   <set name="degois" type="Production"/>
+   <set name="orcid" type="Work"/>
+</node>
+
+<node visible="yes" showlabel="no" style="Dashed">
+   <set name="pending" type="Production"/>
+</node>
+
+<edge color="Blue" style="Dashed" visible="yes" label="&#x2243;">
+   <relation name="$same"> <type name="Paper"/> <type name="Paper"/> </relation>
+</edge>
+
+<edge color="Gray" style="Bold" visible="yes" merge="yes" layout="no" constraint="no" label="=">
+   <relation name="$equal"> <type name="Paper"/> <type name="Paper"/> </relation>
+</edge>
+
+<edge color="Green" visible="yes" label="&gt;">
+   <relation name="$subsumes"> <type name="Production"/> <type name="Work"/> </relation>
+</edge>
+
+<edge color="Red" visible="yes" label="u">
+   <relation name="$modifies"> <type name="Production"/> <type name="Production"/> </relation>
+</edge>
+
+<edge visible="no">
+   <relation name="$sync_p&apos;"> <type name="Production"/> <type name="Production"/> </relation>
+</edge>
+
+<edge visible="no" attribute="yes">
+   <relation name="ids"> <type name="Paper"/> <type name="UniqueId"/> </relation>
+   <relation name="key"> <type name="Production"/> <type name="Id"/> </relation>
+   <relation name="putcode"> <type name="Paper"/> <type name="Id"/> </relation>
+   <relation name="source"> <type name="Work"/> <type name="Source"/> </relation>
+   <relation name="title"> <type name="Paper"/> <type name="Title"/> </relation>
+   <relation name="type"> <type name="Paper"/> <type name="Type"/> </relation>
+   <relation name="year"> <type name="Paper"/> <type name="Year"/> </relation>
+</edge>
+
+</view>
+
+</alloy>
