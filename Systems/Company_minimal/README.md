@@ -11,7 +11,7 @@ Every person is mapped to a emplyee with the same name, which additionally have 
 #### Meta-models
 | [World.ecore](Resources/World.ecore) for world models | [Company.ecore](Resources/Company.ecore) for company models |
 | --- | --- |
-| <img src="Resources/images/World_metamodel.png" alt="World metamodel" width="200px"> | <img src="Resources/images/Company_metamodel.png" alt="Company metamodel" width="200px"> |
+| <img src="Resources/images/World_metamodel.png" alt="World metamodel" width="90%"> | <img src="Resources/images/Company_metamodel.png" alt="Company metamodel" width="90%"> |
 
 #### History
 * This example has been used to illustrate the SoSyM *[Least-change bidirectional model transformation with QVT-R and ATL](http://nmacedo.github.io/pubs.html#sosym16)* paper and N. Macedo's *[PhD Thesis](http://nmacedo.github.io/pubs.html#phd14)*.
