@@ -8,7 +8,7 @@ A formalization of a an ORCID-based synchronization framework for PTCRIS, as des
 
 Alloy was used to explore the design of PTCRISync prior to implementation, namely it was used to formalize *what* was the desired notion of consistency between ORCID and each of the PTCRIS services, and *how* could a synchronization procedure be implemented to enforce such consistency. This Analyzer was also used to automatically generate usage scenarios that were useful for requirement elicitation and validation with the stakeholders. These scenarios can also be used for certifying compliant PTCRIS services, by allowing rigorous testing of the proposed implementations.
 
-The employed strategy is described in this [paper](http://nmacedo.github.io/pubs.html#f1000r15), while the formalization of the framework is available in this [report](http://nmacedo.github.io/pubs.html#inesctec15). This is superseded by the PTCRISync [wiki](https://github.com/fccn/PTCRISync/wiki) that also provides information on the adoption of the framework.
+The employed strategy is described in this [paper](http://nmacedo.github.io/pubs.html#f1000r15), while the formalization of the framework is available in this [report](http://nmacedo.github.io/pubs.html#inesctec15). This is superseded by the PTCRISync [wiki](https://github.com/fccn/PTCRISync/wiki) that also provides information on the adoption of the framework. The officially chosen the specification is version [0.4.3](ptcris_v0_4_3.als).
 
 ## Example scenario
 
