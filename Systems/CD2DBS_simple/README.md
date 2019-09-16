@@ -1,4 +1,4 @@
-# Object-relational mapping (without associations/keys) 
+# Object-relational mapping (without associations/keys)
 
 ### UML2RDBMS
 The [uml2rdbms_simple.qvtr](Resources/uml2rdbms_simple.qvtr) transformation is a (very) simplified version of the classical object-relational mapping, between class diagrams and database schemes, used as a running example in the QVT standard.
