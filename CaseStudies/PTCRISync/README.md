@@ -18,7 +18,7 @@ Two groups of similar works in the ORCID profile, each matched by a production i
 |  <img src="Resources/images/imported_s6_p0.png" alt="S6 P0" width="70%" align="middle"/> | <img src="Resources/images/imported_s6_o0.png" alt="S6 O0" width="70%" align="middle"/> |
 | --- | --- |
 
-### ORCID update ($\Rightarrow$\texttt{IMPORT} inconsistency)
+### ORCID update (&#8658;`IMPORT` inconsistency)
 A new work (`Work2`) is introduced in the ORCID profile that connects the two distinct groups of similar works.
 
 |  <img src="Resources/images/imported_s6_p0.png" alt="S6 P0" width="70%" align="middle"/> | <img src="Resources/images/imported_s6_o1.png" alt="S6 O1" width="70%" align="middle"/> |
