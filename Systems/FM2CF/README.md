@@ -13,7 +13,7 @@ Every mandatory feature on the feature model must be present in the configuratio
 #### Meta-models
 | [FM.ecore](Resources/FM.ecore) for feature models | [CF.ecore](Resources/CF.ecore) for the first configuration | [CF.ecore](Resources/CF.ecore) for the second configuration |
 | --- | --- | --- |
-| <img src="Resources/images/FM_metamodel.png" alt="FM metamodel" width="400px"> | <img src="Resources/images/CF_metamodel.png" alt="Configuration metamodel" width="350px"> | <img src="Resources/images/CF_metamodel.png" alt="Configuration metamodel" width="350px"> |
+| <img src="Resources/images/FM_metamodel.png" alt="FM metamodel" width="90%"> | <img src="Resources/images/CF_metamodel.png" alt="Configuration metamodel" width="90%"> | <img src="Resources/images/CF_metamodel.png" alt="Configuration metamodel" width="90%"> |
 
 #### Models
 | [FM.xmi](Resources/FM.xmi) | [CF1.xmi](Resources/CF1.xmi) | [CF2.xmi](Resources/CF2.xmi) |
