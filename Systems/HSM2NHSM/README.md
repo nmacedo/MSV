@@ -10,7 +10,7 @@ Several versions of the transformation are provided. The [hsm2nhsm_closure_2mm.q
 #### Meta-models
 | [HSM.ecore](Resources/HSM.ecore) for expanded (hierarchical) state diagrams | [NHSM.ecore](Resources/NHSM.ecore) for collapsed (non-hierarchical) state diagrams |
 | --- | --- |
-| <img src="Resources/images/HSM_metamodel.png" alt="HSM metamodel" width="80%"> | <img src="Resources/images/NHM_metamodel.png" alt="NHSM metamodel" width="80%"> |
+| <img src="Resources/images/HSM_metamodel.png" alt="HSM metamodel" width="80%"> | <img src="Resources/images/NHM_metamodel.png" alt="NHSM metamodel" width="100%"> |
 
 #### Models
 | [HSM_expanded.xmi](Resources/HSM_expanded.xmi) | [NHM_example.xmi](Resources/NHM_example.xmi) |
