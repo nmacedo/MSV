@@ -2,6 +2,8 @@
 
 A formalization of a an ORCID-based synchronization framework for PTCRIS, as described [here](https://github.com/fccn/PTCRISync/wiki) (supersedes this [report](https://nmacedo.github.io/pubs/INESCTEC15.pdf)).
 
+All models have been developed and analyzed under the Alloy Analyzer 4.2_2015-02-22.
+
 ---
 
 * Language: [[Alloy](https://github.com/nmacedo/MSV/wiki/By-Language#alloy)]
