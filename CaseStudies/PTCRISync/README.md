@@ -30,13 +30,14 @@ Since the group of similar works now shares UIDs with both productions at the PT
 |  <img src="Resources/images/imported_s6_p1.png" alt="S6 P1" width="70%" align="middle"/> | <img src="Resources/images/imported_s6_o1.png" alt="S6 O1" width="70%" align="middle"/> |
 | --- | --- |
 
-## History
+### History
 
-* Version 0.4.3 is the target of the F1000Research *[An ORCID-based synchronization framework for a national CRIS ecosystem](http://nmacedo.github.io/pubs.html#f1000r15)* paper and the *[PTCRISync specification: An ORCID-based synchronization framework for PTCRIS](http://nmacedo.github.io/pubs.html#inesctec15)* report commisioned by the FCCN|FCT.
+* This model has been originally developed for the PTCRISync project commisioned by the FCCN|FCT.
+* Version 0.4.3 is the target of the F1000Research *[An ORCID-based synchronization framework for a national CRIS ecosystem](http://nmacedo.github.io/pubs.html#f1000r15)* paper and the *[PTCRISync specification: An ORCID-based synchronization framework for PTCRIS](http://nmacedo.github.io/pubs.html#inesctec15)* report.
 * All models have been developed and analyzed under the *Alloy Analyzer 4.2_2015-02-22*.
 
 ---
 
 * Language: [[Alloy](https://github.com/nmacedo/MSV/wiki/By-Language#alloy)]
-* Theme: [[Synchronization](https://github.com/nmacedo/MSV/wiki/By-Theme#synchronization)] [[CRIS](https://github.com/nmacedo/MSV/wiki/By-Theme#cris)] [[Rich Structural](https://github.com/nmacedo/MSV/wiki/By-Theme#rich-structural)]
+* Theme: [[Synchronization](https://github.com/nmacedo/MSV/wiki/By-Theme#synchronization)] [[CRIS](https://github.com/nmacedo/MSV/wiki/By-Theme#cris)] [[Rich Structure](https://github.com/nmacedo/MSV/wiki/By-Theme#rich-structure)] [[Rich Behaviour](https://github.com/nmacedo/MSV/wiki/By-Theme#rich-behaviour)]
 * Venue: [[F1000R15](https://github.com/nmacedo/MSV/wiki/By-Venue#f1000r15)] [[INESCTEC15](https://github.com/nmacedo/MSV/wiki/By-Venue#inesctec15)]

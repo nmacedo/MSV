@@ -16,11 +16,12 @@ Every persistent Class on the UML class diagram is matched to a Table in the rel
 | --- | --- |
 | <img src="Resources/images/UML_company.png" alt="UML company" width="90%" align="middle"/> | <img src="Resources/images/RDB_company.png" alt="RDB company" width="90%" align="middle"/> |
 
-#### History
+### History
 * This example is a simplified version of the example illustrating the *MOF 2.0 Query/View/Transformation Specification*. 
 * This example has been used to illustrate the SoSyM *[Least-change bidirectional model transformation with QVT-R and ATL](http://nmacedo.github.io/pubs.html#sosym16)* and FASE'13 *[Implementing QVT-R bidirectional model transformations using Alloy](http://nmacedo.github.io/pubs.html#fase13)* papers, and N. Macedo's *[PhD Thesis](http://nmacedo.github.io/pubs.html#phd14)*.
 * A version with [associations and keys](../CD2DBS_keys) has been used to illustrate the ASE'13 *[Model repair and transformation with Echo](http://nmacedo.github.io/pubs.html#ase13)* paper.
 * The [benchmarks](Resources/Benchmarks) procedurally generated to evaluate the SAT-based bidirectional transformation approach are also from this example.
+* All models have been developed and analyzed under the *Alloy Analyzer 4.2_2012-09-25*, and subsequently tested for support under version *4.2_2015-02-22*.
 
 <!-- Warning: resource URIs -->
 

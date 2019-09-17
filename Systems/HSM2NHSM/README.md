@@ -19,7 +19,7 @@ Several versions of the transformation are provided. The [hsm2nhsm_closure_2mm.q
 | --- | --- |
 | <img src="Resources/images/HSM_model.png" alt="HSM model" width="90%" align="middle"/> | <img src="Resources/images/NHM_model.png" alt="NHSM model" width="90%" align="middle"/> |
 
-#### History
+### History
 * This example is based on the running example from the paper *JTL: a bidirectional and change propagating transformation language* by A. Cicchetti, D. Di Ruscio, R. Eramo and A. Pierantonio.
 * This example has been used to illustrate the SoSyM *[Least-change bidirectional model transformation with QVT-R and ATL](http://nmacedo.github.io/pubs.html#sosym16)* paper and N. Macedo's *[PhD Thesis](http://nmacedo.github.io/pubs.html#phd14)*.
 
