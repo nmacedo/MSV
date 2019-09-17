@@ -33,11 +33,11 @@ Since the group of similar works now shares UIDs with both productions at the PT
 ### History
 
 * This model has been originally developed for the PTCRISync project commisioned by the FCCN|FCT.
-* Version 0.4.3 is the target of the F1000Research *[An ORCID-based synchronization framework for a national CRIS ecosystem](http://nmacedo.github.io/pubs.html#f1000r15)* paper and the *[PTCRISync specification: An ORCID-based synchronization framework for PTCRIS](http://nmacedo.github.io/pubs.html#inesctec15)* report.
+* Version 0.4.3 is the target of the ORCID-CASRAI'15 *[An ORCID-based synchronization framework for a national CRIS ecosystem](http://nmacedo.github.io/pubs.html#f1000r15)* paper and the *[PTCRISync specification: An ORCID-based synchronization framework for PTCRIS](http://nmacedo.github.io/pubs.html#inesctec15)* report.
 * All models have been developed and analyzed under the *Alloy Analyzer 4.2_2015-02-22*.
 
 ---
 
 * Language: [[Alloy](https://github.com/nmacedo/MSV/wiki/By-Language#alloy)]
 * Theme: [[Synchronization](https://github.com/nmacedo/MSV/wiki/By-Theme#synchronization)] [[CRIS](https://github.com/nmacedo/MSV/wiki/By-Theme#cris)] [[Rich Structure](https://github.com/nmacedo/MSV/wiki/By-Theme#rich-structure)] [[Rich Behaviour](https://github.com/nmacedo/MSV/wiki/By-Theme#rich-behaviour)]
-* Venue: [[F1000R15](https://github.com/nmacedo/MSV/wiki/By-Venue#f1000r15)] [[INESCTEC15](https://github.com/nmacedo/MSV/wiki/By-Venue#inesctec15)]
+* Venue: [[ORCID-CASRAI15](https://github.com/nmacedo/MSV/wiki/By-Venue#orcid-casrai15)] [[INESCTEC15](https://github.com/nmacedo/MSV/wiki/By-Venue#inesctec15)]
