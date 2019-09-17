@@ -1,0 +1,15 @@
+# OLAP Cube Usage Preferences
+
+A model for the extraction of OLAP usage preferences based on the association rules retrieved by the OLAP mining process. This work is described in this [paper](https://nmacedo.github.io/pubs.html#confenis17). The process consists of:
+* construction of the OLAP cube from the data tables and user parameters
+* construction of the mining rules from the OLAP cube
+* construction of the strong rules from the mining rules and user preferences
+* construction of the preferences from the strong rules
+
+Data in the tables is abstracted away, each rule has a performance field for the selected fields that represents that data.
+
+---
+
+* Language: [[Alloy](https://github.com/nmacedo/MSV/wiki/By-Language#alloy)]
+* Theme: [[Data Warehousing](https://github.com/nmacedo/MSV/wiki/By-Theme#data-warehousing)]  [[Structural](https://github.com/nmacedo/MSV/wiki/By-Theme#rich-structure)] 
+* Venue: [[CONFENIS17](https://github.com/nmacedo/MSV/wiki/By-Venue#papers)]

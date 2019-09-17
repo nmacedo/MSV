@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<alloy>
+
+<view nodetheme="Martha">
+
+<projection> <type name="SCD"/> <type name="State"/> </projection>
+
+<defaultnode/>
+
+<defaultedge/>
+
+<node>
+   <type name="AuditTable"/>
+   <type name="Int"/>
+   <type name="State"/>
+   <type name="String"/>
+   <type name="univ"/>
+   <type name="ordering/Ord"/>
+   <type name="seq/Int"/>
+   <set name="$updateDimension_r&apos;" type="Row"/>
+   <set name="$updateDimension_r&apos;&apos;" type="Row"/>
+   <set name="$updateDimension_r1" type="Row"/>
+   <set name="$updateDimensionCorrect_r" type="Row"/>
+   <set name="$updateDimensionCorrect_r&apos;" type="Row"/>
+   <set name="$updateDimensionCorrect_s" type="State"/>
+   <set name="$updateDimensionCorrect_s&apos;" type="State"/>
+   <set name="$updateDimensionCorrect_s&apos;&apos;" type="State"/>
+   <set name="$updateDimensionCorrect_scd" type="SCD"/>
+   <set name="dimension2audit" type="Mapping"/>
+   <set name="dimension2history" type="Mapping"/>
+   <set name="First" type="ordering/Ord"/>
+   <set name="Next" type="ordering/Ord"/>
+</node>
+
+<node color="Gray">
+   <type name="DataObject"/>
+</node>
+
+<node color="White">
+   <type name="SCD"/>
+</node>
+
+<node shape="Ellipse" color="Blue">
+   <type name="Value"/>
+</node>
+
+<node shape="Hexagon" color="Green">
+   <type name="Row"/>
+</node>
+
+<node shape="House">
+   <type name="DimensionTable"/>
+</node>
+
+<node shape="Inv House">
+   <type name="HistoryTable"/>
+</node>
+
+<node shape="Parallelogram" color="Red">
+   <type name="Mapping"/>
+</node>
+
+<node visible="no" shape="Trapezoid">
+   <type name="Field"/>
+</node>
+
+<edge visible="no" attribute="no">
+   <relation name="fields"> <type name="DataObject"/> <type name="Field"/> </relation>
+</edge>
+
+<edge visible="no" attribute="yes">
+   <relation name="a_dates"> <type name="AuditTable"/> <type name="Field"/> </relation>
+   <relation name="a_ops"> <type name="AuditTable"/> <type name="Field"/> </relation>
+   <relation name="a_vars"> <type name="AuditTable"/> <type name="Field"/> </relation>
+   <relation name="association"> <type name="Mapping"/> <type name="Field"/> <type name="Field"/> </relation>
+   <relation name="d_vars"> <type name="DimensionTable"/> <type name="Field"/> </relation>
+   <relation name="h_dates"> <type name="HistoryTable"/> <type name="Field"/> </relation>
+   <relation name="h_vars"> <type name="HistoryTable"/> <type name="Field"/> </relation>
+   <relation name="keys"> <type name="DataObject"/> <type name="Field"/> </relation>
+</edge>
+
+</view>
+
+</alloy>

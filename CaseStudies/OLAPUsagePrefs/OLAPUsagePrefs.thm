@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<alloy>
+
+<view nodetheme="Martha" edgetheme="Martha">
+
+<projection> <type name="CubeParameters"/> <type name="MiningModel"/> <type name="MiningStructure"/> <type name="OLAPCube"/> </projection>
+
+<defaultnode/>
+
+<defaultedge/>
+
+<node>
+   <type name="Attribute"/>
+   <type name="CubeParameters"/>
+   <type name="Dimension"/>
+   <type name="FactTable"/>
+   <type name="Measure"/>
+   <type name="MiningModel"/>
+   <type name="MiningStructure"/>
+   <type name="OLAPCube"/>
+   <type name="String"/>
+   <type name="Table"/>
+   <type name="univ"/>
+   <type name="seq/Int"/>
+   <set name="$c" type="OLAPCube"/>
+   <set name="$p1" type="CubeParameters"/>
+</node>
+
+<node hideunconnected="yes" shape="Trapezoid" color="Gray">
+   <type name="Performance"/>
+</node>
+
+<node shape="House" color="Red">
+   <type name="PreferenceParameters"/>
+</node>
+
+<node shape="Trapezoid">
+   <type name="Field"/>
+</node>
+
+<node showlabel="no">
+   <set name="$GoodCubeParameters_f" type="Field"/>
+   <set name="$GoodPreferenceParameters_r" type="Performance"/>
+   <set name="$p2" type="PreferenceParameters"/>
+   <set name="flds" type="Field"/>
+   <set name="itemSets" type="Field"/>
+</node>
+
+<node showlabel="no" style="Bold" color="Green">
+   <set name="strongRules" type="Rule"/>
+   <set name="tabs" type="Table"/>
+</node>
+
+<node visible="no">
+   <type name="SubsetFields"/>
+</node>
+
+<node visible="no" hideunconnected="no">
+   <type name="Int"/>
+</node>
+
+<node visible="no" shape="Ellipse" color="Blue">
+   <type name="Preference"/>
+</node>
+
+<node visible="no" shape="Hexagon">
+   <type name="Rule"/>
+</node>
+
+<node visible="yes" showlabel="no">
+   <set name="preferences" type="Preference"/>
+   <set name="rules" type="Rule"/>
+</node>
+
+<edge attribute="no">
+   <relation name="performance"> <type name="Rule"/> <type name="Performance"/> </relation>
+</edge>
+
+<edge attribute="yes">
+   <relation name="fields"> <type name="Table"/> <type name="Field"/> </relation>
+</edge>
+
+<edge layout="yes" attribute="no">
+   <relation name="o"> <type name="Rule"/> <type name="Field"/> </relation>
+</edge>
+
+<edge style="Bold" visible="no" attribute="yes">
+   <relation name="attr"> <type name="PreferenceParameters"/> <type name="Attribute"/> </relation>
+</edge>
+
+<edge visible="no" attribute="yes">
+   <relation name="conf"> <type name="Performance"/> <type name="Int"/> </relation>
+   <relation name="conf"> <type name="PreferenceParameters"/> <type name="Int"/> </relation>
+   <relation name="supp"> <type name="Performance"/> <type name="Int"/> </relation>
+   <relation name="supp"> <type name="PreferenceParameters"/> <type name="Int"/> </relation>
+</edge>
+
+<edge visible="no" layout="yes">
+   <relation name="$ConstructRules_f"> <type name="Rule"/> <type name="Field"/> </relation>
+</edge>
+
+<edge visible="yes" layout="yes" attribute="no">
+   <relation name="is"> <type name="Rule"/> <type name="Field"/> </relation>
+</edge>
+
+</view>
+
+</alloy>
