@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<alloy>
+
+<view nodetheme="Martha">
+
+<projection> <type name="FrontDesk"/> <type name="Time"/> </projection>
+
+<defaultnode hideunconnected="yes"/>
+
+<defaultedge/>
+
+<node>
+   <type name="FrontDesk"/>
+   <type name="Int"/>
+   <type name="String"/>
+   <type name="Time"/>
+   <type name="univ"/>
+   <type name="ko/Ord"/>
+   <type name="seq/Int"/>
+   <type name="to/Ord"/>
+   <set name="$NoBadEntry_g" type="Guest"/>
+   <set name="$NoBadEntry_k" type="Key"/>
+   <set name="$NoBadEntry_r" type="Room"/>
+   <set name="$NoBadEntry_t" type="Time"/>
+   <set name="$NoBadEntry_t&apos;" type="Time"/>
+   <set name="First" type="to/Ord"/>
+   <set name="Next" type="to/Ord"/>
+</node>
+
+<node label="r">
+   <type name="Room"/>
+</node>
+
+<node shape="Ellipse" label="g">
+   <type name="Guest"/>
+</node>
+
+<node shape="Hexagon" label="k">
+   <type name="Key"/>
+</node>
+
+<edge layout="yes">
+   <relation name="keys"> <type name="Guest"/> <type name="Key"/> </relation>
+</edge>
+
+<edge visible="no" attribute="yes">
+   <relation name="keys"> <type name="Room"/> <type name="Key"/> </relation>
+</edge>
+
+</view>
+
+</alloy>
