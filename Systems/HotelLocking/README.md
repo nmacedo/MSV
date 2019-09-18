@@ -22,11 +22,10 @@ A simple adaptation of the hotel room locking system model that comes packaged w
 _Comments:_
 * The specification is broken depending on whether a "no intervening" constraint is enforced.
 * The original Alloy model considers a variable scope for guests and rooms. This encumbers other model checkers, so an alternative version with exact scopes is provided (files with `exact` suffix).
-* This example is rich in structural properties. Alloy model <hotel_init.als> generates every valid configuration.
 
 ---
 
 * Language: [[Alloy](https://github.com/nmacedo/MSV/wiki/By-Language#alloy)] [[TLA+](https://github.com/nmacedo/MSV/wiki/By-Language#tla)] [[Electrum](https://github.com/nmacedo/MSV/wiki/By-Language#electrum)] [[B](https://github.com/nmacedo/MSV/wiki/By-Language#b)]
-* Theme: [[Structural](https://github.com/nmacedo/MSV/wiki/By-Theme#rich-structural-model)] [[Behavioral](https://github.com/nmacedo/MSV/wiki/By-Theme#rich-behavioral-model)]
-* Venue: [[FSE16](https://github.com/nmacedo/MSV/wiki/By-Venue#papers)]  [FSE16 Benchmarks] [[Corr16](https://github.com/nmacedo/MSV/wiki/By-Venue#papers)]
+* Theme: [[Rich Structure](https://github.com/nmacedo/MSV/wiki/By-Theme#rich-structure)] [[Rich Behavioral](https://github.com/nmacedo/MSV/wiki/By-Theme#rich-behavior)]
+* Venue: [[FSE16](https://github.com/nmacedo/MSV/wiki/By-Venue#fse16)] [[Corr16](https://github.com/nmacedo/MSV/wiki/By-Venue#corr16)]
 
