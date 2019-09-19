@@ -1,0 +1,91 @@
+-------------------------------------------------------------------------
+-- Simple ring leader election algorithm                               --
+-- https://en.wikipedia.org/wiki/Leader_election#Rings_with_unique_IDs --
+-- Author: nmm                                                         --
+-------------------------------------------------------------------------
+
+-- the main module managing the N processes
+-- due to the absence of quantifications, the management of the 
+-- processes must be hard-coded for particular N values
+MODULE main
+
+DEFINE
+	-- the number of processes
+	N := 3;
+
+VAR
+	-- the processes of the network
+	-- the topology is fixed, only the assigned ids will vary
+	-- NB: arrays of module instances do not seem to be supported
+	p0 : Process(id[0],N,p1);
+	p1 : Process(id[1],N,p2);
+	p2 : Process(id[2],N,p0);
+	-- the ids assigned to the processes
+	id : array 0..(N - 1) of 0..(N - 1);
+
+INIT	
+	-- the assignment of ids is free, but they must be unique
+	id[0] != id[1] & id[0] != id[2] & id[1] != id[2]
+
+ASSIGN
+	-- the ids are preserved throughout the execution of the algorithm
+	next(id) := id;
+
+TRANS
+	-- only one of the processes acts in a given instant
+	p0.OP = ACT <-> !(ACT in {p1.OP,p2.OP}) &
+	p1.OP = ACT <-> !(ACT in {p0.OP,p2.OP}) &
+	p2.OP = ACT <-> !(ACT in {p1.OP,p0.OP}) 
+
+-- safety property: at most one leaders is ever elected
+INVARSPEC
+	p0.leader -> !(p1.leader | p2.leader) &
+	p1.leader -> !(p0.leader | p2.leader) &
+	p2.leader -> !(p1.leader | p0.leader)
+
+-- liveness property: at least one leader is eventually elected
+LTLSPEC
+	F (p0.leader | p1.leader | p2.leader)
+
+-- all the processes will act infinite times 
+FAIRNESS
+	p0.OP = ACT
+FAIRNESS
+	p1.OP = ACT
+FAIRNESS
+	p2.OP = ACT
+
+-- modules the behavior of each of the individual processes
+-- parameters are its id, the previous process in the ring and the total number of processes
+-- this module needs not be changed as the N changes
+MODULE Process(id,N,prev)
+
+VAR
+	-- the id that this process is passing to the succeeding process
+	-- abstracts the exchange of messages
+	out : 0..(N - 1);
+	-- whether this process considers itself to be the leader
+	leader : boolean;
+
+IVAR
+	-- whether the process acts or waits is defined by an input variable
+	OP : {ACT, WAIT};
+
+ASSIGN
+	-- starts by passing its own id
+	init(out) := id;
+	-- does not consider itself as the leader
+	init(leader) := FALSE;
+
+	-- checks whether the id being passed by the previous process is larger than the currently stored
+	-- if so, updates the out variable
+	next(out) := case
+					OP = ACT & prev.out > out : prev.out;
+					TRUE : out;
+				 esac;
+	-- the process considers itself the leader if its own id is passed by the previous process
+	next(leader) := case
+					OP = ACT & prev.out = id : TRUE;
+					TRUE : leader;
+				 esac;
+
