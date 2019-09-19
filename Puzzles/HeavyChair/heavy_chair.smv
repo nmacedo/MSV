@@ -1,0 +1,57 @@
+MODULE main
+
+-- The heavy chair problem 
+-- Can a chair be rotated over its legs, so that it sits in the adjacent position 
+-- in the same direction?
+-- Author: Nuno Macedo
+
+VAR
+    -- the position of the chair within the finite board
+    pos_x : 0 .. N;
+    pos_y : 0 .. N;
+    -- the direction of the chair
+    dir : 0 .. 3;
+
+IVAR
+    -- the set of valid operations as external input
+    -- L(eft) or R(ight) and T(op) or B(ottom) leg, C(lockwise) or A(nti-clockwise)
+    OP : {TLC,BLA,BRC,TRA,BLC,BRA,TRC,TLA};
+
+DEFINE
+    -- the size of the board (should be >0)
+    N := 500;
+    -- whether a chair is stuck, i.e., trying to move outside the board
+    stuck := (OP in {TLC,BLA} & pos_x = 0) | (OP in {BRC,TRA} & pos_x = N) |
+             (OP in {BLC,BRA} & pos_y = 0) | (OP in {TRC,TLA} & pos_y = N);
+
+ASSIGN
+    -- initial position and direction of the chair
+    init(pos_x) := N % 2;
+    init(pos_y) := N % 2;
+    init(dir) := 0;
+
+    -- update the state depending on the selected leg and direction
+    -- unless stuck
+    -- directions are modulo 4 since 4 rotations lead to the same direction
+    -- NB: under current "mod" definitions of NuSMV, cannot use "d - 1"
+    next(pos_x) := case
+                    stuck :                     pos_x;
+                    OP in {TLA,BRA,TRC,BLC} :   pos_x;       
+                    OP in {TLC,BLA} :           pos_x - 1;  
+                    OP in {TRA,BRC} :           pos_x + 1;  
+               esac;
+    next(pos_y) := case
+                    stuck :                     pos_y;
+                    OP in {TLC,TRA,BLA,BRC} :   pos_y;
+                    OP in {TLA,TRC} :           pos_y + 1;
+                    OP in {BLC,BRA} :           pos_y - 1;
+               esac;
+    next(dir) := case
+                    stuck :                     dir;
+                    OP in {TLC,BLC,TRC,BRC} :   (dir + 1) mod 4;
+                    OP in {TLA,BLA,TRA,BRA} :   (dir + 3) mod 4;
+               esac;
+               
+-- is it possible to move the chair to an adjacent position with the same direction?
+-- safety property: there is no state in which this happens
+LTLSPEC G ! (pos_x = (N % 2) & pos_y = (N % 2) + 1 & dir = 0)

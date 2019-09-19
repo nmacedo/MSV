@@ -1,0 +1,44 @@
+-- Author: Alcino Cunha
+
+MODULE main
+VAR
+        leg : 0..3;
+        dir : {cw,ccw};
+        x : -5..5;
+        y : -5..5;
+        o : 0..3;
+ASSIGN
+        init(x) := 0;
+        init(y) := 0;
+        init(o) := 2;
+        next(x) :=
+                case
+                        leg=0 & dir=ccw & x > -5 : (-1) + x;
+                        leg=1 & dir=cw & x > -5 : (-1) + x;
+                        leg=2 & dir=ccw & x < 5 : x+1;
+                        leg=3 & dir=cw & x < 5 : x+1;
+                        TRUE : x;
+                esac;
+        next(y) :=
+                case
+                        leg=0 & dir=cw & y > -5 : (-1) + y;
+                        leg=1 & dir=ccw & y < 5 : y+1;
+                        leg=2 & dir=cw & y < 5 : y+1;
+                        leg=3 & dir=ccw & y > -5 : (-1) + y;
+                        TRUE : y;
+                esac;
+        next(o) :=
+                case
+                        leg=0 & dir=ccw & x > -5 : (o+3) mod 4;
+                        leg=1 & dir=cw & x > -5 : (o+1) mod 4;
+                        leg=2 & dir=ccw & x < 5 : (o+3) mod 4;
+                        leg=3 & dir=cw & x < 5 : (o+1) mod 4;
+                        leg=0 & dir=cw & y > -5 : (o+1) mod 4;
+                        leg=1 & dir=ccw & y < 5 : (o+3) mod 4;
+                        leg=2 & dir=cw & y < 5 : (o+1) mod 4;
+                        leg=3 & dir=ccw & y > -5 : (o+3) mod 4;
+                        TRUE : o;
+                esac;
+LTLSPEC G !(x=1 & y=1 & o=2)
+
+                        

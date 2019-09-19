@@ -1,0 +1,31 @@
+-- Author: Nuno Macedo
+
+MODULE main
+VAR
+    x : integer;
+    y : integer;
+    d : 0 .. 3;
+
+IVAR
+    OP : {ltc,lba,rbc,rta,lbc,rba,rtc,lta};
+    
+ASSIGN
+    init(x) := 5;
+    init(y) := 5;
+    init(d) := 0;
+    next(x) := case
+                    OP in {lta,rba,rtc,lbc} :   x;       
+                    OP in {ltc,lba} :           x - 1;  
+                    OP in {rta,rbc} :           x + 1;  
+               esac;
+    next(y) := case
+                    OP in {ltc,rta,lba,rbc} :   y;
+                    OP in {lta,rtc} :           y + 1;
+                    OP in {lbc,rba} :           y - 1;
+               esac;
+    next(d) := case
+                    OP in {ltc,lbc,rtc,rbc} :   (d + 1) mod 4;
+                    OP in {lta,lba,rta,rba} :   (d + 3) mod 4;
+               esac;
+               
+LTLSPEC G ! (x = 5 & y = 5 & d = 0)
