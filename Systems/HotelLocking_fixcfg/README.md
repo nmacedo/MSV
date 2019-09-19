@@ -5,5 +5,5 @@ A version of the hotel room locking system with fixed configurations, as generat
 ---
 
 * Language: [[Alloy](https://github.com/nmacedo/MSV/wiki/By-Language#alloy)] [[TLA+](https://github.com/nmacedo/MSV/wiki/By-Language#tla)] [[B](https://github.com/nmacedo/MSV/wiki/By-Language#b)]
-* Theme: [[Rich Behavioral](https://github.com/nmacedo/MSV/wiki/By-Theme#rich-behavior)]
+* Theme: [[Rich Behaviour](https://github.com/nmacedo/MSV/wiki/By-Theme#rich-behaviour)]
 * Venue: [[Corr16](https://github.com/nmacedo/MSV/wiki/By-Venue#corr16)]
