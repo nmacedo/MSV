@@ -1,0 +1,25 @@
+/**
+@author Nuno Macedo
+**/
+
+abstract sig Bank {}
+one sig Left,Right extends Bank {}
+
+one var sig Farmer, Goat, Cabbage, Fox in Bank {}
+
+fact {
+	Farmer + Goat + Cabbage + Fox = Right
+	always {
+		Farmer != Farmer'
+		((Farmer = Goat && Goat != Goat' && Fox = Fox' && Cabbage = Cabbage') ||
+		(Farmer = Cabbage && Goat = Goat' && Fox = Fox' && Cabbage != Cabbage') ||
+		(Farmer = Fox && Goat = Goat' && Fox != Fox' && Cabbage = Cabbage') ||
+		(Goat = Goat' && Fox = Fox' && Cabbage = Cabbage'))
+	}
+	always {
+		not (Fox = Goat && Goat != Farmer) 
+		not (Goat = Cabbage && Goat != Farmer) 
+	}
+}
+
+run { eventually Farmer + Goat + Cabbage + Fox = Left } for 4

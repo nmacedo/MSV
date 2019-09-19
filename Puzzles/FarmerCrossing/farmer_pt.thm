@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<alloy>
+
+<view nodetheme="Martha">
+
+<projection> <type name="Passo"/> </projection>
+
+<defaultnode/>
+
+<defaultedge/>
+
+<node>
+   <type name="Couve"/>
+   <type name="Direita"/>
+   <type name="Esquerda"/>
+   <type name="Ganso"/>
+   <type name="Int"/>
+   <type name="Lobo"/>
+   <type name="Objeto"/>
+   <type name="Passo"/>
+   <type name="String"/>
+   <type name="univ"/>
+   <type name="ordering/Ord"/>
+   <type name="seq/Int"/>
+   <set name="$p" type="Passo"/>
+   <set name="First" type="ordering/Ord"/>
+   <set name="Next" type="ordering/Ord"/>
+</node>
+
+<node shape="Ellipse">
+   <type name="Comestivel"/>
+</node>
+
+<node shape="House" color="Gray">
+   <type name="Agricultor"/>
+</node>
+
+<node shape="Parallelogram" color="Blue">
+   <type name="Margem"/>
+</node>
+
+</view>
+
+</alloy>

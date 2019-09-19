@@ -1,0 +1,73 @@
+MODULE main
+
+-- Fox, goose and bag of beans puzzle
+-- https://en.wikipedia.org/wiki/Fox,_goose_and_bag_of_beans_puzzle
+-- Author: Nuno Macedo
+
+VAR
+    -- the position of the farmer and his purchases
+    -- either on the starting bank of the river (FALSE) or on the far bank (TRUE)
+    farmer : boolean;
+    beans : boolean;
+    goose : boolean;
+    fox : boolean;
+
+	-- whether a purchase has been eaten
+	eaten_goose : boolean;
+	eaten_beans : boolean;
+
+-- only allow transitions if the purchase is in the same side as the farmer
+TRANS
+    OP = g -> goose = farmer;
+TRANS
+    OP = f -> fox = farmer;
+TRANS
+    OP = b -> beans = farmer;
+
+IVAR
+	-- the set of valid operations as external input
+	-- transport the g(oose), f(ox), b(eans) or a(lone)
+	OP : {g,f,b,a};
+
+ASSIGN 
+    -- everyone at the starting river bank
+	init (goose) := FALSE;
+	init (fox) := FALSE;
+	init (beans) := FALSE;
+	init (farmer) := FALSE;
+
+	-- nothing has been eaten
+	init (eaten_beans) := FALSE;
+	init (eaten_goose) := FALSE;
+
+    -- the farmer always crosses the river
+	next(farmer) := !farmer;
+
+	-- the purchases cross the river if appropiate operation
+	-- the farmer will be on the same side as the purchase due to the TRANS constraint
+	-- NB: eaten artifacts must keep crossing the river
+	-- otherwise the system will enter a deadlock and fail to produce an infinite trace
+	next(goose) := case
+					OP = g : !goose;
+					TRUE : goose;
+				   esac;
+
+	next(fox) := case
+					OP = f : !fox;
+					TRUE : fox;
+				   esac;
+
+	next(beans) := case
+					OP = b : !beans;
+					TRUE : beans;
+				   esac;
+
+	-- the purchases are eaten if the farmer is on the other side, or if they were already eaten
+	-- NB: the eaten state is only updated in the state following the dangerous situation
+	next(eaten_goose) := (fox = goose & fox != farmer) | eaten_goose;
+
+	next(eaten_beans) := (goose = beans & beans != farmer) | eaten_beans;
+
+-- is it possible to cross everyone without casualties?
+-- safety property: there is no state in which this happens
+LTLSPEC G ! (goose & fox & beans & !eaten_goose & !eaten_beans);
