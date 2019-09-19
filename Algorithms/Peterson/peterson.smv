@@ -1,0 +1,81 @@
+-- Peterson's algorithm for the mutual exclusion problem.
+-- https://en.wikipedia.org/wiki/Peterson%27s_algorithm
+-- Author: nmm
+
+-- module representing the interaction between the two threads
+MODULE main
+
+VAR
+	-- the id of the next thread to enter the critical section
+	-- no init restriction: arbitrary selection
+	turn : {0,1};
+	-- two instantiations of the thread module representing the competing processes
+	-- each is passed its id, the flag of the opposite and the shared turn variable
+	thr0 : Thread(0,thr1.flag,turn);
+	thr1 : Thread(1,thr0.flag,turn);
+
+-- at every moment, exectly one of the threads is allowed to execute
+TRANS
+	thr1.EVENT = action <-> thr0.EVENT = stutter
+TRANS
+ 	thr0.EVENT = action <-> thr1.EVENT = stutter
+
+-- mutual exclusion (safety property): the threads do not enter the critical section simultaneously
+-- equivalent to G !(thr0.critical & thr1.critical)
+INVARSPEC
+	!(thr0.critical & thr1.critical);
+
+-- deadlock freedom (liveness property): eventually one of the threads accesses the critical section
+LTLSPEC 
+	G ((thr0.begin & thr1.begin) -> F (thr0.critical | thr1.critical))
+
+-- starvation freedom (liveness property): eventually both threads access the critical section
+LTLSPEC 
+	G (thr0.begin -> F (thr0.critical))
+LTLSPEC 
+	G (thr1.begin -> F (thr1.critical))
+
+-- both threads will run an infinite number of times
+FAIRNESS thr0.EVENT = action
+FAIRNESS thr1.EVENT = action
+
+-- module representing a single thread
+-- id identifies the thread, oflag is the flag of the opposing thread and turn is the id of the next thread to enter the critical section
+MODULE Thread(id,oflag,turn)
+
+VAR
+	-- the program counter represents the current instruction of the algorithm
+	pc : 0 .. 5;
+	-- the flag indicates whether the thread wants to enter the critical section
+	flag : boolean;
+
+-- whether the thread executes or not is set by an external variable
+IVAR
+	EVENT : {stutter, action};
+
+-- some alias for some instructions of the algorithm
+DEFINE
+	critical := pc = 3;
+	begin := pc = 0;
+
+-- starts at the first instruction and with the flag turned off
+INIT
+	begin & ! flag
+
+-- the instructions as defined by the Peterson's algorithm
+-- the thread modifies the value of the shared turn variable and its own flag
+TRANS
+	EVENT != stutter -> (pc = 0 -> (next(flag) = TRUE & next(turn) = turn & next(pc) = pc+1))
+TRANS
+	EVENT != stutter -> (pc = 1 -> (next(flag) = flag & next(turn) = 1 - id & next(pc) = pc+1))
+TRANS
+	EVENT != stutter -> (pc = 2 -> (next(flag) = flag & next(turn) = turn & next(pc) = (oflag & (turn = 1 - id) ? pc : pc+1)))
+TRANS
+	EVENT != stutter -> (pc = 3 -> (next(flag) = flag & next(turn) = turn & next(pc) = pc+1))
+TRANS
+	EVENT != stutter -> (pc = 4 -> (next(flag) = FALSE & next(turn) = turn & next(pc) = pc+1))
+TRANS
+	EVENT != stutter -> (pc = 5 -> (next(flag) = flag & next(turn) = turn & next(pc) = 0))
+-- if stuttering this thread does nothing with its variables (the other thread may be changing the turn)
+TRANS
+	EVENT = stutter -> (next(pc) = pc & next(flag) = flag)
