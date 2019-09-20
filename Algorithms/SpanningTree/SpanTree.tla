@@ -1,3 +1,5 @@
+\* Author: Nuno Macedo
+
 ------------------------------ MODULE SpanTree ------------------------------
 EXTENDS Naturals 
 

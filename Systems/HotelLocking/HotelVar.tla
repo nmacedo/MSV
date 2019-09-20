@@ -1,76 +1,61 @@
 \* Author: Nuno Macedo
 
-------------------------------- MODULE Hotel_new -------------------------------
+------------------------------- MODULE Hotel -------------------------------
 EXTENDS Naturals 
-CONSTANT KEY, ROOM, GUEST
-ASSUME KEY \in Nat
-VARIABLE keys, current, last, occupant, gkeys, Room, Guest
+CONSTANT Key, Room, Guest
+VARIABLE keys, currentKey, lastKey, occupant, gKeys, room, guest
 -----------------------------------------------------------------------------
-
-Key == 0..KEY-1
-
-TypeInv == /\ Room \in SUBSET ROOM
-           /\ Guest \in SUBSET GUEST
-           /\ keys \in [Room -> SUBSET Key]
-           /\ current \in [Room -> Key]
-           /\ \A r \in Room : current[r] \in keys[r]
-           /\ \A r1,r2 \in Room : (keys[r1] \cap keys[r2]) # {} => r1 = r2
-           /\ last \in [Room -> Key]
-           /\ occupant \in [Room -> SUBSET Guest]
-           /\ gkeys \in [Guest -> SUBSET Key]
+TypeInv == /\ room \in SUBSET Room
+           /\ guest \in SUBSET Guest
+           /\ keys \in [room -> SUBSET Key]
+           /\ currentKey \in [room -> Key]
+           /\ \A r \in room : currentKey[r] \in keys[r]
+           /\ \A r1,r2 \in room : (keys[r1] \cap keys[r2]) # {} => r1 = r2
+           /\ lastKey \in [room -> Key]
+           /\ occupant \in [room -> SUBSET guest]
+           /\ gKeys \in [guest -> SUBSET Key]
            
-Init == /\ Room \in SUBSET ROOM
-        /\ Guest \in SUBSET GUEST
-        /\ keys \in [Room -> SUBSET Key]
-        /\ current \in [Room -> Key]
-        /\ \A r \in Room : current[r] \in keys[r]
-        /\ \A r1,r2 \in Room : (keys[r1] \cap keys[r2]) # {} => r1 = r2
-        /\ last = current
-        /\ occupant = [r \in Room |-> {}]
-        /\ gkeys = [g \in Guest |-> {}]
+           
+Init == /\ room \in SUBSET Room
+        /\ guest \in SUBSET Guest
+        /\ keys \in [room -> SUBSET Key]
+        /\ currentKey \in [room -> Key]
+        /\ \A r \in room : currentKey[r] \in keys[r]
+        /\ \A r1,r2 \in room : (keys[r1] \cap keys[r2]) # {} => r1 = r2
+        /\ lastKey = currentKey
+        /\ occupant = [r \in room |-> {}]
+        /\ gKeys = [g \in guest |-> {}]
 
-vs == <<keys,current,last,occupant,gkeys,Guest,Room>>
+vars == <<keys,currentKey,lastKey,occupant,gKeys,guest,room>>
        
 nextKey[k \in Key, ks \in SUBSET Key] == {x \in ks : x > k /\ (\A y \in ks : y > k => x <= y)} 
 
-Entry(g,r,k) == /\ k \in gkeys[g]
-                /\ (k = current[r] \/ {k} = nextKey[current[r],keys[r]])
-                /\ current' = [current EXCEPT ![r] = k]
-                /\ UNCHANGED<<keys,last,occupant,gkeys,Guest,Room>>
+Entry(g,r,k) == /\ (k = currentKey[r] \/ {k} = nextKey[currentKey[r],keys[r]])
+                /\ k \in gKeys[g]
+                /\ currentKey' = [currentKey EXCEPT ![r] = k]
+                /\ UNCHANGED<<keys,lastKey,occupant,gKeys,guest,room>>
                 
-Checkout(g) == /\ \E r \in Room : g \in occupant[r]
+Checkout(g) == /\ \E r \in room : g \in occupant[r]
                /\ occupant' = [r \in DOMAIN occupant |-> occupant[r] \ {g}]
-               /\ UNCHANGED<<keys,last,current,gkeys,Guest,Room>>
+               /\ UNCHANGED<<keys,lastKey,currentKey,gKeys,guest,room>>
                               
 Checkin(g,r,k) == /\ occupant[r] = {}
-                  /\ {k} = nextKey[last[r],keys[r]]
-                  /\ occupant' = [occupant EXCEPT ![r] = {g}]
-                  /\ gkeys' = [gkeys EXCEPT ![g] = @ \cup {k}]
-                  /\ last' = [last EXCEPT ![r] = k]
-                  /\ UNCHANGED<<keys,current,Guest,Room>>
+                  /\ {k} = nextKey[lastKey[r],keys[r]]
+                  /\ occupant' = [occupant EXCEPT ![r] = @ \cup {g}]
+                  /\ gKeys' = [gKeys EXCEPT ![g] = @ \cup {k}]
+                  /\ lastKey' = [lastKey EXCEPT ![r] = k]
+                  /\ UNCHANGED<<keys,currentKey,guest,room>>
 
-PostCheckin(g,r,k) == /\ occupant[r] = {g}
-                      /\ k \in gkeys[g]
-                      /\ last[r] = k
-                      /\ current[r] # k \* without this NoIntervenes causes an error if tested after Next
-                 
-Act == \E g \in Guest : Checkout(g) \/ \E r \in Room, k \in Key : Entry(g,r,k) \/ Checkin(g,r,k)
+Next == \E g \in guest : Checkout(g) \/ \E r \in room, k \in Key : Entry(g,r,k) \/ Checkin(g,r,k)
 
-NoIntervenes == \A g \in Guest, k \in Key, r \in Room : PostCheckin(g,r,k) => Entry(g,r,k)
-
-Spec == Init /\ [][Act /\ TypeInv /\ NoIntervenes]_vs
-
-Spec2 == Init /\ [][Act]_vs
-
+Spec == Init /\ [Next]_vars
 -----------------------------------------------------------------------------
-
 NoBadEntries == 
-  [][\A g \in Guest, r \in Room, k \in Key : Entry(g,r,k) /\ occupant[r] # {} => g \in occupant[r]]_vs
+  [][\A g \in guest, r \in room, k \in Key : Entry(g,r,k) /\ occupant[r] # {} => g \in occupant[r]]_vars
 
-Sanity == 
-  []~((\E r1,r2 \in Room : occupant[r1] # {} /\ occupant[r2] # {} /\ occupant[r1] # occupant[r2]))
-  
+NoIntervenes == 
+  [\A g \in guest, k \in Key, r \in room : (g \in occupant[r] /\ k \in gKeys[g] /\ lastKey[r] = k /\ currentKey[r] # k) => Entry(g,r,k)]_vars
 =============================================================================
 \* Modification History
-\* Last modified Tue Jan 12 16:52:23 WET 2016 by nmm
+\* Last modified Tue Mar 31 10:44:29 WEST 2015 by nmm
 \* Created Fri Feb 27 09:57:00 WET 2015 by nmm
