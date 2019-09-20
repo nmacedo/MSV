@@ -1,3 +1,10 @@
+/*
+ * Hotel room locking system from "Software Abstractions: Logic, 
+ * Language, and Analysis" by Daniel Jackson.
+ *
+ * model author: Daniel Jackson
+ * modified: Nuno Macedo
+ */
 module hotel
 
 open util/ordering[Key] 

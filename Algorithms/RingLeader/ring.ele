@@ -1,3 +1,10 @@
+/*
+ * Ring leader election algorithm from "Software Abstractions: Logic, 
+ * Language, and Analysis" by Daniel Jackson.
+ *
+ * model author: Daniel Jackson
+ * modified: Nuno Macedo
+ */
 module ring
 
 open util/ordering[Id] 

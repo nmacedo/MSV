@@ -7,5 +7,5 @@ The full description of the models is available in this [paper](https://nmacedo.
 
 * Language: [[Alloy](https://github.com/nmacedo/MSV/wiki/By-Language#alloy)] [[Electrum](https://github.com/nmacedo/MSV/wiki/By-Language#electrum)]
 * Theme: [[Industrial](https://github.com/nmacedo/MSV/wiki/By-Theme#industrial)] [[Transportation](https://github.com/nmacedo/MSV/wiki/By-Theme#transportation)] [[Structural](https://github.com/nmacedo/MSV/wiki/By-Theme#rich-structural-model)] [[Behavioral](https://github.com/nmacedo/MSV/wiki/By-Theme#rich-behavioral-model)]
-* Venue: [[ABZ18](https://github.com/nmacedo/MSV/wiki/By-Venue#papers)]
+* Venue: [[ABZ18a](https://github.com/nmacedo/MSV/wiki/By-Venue#abz18a)]
 

@@ -1,6 +1,7 @@
 /*
- * Direct specification of a distributed spanning tree algorithm
- * over arbitrary network topologies
+ * Direct specification of a distributed spanning tree 
+ * algorithm over arbitrary network topologies, packaged 
+ * with the Alloy Analyzer.
  *
  * model author: Alloy Analyzer team
  * modified: nmm
