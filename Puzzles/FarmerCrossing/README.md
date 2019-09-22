@@ -17,5 +17,4 @@ _Comments_:
 
 * Language: [[TLA+](https://github.com/nmacedo/MSV/wiki/By-Language#tla)] [[SMV](https://github.com/nmacedo/MSV/wiki/By-Language#smv)] [[Alloy](https://github.com/nmacedo/MSV/wiki/By-Language#alloy)] [[Electrum](https://github.com/nmacedo/MSV/wiki/By-Language#electrum)] 
 * Theme: [[Transport puzzle](https://github.com/nmacedo/MSV/wiki/By-Theme#transport-puzzles)]
-* Venue: [[EM15/16](https://github.com/nmacedo/MSV/wiki/By-Venue#em-1516)] [[BestStudents]()]
-
+* Venue: [[EM15/16](https://github.com/nmacedo/MSV/wiki/By-Venue#em-1516)] [[BestStudents17](https://github.com/nmacedo/MSV/wiki/By-Venue#beststudents17)]
