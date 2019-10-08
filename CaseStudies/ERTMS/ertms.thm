@@ -3,8 +3,6 @@
 
 <view nodetheme="Martha" edgetheme="Martha" useOriginalAtomNames="yes">
 
-<projection> <type name="VSS_manager"/> </projection>
-
 <defaultnode/>
 
 <defaultedge/>
@@ -17,31 +15,51 @@
    <type name="String"/>
    <type name="univ"/>
    <type name="Unknown"/>
-   <type name="VSS_manager"/>
    <type name="D/Ord"/>
    <type name="ordering/Ord"/>
    <type name="seq/Int"/>
    <type name="V/Ord"/>
 </node>
 
+<node label="start_ghost_ptimer">
+   <set name="$start_ghost_ptimer" type="TTD"/>
+</node>
+
+<node label="start_shadow_timer_A">
+   <set name="$start_shadow_timer_A" type="TTD"/>
+</node>
+
+<node label="start_shadow_timer_B">
+   <set name="$start_shadow_timer_B" type="TTD"/>
+</node>
+
+<node label="start_integrity_loss_ptimer">
+   <set name="$start_integrity_loss_ptimer" type="VSS"/>
+</node>
+
+<node showlabel="no" label="mute">
+   <set name="$mute" type="Train"/>
+</node>
+
 <node color="Blue" label="Ambiguous">
    <set name="$_ambiguous" type="VSS"/>
 </node>
 
-<node color="Blue" label="NonInteger">
-   <set name="$NonInteger" type="Train"/>
+<node color="Red" label="Unknown">
+   <set name="$_unknown" type="VSS"/>
+</node>
+
+
+<node color="Blue" label="integrity_timer">
+   <set name="this/integrity_timer" type="Train"/>
 </node>
 
 <node color="Green" label="Free">
    <set name="$_free" type="VSS"/>
 </node>
 
-<node color="Red" label="Disconnected">
-   <set name="$Disconnected" type="Train"/>
-</node>
-
-<node color="Red" label="Unknown">
-   <set name="$_unknown" type="VSS"/>
+<node color="Red" label="mute_timer">
+   <set name="this/mute_timer" type="Train"/>
 </node>
 
 <node color="Yellow" label="Occupied">
@@ -49,48 +67,16 @@
    <set name="$occupied" type="TTD"/>
 </node>
 
-<node label="DisconnectPropRunning">
-   <set name="this/DisconnectPropRunning" type="VSS"/>
+<node label="connected">
+   <set name="this/connected" type="Train"/>
 </node>
 
-<node label="GhostTrainPropRunning">
-   <set name="this/GhostTrainPropRunning" type="TTD"/>
+<node label="report_front">
+   <set name="this/report_front" type="Train"/>
 </node>
 
-<node label="IntegrityLossPropRunning">
-   <set name="this/IntegrityLossPropRunning" type="VSS"/>
-</node>
-
-<node label="IntegrityLost">
-   <set name="this/IntegrityLost" type="Train"/>
-</node>
-
-<node label="MissionEnded">
-   <set name="this/MissionEnded" type="Train"/>
-</node>
-
-<node label="MissionStarted">
-   <set name="this/MissionStarted" type="Train"/>
-</node>
-
-<node label="MuteExpired">
-   <set name="this/MuteExpired" type="Train"/>
-</node>
-
-<node label="ShadowARunning">
-   <set name="this/ShadowARunning" type="TTD"/>
-</node>
-
-<node label="ShadowBRunning">
-   <set name="this/ShadowBRunning" type="TTD"/>
-</node>
-
-<node label="UnknownTrain">
-   <set name="this/UnknownTrain" type="Train"/>
-</node>
-
-<node label="WaitIntegrityExpired">
-   <set name="this/WaitIntegrityExpired" type="Train"/>
+<node label="report_rear">
+   <set name="this/report_rear" type="Train"/>
 </node>
 
 <node shape="Inv Trapezoid" color="Green">
@@ -101,61 +87,146 @@
    <type name="VSS"/>
 </node>
 
-<node showlabel="no">
-   <set name="$DisconnectPropStart" type="VSS"/>
-   <set name="$DisconnectPropStop" type="VSS"/>
-   <set name="$GhostTrainPropStart" type="TTD"/>
-   <set name="$IntegrityLossPropStart" type="VSS"/>
-   <set name="$IntegrityLossPropStop" type="VSS"/>
-   <set name="$S8_tr1" type="Train"/>
-   <set name="$S8_tr2" type="Train"/>
-   <set name="$ShadowAStart" type="TTD"/>
-   <set name="$ShadowBStart" type="TTD"/>
+<node showlabel="no" style="Dashed">
+   <set name="$_Ccon" type="Train"/>
 </node>
 
-<node showlabel="no" color="Green">
-   <set name="$ZVizTrainC3" type="Train"/>
+<node showlabel="no" style="Solid">
+   <set name="$_Bfront" type="Train"/>
 </node>
 
-<node style="Bold" label="IntegrityConfirmed">
-   <set name="this/IntegrityConfirmed" type="Train"/>
+<node style="Dashed" label="disconnect_ptimer">
+   <set name="this/disconnect_ptimer" type="VSS"/>
 </node>
 
-<node style="Bold" label="Reports">
-   <set name="this/Reports" type="TTD"/>
+<node style="Dashed" label="ghost_ptimer">
+   <set name="this/ghost_ptimer" type="TTD"/>
 </node>
 
-<node style="Dotted" label="DisconnectPropExpired">
-   <set name="this/DisconnectPropExpired" type="VSS"/>
+<node style="Dotted" label="integrity_loss_ptimer">
+   <set name="this/integrity_loss_ptimer" type="VSS"/>
 </node>
 
-<node style="Dotted" label="GhostTrainPropExpired">
-   <set name="this/GhostTrainPropExpired" type="TTD"/>
+<node style="Dotted" label="shadow_timer_A">
+   <set name="this/shadow_timer_A" type="TTD"/>
 </node>
 
-<node style="Dotted" label="IntegrityLossPropExpired">
-   <set name="this/IntegrityLossPropExpired" type="VSS"/>
+<node style="Dotted" label="shadow_timer_B">
+   <set name="this/shadow_timer_B" type="TTD"/>
 </node>
 
-<node style="Dotted" label="ShadowAExpired">
-   <set name="this/ShadowAExpired" type="TTD"/>
-</node>
-
-<node style="Dotted" label="ShadowBExpired">
-   <set name="this/ShadowBExpired" type="TTD"/>
-</node>
-
-<node style="Dotted" shape="Parallelogram" color="Gray">
+<node style="Dotted" shape="Parallelogram" color="Green">
    <type name="Train"/>
-</node>
-
-<node style="Solid" label="Reporting">
-   <set name="this/Reporting" type="Train"/>
 </node>
 
 <node visible="no">
    <type name="State"/>
 </node>
+
+<node visible="no" showlabel="no">
+   <set name="$S1_tr" type="Train"/>
+</node>
+
+<node visible="no" showlabel="no">
+   <set name="$S2_tr1" type="Train"/>
+</node>
+
+<node visible="no" showlabel="no">
+   <set name="$S2_tr2" type="Train"/>
+</node>
+
+<node visible="no" showlabel="no">
+   <set name="$S3_tr1" type="Train"/>
+</node>
+
+<node visible="no" showlabel="no">
+   <set name="$S3_tr2" type="Train"/>
+</node>
+
+<node visible="no" showlabel="no">
+   <set name="$S4_tr" type="Train"/>
+</node>
+
+<node visible="no" showlabel="no">
+   <set name="$S5_tr1" type="Train"/>
+</node>
+
+<node visible="no" showlabel="no">
+   <set name="$S5_tr2" type="Train"/>
+</node>
+
+
+<node visible="no" showlabel="no">
+   <set name="$S6_tr" type="Train"/>
+</node>
+
+<node visible="no" showlabel="no">
+   <set name="$S6_tr1" type="Train"/>
+</node>
+
+<node visible="no" showlabel="no">
+   <set name="$S7_tr" type="Train"/>
+</node>
+
+<node visible="no" showlabel="no">
+   <set name="$S7_tr1" type="Train"/>
+</node>
+
+<node visible="no" showlabel="no">
+   <set name="$S8_tr1" type="Train"/>
+</node>
+
+<node visible="no" showlabel="no">
+   <set name="$S8_tr2" type="Train"/>
+</node>
+
+<node visible="no" showlabel="no">
+   <set name="$S9_tr1" type="Train"/>
+</node>
+
+<node visible="no" showlabel="no">
+   <set name="$S9_tr2" type="Train"/>
+</node>
+
+<node visible="yes" showlabel="no" style="Bold">
+   <set name="$_Arear" type="Train"/>
+</node>
+
+<node visible="yes" showlabel="no">
+   <set name="$disintegrated" type="Train"/>
+</node>
+
+<edge layout="yes" label="VSSs">
+   <relation name="$_VSSs"> <type name="TTD"/> <type name="VSS"/> </relation>
+</edge>
+
+<edge style="inherit" visible="no">
+   <relation name="state"> <type name="VSS"/> <type name="State"/> </relation>
+</edge>
+
+<edge visible="no">
+   <relation name="start"> <type name="TTD"/> <type name="VSS"/> </relation>
+</edge>
+
+<edge visible="no" layout="yes">
+   <relation name="end"> <type name="TTD"/> <type name="VSS"/> </relation>
+</edge>
+
+<edge layout="yes">
+   <relation name="jumping"> <type name="VSS"/> <type name="Train"/> </relation>
+</edge>
+
+<edge color="Blue">
+   <relation name="position_rear"> <type name="Train"/> <type name="VSS"/> </relation>
+</edge>
+
+<edge color="Gray" layout="yes">
+   <relation name="jumping"> <type name="VSS"/> <type name="Train"/> </relation>
+</edge>
+
+<edge color="Green">
+   <relation name="position_front"> <type name="Train"/> <type name="VSS"/> </relation>
+</edge>
 
 <edge color="Magic" layout="yes" label="VSSs">
    <relation name="$_VSSs"> <type name="TTD"/> <type name="VSS"/> </relation>
@@ -164,29 +235,6 @@
 <edge color="Red">
    <relation name="MA"> <type name="Train"/> <type name="VSS"/> </relation>
 </edge>
-
-<edge style="Dashed">
-   <relation name="state"> <type name="VSS"/> <type name="State"/> </relation>
-</edge>
-
-<edge style="Dashed" layout="yes">
-   <relation name="jumping"> <type name="VSS"/> <type name="Train"/> </relation>
-</edge>
-
-<edge style="Dotted">
-   <relation name="loc_front"> <type name="Train"/> <type name="VSS"/> </relation>
-   <relation name="loc_rear"> <type name="Train"/> <type name="VSS"/> </relation>
-</edge>
-
-<edge visible="no">
-   <relation name="$pos"> <type name="Train"/> <type name="VSS"/> </relation>
-   <relation name="start"> <type name="TTD"/> <type name="VSS"/> </relation>
-</edge>
-
-<edge visible="no" layout="yes">
-   <relation name="end"> <type name="TTD"/> <type name="VSS"/> </relation>
-</edge>
-
 </view>
 
 </alloy>
