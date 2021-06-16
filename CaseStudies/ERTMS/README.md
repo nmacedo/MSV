@@ -11,11 +11,12 @@ The original model, as published in ABZ'18, was developed for version [1A](http:
 * Version 1A is described in the paper ABZ'18 paper [Validating the Hybrid ERTMS/ETCS Level 3 Concept with Electrum](http://haslab.github.io/TRUST/papers/abz18.pdf) and version 1C in its [extended version](http://haslab.github.io/TRUST/papers/sttt19.pdf) in STTT.
 * Although these models were initially developed for Electrum 1.1, they have since been updated for Electrum 2.1. Legacy versions are available [here](https://github.com/nmacedo/MSV/tree/7879be4dd1c4cc5a3883fb7413dc1979e8204a7d/CaseStudies/ERTMS).
 * This model was used as an example in a tutorial on [Formal software design with Alloy and Electrum](http://haslab.github.io/TRUST/tutorial.html) at FM'19, in the session on [Methodology and Tips](http://haslab.github.io/TRUST/slides/session5.pdf).
-* A simplified version of this model was used in the F-IDE'18 paper [Improving the Visualization of Alloy Instances](http://haslab.github.io/TRUST/papers/fide18.pdf).
+* Version 1A was used in the benchmarks of the ASE'18 tool demo [The Electrum Analyzer: Model checking relational first-order temporal specifications](http://haslab.github.io/TRUST/papers/ase18tool.pdf).
+* A simplified version of this model was used as a running example in the F-IDE'18 paper [Improving the Visualization of Alloy Instances](http://haslab.github.io/TRUST/papers/fide18.pdf).
 
 ---
 
 * Language: [[Alloy](https://github.com/nmacedo/MSV/wiki/By-Language#alloy)] [[Electrum](https://github.com/nmacedo/MSV/wiki/By-Language#electrum)]
 * Theme: [[Industrial](https://github.com/nmacedo/MSV/wiki/By-Theme#industrial)] [[Transportation](https://github.com/nmacedo/MSV/wiki/By-Theme#transportation)] [[Structural](https://github.com/nmacedo/MSV/wiki/By-Theme#rich-structural-model)] [[Behavioral](https://github.com/nmacedo/MSV/wiki/By-Theme#rich-behavioral-model)]
-* Venue: [[ABZ18a](https://github.com/nmacedo/MSV/wiki/By-Venue#abz18a)] [[STTT19](https://github.com/nmacedo/MSV/wiki/By-Venue#sttt19)]
+* Venue: [[ABZ18a](https://github.com/nmacedo/MSV/wiki/By-Venue#abz18a)] [[ASE18](https://github.com/nmacedo/MSV/wiki/By-Venue#ase18)] [[STTT19](https://github.com/nmacedo/MSV/wiki/By-Venue#sttt19)]
 
