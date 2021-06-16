@@ -9,7 +9,7 @@ The original model, as published in ABZ'18, was developed for version [1A](http:
 ### 
 
 * Version 1A is described in the paper ABZ'18 paper [Validating the Hybrid ERTMS/ETCS Level 3 Concept with Electrum](http://haslab.github.io/TRUST/papers/abz18.pdf) and version 1C in its [extended version](http://haslab.github.io/TRUST/papers/sttt19.pdf) in STTT.
-* Although these models were initially developed for Electrum 1, they have since been updated for Electrum 2.1. Legacy versions are available [here](https://github.com/nmacedo/MSV/tree/7879be4dd1c4cc5a3883fb7413dc1979e8204a7d/CaseStudies/ERTMS).
+* Although these models were initially developed for Electrum 1.1, they have since been updated for Electrum 2.1. Legacy versions are available [here](https://github.com/nmacedo/MSV/tree/7879be4dd1c4cc5a3883fb7413dc1979e8204a7d/CaseStudies/ERTMS).
 
 ---
 
