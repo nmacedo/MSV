@@ -1,14 +1,16 @@
 /**
-An Electrum model of the Hybrid ERTMS/ETCS Level 3 Concept (HL3) based on the "Principles"
-document at https://www.southampton.ac.uk/abz2018/information/case-study.page 
-launched  as part of the ABZ 2018 call for case study contributions.
+An Electrum model of the Hybrid ERTMS/ETCS Level 3 Concept (HL3) based on version 1A of
+the "Principles" document at 
+https://www.southampton.ac.uk/abz2018/information/case-study.page, launched as part of 
+the ABZ 2018 call for case study contributions.
 
 A technical report describing the model and its development can be found at
-http://haslab.github.io/Electrum/ertms.pdf.
+http://haslab.github.io/TRUST/papers/abz18.pdf.
 
-This model is available at http://haslab.github.io/Electrum/ertms.ele and its visualizer theme 
-at http://haslab.github.io/Electrum/ertms.thm. A similar Alloy encoding can be found at 
-http://haslab.github.io/Electrum/ertms.als.
+This model is available at https://github.com/haslab/Electrum2/wiki/Models/ertms_1A.ele 
+and its visualizer theme at https://github.com/haslab/Electrum2/wiki/Models/ertms_1A.thm.
+A similar Alloy encoding can be found at 
+https://github.com/haslab/Electrum2/wiki/Models/ertms_1A.als.
 
 @author: Nuno Macedo
 **/
@@ -536,7 +538,7 @@ pred n07 [v:VSS] {
 pred n07A [v:VSS] {
 	-- train with mute timer expired or EoM
 	-- train on VSS
-	some tr:(knownTrain[v])' | tr in mute_timer' || previous eom[tr] 
+	some tr:(knownTrain[v])' | tr in mute_timer' || before eom[tr] 
 }
 
 pred n07B [v:VSS] {
@@ -557,7 +559,7 @@ pred n08 [v:VSS] {
 pred n08A [v:VSS] {
 	-- train on VSS
 	some tr: knownTrain[v] |
-		(tr in integrity_timer && (previous tr not in integrity_timer))
+		(tr in integrity_timer && (before tr not in integrity_timer))
 }
 
 pred n08B [v:VSS] {
@@ -1317,15 +1319,15 @@ pred S9 {
 	}
 }
 
-run S1 for exactly 1 Train, exactly 3 TTD, exactly 8 VSS, exactly 8 Time expect 1
-run S2 for exactly 2 Train, exactly 3 TTD, exactly 8 VSS, exactly 8 Time expect 1
-run S3 for exactly 2 Train, exactly 3 TTD, exactly 8 VSS, exactly 9 Time expect 1
-run S4 for exactly 1 Train, exactly 3 TTD, exactly 8 VSS, exactly 9 Time expect 1
-run S5 for exactly 2 Train, exactly 3 TTD, exactly 8 VSS, exactly 8 Time expect 1
-run S6 for exactly 1 Train, exactly 3 TTD, exactly 8 VSS, exactly 9 Time expect 1
-run S7 for exactly 1 Train, exactly 3 TTD, exactly 8 VSS, exactly 9 Time expect 1
-run S8 for exactly 2 Train, exactly 4 TTD, exactly 9 VSS, exactly 12 Time expect 1
-run S9 for exactly 2 Train, exactly 4 TTD, exactly 9 VSS, exactly 12 Time expect 1
+run S1 for exactly 1 Train, exactly 3 TTD, exactly 8 VSS, exactly 8 steps expect 1
+run S2 for exactly 2 Train, exactly 3 TTD, exactly 8 VSS, exactly 8 steps expect 1
+run S3 for exactly 2 Train, exactly 3 TTD, exactly 8 VSS, exactly 9 steps expect 1
+run S4 for exactly 1 Train, exactly 3 TTD, exactly 8 VSS, exactly 9 steps expect 1
+run S5 for exactly 2 Train, exactly 3 TTD, exactly 8 VSS, exactly 8 steps expect 1
+run S6 for exactly 1 Train, exactly 3 TTD, exactly 8 VSS, exactly 9 steps expect 1
+run S7 for exactly 1 Train, exactly 3 TTD, exactly 8 VSS, exactly 9 steps expect 1
+run S8 for exactly 2 Train, exactly 4 TTD, exactly 9 VSS, exactly 12 steps expect 1
+run S9 for exactly 2 Train, exactly 4 TTD, exactly 9 VSS, exactly 12 steps expect 1
 
 /**
 Verification of safety properties.
@@ -1386,11 +1388,11 @@ pred auto_timer {
 	all vs:VSS | some (knownTrain[vs])&mute_timer => vs in disconnect_ptimer
 }
 
-check trains_ok_states_ok			for 6 VSS, 3 TTD, 2 Train, exactly 10 Time expect 0
-check trains_ok_occupied_ok	 	for 6 VSS, 3 TTD, 2 Train, exactly 10 Time expect 0
-check trains_ok_free_ok 			for 6 VSS, 3 TTD, 2 Train, exactly 10 Time expect 0
-check timers_auto_free_ok 			for 6 VSS, 3 TTD, 2 Train, exactly 10 Time expect 0
-check timers_auto_occupied_ok		for 6 VSS, 3 TTD, 2 Train, exactly 10 Time expect 0
+check trains_ok_states_ok			for 6 VSS, 3 TTD, 2 Train, exactly 10 steps expect 0
+check trains_ok_occupied_ok	 	for 6 VSS, 3 TTD, 2 Train, exactly 10 steps expect 0
+check trains_ok_free_ok 			for 6 VSS, 3 TTD, 2 Train, exactly 10 steps expect 0
+check timers_auto_free_ok 			for 6 VSS, 3 TTD, 2 Train, exactly 10 steps expect 0
+check timers_auto_occupied_ok		for 6 VSS, 3 TTD, 2 Train, exactly 10 steps expect 0
 
 /**
 Visualization auxiliary functions.
@@ -1416,5 +1418,4 @@ fun _VSSs : TTD -> VSS {
 fun _Arear : set Train { report_rear } 
 fun _Bfront : set Train { report_front }
 fun _Ccon : set Train { connected } 	
-
 

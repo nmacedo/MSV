@@ -1,14 +1,16 @@
 /**
-An Electrum model of the Hybrid ERTMS/ETCS Level 3 Concept (HL3) based on the "Principles"
-document at https://www.southampton.ac.uk/abz2018/information/case-study.page 
-launched as part of the ABZ 2018 call for case study contributions.
+An Electrum model of the Hybrid ERTMS/ETCS Level 3 Concept (HL3) based on version 1C of
+the "Principles" document at 
+https://www.southampton.ac.uk/abz2018/information/case-study.page, launched as part of 
+the ABZ 2018 call for case study contributions.
 
 A technical report describing the model and its development can be found at
-http://haslab.github.io/Electrum/ertms.pdf.
+http://haslab.github.io/TRUST/papers/sttt19.pdf.
 
-This model is available at http://haslab.github.io/Electrum/ertms.ele and its visualizer theme 
-at http://haslab.github.io/Electrum/ertms.thm. A similar Alloy encoding can be found at 
-http://haslab.github.io/Electrum/ertms.als.
+This model is available at https://github.com/haslab/Electrum2/wiki/Models/ertms_1C.ele 
+and its visualizer theme at https://github.com/haslab/Electrum2/wiki/Models/ertms_1C.thm.
+A similar Alloy encoding can be found at 
+https://github.com/haslab/Electrum2/wiki/Models/ertms_1A.als.
 
 @author: Nuno Macedo
 **/
@@ -64,7 +66,7 @@ fact TTDReports {
 -- the TTD information is considered safe (§3.1.1.5, ASM5), although communication may have delays (§4.5.1.3.5).
 fun occupied : set TTD {
 	{t:TTD | t in Reports implies some VSSs[t] & Train.pos 
-				       else previous some VSSs[t] & Train.pos }
+				       else before some VSSs[t] & Train.pos }
 }
 
 -- available trains, always positioned in the track.
@@ -80,15 +82,25 @@ fun pos : Train -> VSS { pos_rear + pos_front }
 -- whether each train is currently on a mission, as entailed by SoM/EoM events (§4.2.1.1).
 -- this is not the same as disconnected (§4.2.1.1), that has either ended a mission or mute timer expired.
 -- additionally, the trackside may be unaware of the train at all (for the reference, typically during splits)
-var sig MissionStarted,MissionEnded,UnknownTrain extends Train {}
+var sig MissionStarted,MissionEnded,UnknownTrain in Train {}
+fact {
+	always {
+		no MissionStarted & MissionEnded 
+		no MissionStarted & UnknownTrain
+		no MissionEnded & UnknownTrain
+	}
+}
 -- whether each train report PTD information in each instant, which always contain front end information (§1.2.1.1).
 -- models possible delays on PTD reports, but not yet necessarily represents a disconnected train (§4.2.1.1).
-var sig Reporting extends MissionStarted {}
+var sig Reporting in MissionStarted {}
 -- whether each train reports PTD rear information (§1.2.1.1/§1.2.3.1).
 -- trains may report integrity confirmed (§3.3.3) or integrity lost (§3.5) (for simplicity, will also represent "changed 
 -- train length" events (§3.5) (see Scenario 2)).
 -- outside these are trains not reporting any integrity information, not yet necessarily treated as non-integer (§3.5.1.3).
-var sig IntegrityConfirmed,IntegrityLost extends Reporting {}	
+var sig IntegrityConfirmed,IntegrityLost in Reporting {}	
+fact {
+	always no IntegrityConfirmed & IntegrityLost
+}
 
 -- the model assumes that front and rear information may be received simultaneously, although 
 -- even in such cases the front report should be processed before the rear one (§3.3.1.2).
@@ -1517,29 +1529,29 @@ pred S9ok {
 	}
 }
 
-run S1run 	{S1 and S1ok} 		for exactly 1 Train, exactly 3 TTD, exactly 8 VSS, exactly 8 Time expect 1
-run S2run 	{S2 and S2ok} 		for exactly 2 Train, exactly 3 TTD, exactly 8 VSS, exactly 8 Time expect 1
-run S2arun 	{S2a and S2aok} 	for exactly 2 Train, exactly 3 TTD, exactly 8 VSS, exactly 10 Time expect 1
-run S3run	{S3 and S3ok} 		for exactly 2 Train, exactly 3 TTD, exactly 8 VSS, exactly 9 Time expect 1
-run S4run 	{S4 and S4ok}		for exactly 1 Train, exactly 3 TTD, exactly 8 VSS, exactly 9 Time expect 1
-run S5run 	{S5 and S5ok}		for exactly 2 Train, exactly 3 TTD, exactly 8 VSS, exactly 8 Time expect 1
-run S5arun 	{S5a and S5aok}		for exactly 2 Train, exactly 3 TTD, exactly 8 VSS, exactly 9 Time expect 1
-run S6run 	{S6 and S6ok} 		for exactly 1 Train, exactly 3 TTD, exactly 8 VSS, exactly 9 Time expect 1
-run S7run 	{S7 and S7ok} 		for exactly 1 Train, exactly 3 TTD, exactly 8 VSS, exactly 9 Time expect 1
-run S8run 	{S8 and S8ok} 		for exactly 2 Train, exactly 4 TTD, exactly 9 VSS, exactly 11 Time expect 1
-run S9run 	{S9 and S9ok} 		for exactly 2 Train, exactly 4 TTD, exactly 9 VSS, exactly 12 Time expect 1
+run S1run 	{S1 and S1ok} 		for exactly 1 Train, exactly 3 TTD, exactly 8 VSS, exactly 8 steps expect 1
+run S2run 	{S2 and S2ok} 		for exactly 2 Train, exactly 3 TTD, exactly 8 VSS, exactly 8 steps expect 1
+run S2arun 	{S2a and S2aok} 	for exactly 2 Train, exactly 3 TTD, exactly 8 VSS, exactly 10 steps expect 1
+run S3run	{S3 and S3ok} 		for exactly 2 Train, exactly 3 TTD, exactly 8 VSS, exactly 9 steps expect 1
+run S4run 	{S4 and S4ok}		for exactly 1 Train, exactly 3 TTD, exactly 8 VSS, exactly 9 steps expect 1
+run S5run 	{S5 and S5ok}		for exactly 2 Train, exactly 3 TTD, exactly 8 VSS, exactly 8 steps expect 1
+run S5arun 	{S5a and S5aok}		for exactly 2 Train, exactly 3 TTD, exactly 8 VSS, exactly 9 steps expect 1
+run S6run 	{S6 and S6ok} 		for exactly 1 Train, exactly 3 TTD, exactly 8 VSS, exactly 9 steps expect 1
+run S7run 	{S7 and S7ok} 		for exactly 1 Train, exactly 3 TTD, exactly 8 VSS, exactly 9 steps expect 1
+run S8run 	{S8 and S8ok} 		for exactly 2 Train, exactly 4 TTD, exactly 9 VSS, exactly 11 steps expect 1
+run S9run 	{S9 and S9ok} 		for exactly 2 Train, exactly 4 TTD, exactly 9 VSS, exactly 12 steps expect 1
 /*
-check S1ok	{S1 implies S1ok} 	for exactly 1 Train, exactly 3 TTD, exactly 8 VSS, exactly 8 Time expect 0
-check S2ok	{S2 implies S2ok} 	for exactly 2 Train, exactly 3 TTD, exactly 8 VSS, exactly 8 Time expect 0
-check S2aok {S2a implies S2aok}	for exactly 2 Train, exactly 3 TTD, exactly 8 VSS, exactly 10 Time expect 0
-check S3ok	{S3 implies S3ok} 	for exactly 2 Train, exactly 3 TTD, exactly 8 VSS, exactly 9 Time expect 0
-check S4ok	{S4 implies S4ok}	for exactly 1 Train, exactly 3 TTD, exactly 8 VSS, exactly 9 Time expect 0
-check S5ok 	{S5 implies S5ok}	for exactly 2 Train, exactly 3 TTD, exactly 8 VSS, exactly 8 Time expect 0
-check S5aok {S5a implies S5aok}	for exactly 2 Train, exactly 3 TTD, exactly 8 VSS, exactly 9 Time expect 0
-check S6ok	{S6 implies S6ok} 	for exactly 1 Train, exactly 3 TTD, exactly 8 VSS, exactly 9 Time expect 0
-check S7ok	{S7 implies S7ok} 	for exactly 1 Train, exactly 3 TTD, exactly 8 VSS, exactly 9 Time expect 0
-check S8ok	{S8 implies S8ok} 	for exactly 2 Train, exactly 4 TTD, exactly 9 VSS, exactly 11 Time expect 0
-check S9ok	{S9 implies S9ok} 	for exactly 2 Train, exactly 4 TTD, exactly 9 VSS, exactly 12 Time expect 0
+check S1ok	{S1 implies S1ok} 	for exactly 1 Train, exactly 3 TTD, exactly 8 VSS, exactly 8 steps expect 0
+check S2ok	{S2 implies S2ok} 	for exactly 2 Train, exactly 3 TTD, exactly 8 VSS, exactly 8 steps expect 0
+check S2aok {S2a implies S2aok}	for exactly 2 Train, exactly 3 TTD, exactly 8 VSS, exactly 10 steps expect 0
+check S3ok	{S3 implies S3ok} 	for exactly 2 Train, exactly 3 TTD, exactly 8 VSS, exactly 9 steps expect 0
+check S4ok	{S4 implies S4ok}	for exactly 1 Train, exactly 3 TTD, exactly 8 VSS, exactly 9 steps expect 0
+check S5ok 	{S5 implies S5ok}	for exactly 2 Train, exactly 3 TTD, exactly 8 VSS, exactly 8 steps expect 0
+check S5aok {S5a implies S5aok}	for exactly 2 Train, exactly 3 TTD, exactly 8 VSS, exactly 9 steps expect 0
+check S6ok	{S6 implies S6ok} 	for exactly 1 Train, exactly 3 TTD, exactly 8 VSS, exactly 9 steps expect 0
+check S7ok	{S7 implies S7ok} 	for exactly 1 Train, exactly 3 TTD, exactly 8 VSS, exactly 9 steps expect 0
+check S8ok	{S8 implies S8ok} 	for exactly 2 Train, exactly 4 TTD, exactly 9 VSS, exactly 11 steps expect 0
+check S9ok	{S9 implies S9ok} 	for exactly 2 Train, exactly 4 TTD, exactly 9 VSS, exactly 12 steps expect 0
 */
 /**
 Verification of safety properties.
@@ -1626,12 +1638,12 @@ run trains_sanity {
 	init
 	some Train
 	always (noProblems && strictMove) 
-} for 8 VSS, 3 TTD, 2 Train, exactly 10 Time expect 1
+} for 8 VSS, 3 TTD, 2 Train, exactly 10 steps expect 1
 
-check trains_ok_states_ok		for 8 VSS, 3 TTD, 3 Train, exactly 8 Time expect 0
-check trains_ok_occupied_ok	for 6 VSS, 2 TTD, 2 Train, exactly 10 Time expect 0
-check trains_ok_occupied_ok	for 8 VSS, 3 TTD, 2 Train, exactly 10 Time expect 0
-check trains_ok_free_ok 		for 8 VSS, 3 TTD, 3 Train, exactly 8 Time expect 0
+check trains_ok_states_ok		for 8 VSS, 3 TTD, 3 Train, exactly 8 steps expect 0
+check trains_ok_occupied_ok	for 6 VSS, 2 TTD, 2 Train, exactly 10 steps expect 0
+check trains_ok_occupied_ok	for 8 VSS, 3 TTD, 2 Train, exactly 10 steps expect 0
+check trains_ok_free_ok 		for 8 VSS, 3 TTD, 3 Train, exactly 8 steps expect 0
 
 run timers_sanity { 
 	init 
@@ -1644,15 +1656,15 @@ run timers_sanity {
 	eventually some ShadowAExpired 
 	eventually some ShadowBExpired 
 	eventually some GhostTrainPropExpired 
-} for 8 VSS, 4 TTD, 2 Train, exactly 10 Time expect 1
+} for 8 VSS, 4 TTD, 2 Train, exactly 10 steps expect 1
 
-check timers_nocollisions for 4 VSS, 2 TTD, 2 Train, exactly 8 Time expect 0
-check timers_nocollisions for 8 VSS, 3 TTD, 2 Train, exactly 8 Time expect 0
-check timers_nocollisions for 8 VSS, 3 TTD, 3 Train, exactly 8 Time expect 1
+check timers_nocollisions for 4 VSS, 2 TTD, 2 Train, exactly 8 steps expect 0
+check timers_nocollisions for 8 VSS, 3 TTD, 2 Train, exactly 8 steps expect 0
+check timers_nocollisions for 8 VSS, 3 TTD, 3 Train, exactly 8 steps expect 1
 
-check timers_auto_free_ok 		for 5 VSS, 2 TTD, 2 Train, exactly 8 Time expect 1
-check timers_auto_free_ok 		for 3 VSS, 1 TTD, 2 Train, exactly 3 Time expect 1
-check timers_auto_occupied_ok	for 8 VSS, 3 TTD, 2 Train, exactly 8 Time expect 0
+check timers_auto_free_ok 		for 5 VSS, 2 TTD, 2 Train, exactly 8 steps expect 1
+check timers_auto_free_ok 		for 3 VSS, 1 TTD, 2 Train, exactly 3 steps expect 1
+check timers_auto_occupied_ok	for 8 VSS, 3 TTD, 2 Train, exactly 8 steps expect 0
 
 /**
 Visualization auxiliary functions.
