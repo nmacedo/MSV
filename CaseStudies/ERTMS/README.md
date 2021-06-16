@@ -6,7 +6,7 @@ The description of the models, as well as the modelling approach, is available i
 
 The original model, as published in ABZ'18, was developed for version [1A](http://www.southampton.ac.uk/assets/sharepoint/groupsite/Academic/ABZ-Coneference-2018/Public%20Documents/ABZ2018/16E0421A_HL3.pdf) of the design principles. A new version [1C](https://ertms.be/sites/default/files/2018-07/16E0421C_HL3-clean.pdf) was eventually released, which was considered for the extended version of the paper for STTT. The two versions are available in Electrum for historical reasons.
 
-Although these models were initially developed for Electrum 1, they have been updated for Electrum 2.1. Legacy versions are available [here](https://github.com/nmacedo/MSV/commit/7425ce6d135bb685aa09e10be637e84c85547ba0).
+Although these models were initially developed for Electrum 1, they have been updated for Electrum 2.1. Legacy versions are available [here](https://github.com/nmacedo/MSV/tree/7879be4dd1c4cc5a3883fb7413dc1979e8204a7d/CaseStudies/ERTMS).
 
 ---
 
