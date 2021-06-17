@@ -19,4 +19,5 @@ _Comments_:
 
 * Language: [[TLA+](https://github.com/nmacedo/MSV/wiki/By-Language#tla)] [[SMV](https://github.com/nmacedo/MSV/wiki/By-Language#smv)] 
 * Theme: [[Transport puzzles](https://github.com/nmacedo/MSV/wiki/By-Theme#transport-puzzles)]
-* Venue: [[EM15/16](https://github.com/nmacedo/MSV/wiki/By-Venue#em-1516)] 
+* Venue: [[EM15/16](https://github.com/nmacedo/MSV/wiki/By-Venue#em-1516)] [[EM18/19](https://github.com/nmacedo/MSV/wiki/By-Venue#em-1819)] 
+
