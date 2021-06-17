@@ -8,7 +8,7 @@ The original model, as published in ABZ'18, was developed for version [1A](http:
 
 ### History
 
-* Version 1A is described in the paper ABZ'18 paper [_Validating the Hybrid ERTMS/ETCS Level 3 Concept with Electrum_](http://haslab.github.io/TRUST/papers/abz18.pdf) and version 1C in its [extended version](http://haslab.github.io/TRUST/papers/sttt19.pdf) in STTT.
+* Version 1A is described in the ABZ'18 paper [_Validating the Hybrid ERTMS/ETCS Level 3 Concept with Electrum_](http://haslab.github.io/TRUST/papers/abz18.pdf) and version 1C in its [extended version](http://haslab.github.io/TRUST/papers/sttt19.pdf) in STTT.
 * Although these models were initially developed for Electrum 1.1, they have since been updated for Electrum 2.1. Legacy versions are available [here](https://github.com/nmacedo/MSV/tree/7879be4dd1c4cc5a3883fb7413dc1979e8204a7d/CaseStudies/ERTMS).
 * Version 1A was used in the benchmarks of the ASE'18 tool demo [_The Electrum Analyzer: Model checking relational first-order temporal specifications_](http://haslab.github.io/TRUST/papers/ase18tool.pdf).
 * This model was used as an example in a tutorial on [_Formal software design with Alloy and Electrum_](http://haslab.github.io/TRUST/tutorial.html) at FM'19, in the session on [Methodology and Tips](http://haslab.github.io/TRUST/slides/session5.pdf).
