@@ -1,0 +1,288 @@
+<?xml version="1.0"?>
+<alloy>
+
+<view nodetheme="Martha">
+
+<defaultnode/>
+
+<defaultedge/>
+
+<node>
+   <type name="ArmoredVehicle"/>
+   <type name="Backward"/>
+   <type name="Beam"/>
+   <type name="Blinking"/>
+   <type name="BlinkLeft"/>
+   <type name="BlinkRight"/>
+   <type name="Bright"/>
+   <type name="CameraStateState"/>
+   <type name="Canada"/>
+   <type name="CorneringLightLeft"/>
+   <type name="CorneringLightRight"/>
+   <type name="Cycle1"/>
+   <type name="Cycle2"/>
+   <type name="Cycle3"/>
+   <type name="Dark"/>
+   <type name="Dark1"/>
+   <type name="Dark2"/>
+   <type name="Dark3"/>
+   <type name="Dark4"/>
+   <type name="Dirty"/>
+   <type name="Downward5"/>
+   <type name="Downward5P"/>
+   <type name="Downward5T"/>
+   <type name="Downward7"/>
+   <type name="DriverPosition"/>
+   <type name="EU"/>
+   <type name="Far"/>
+   <type name="Fast"/>
+   <type name="ForthBackNeutral"/>
+   <type name="Forward"/>
+   <type name="Full"/>
+   <type name="Grey"/>
+   <type name="Half"/>
+   <type name="HFull"/>
+   <type name="HighBeamMotor"/>
+   <type name="HighBeamMotorState"/>
+   <type name="HighBeamOn"/>
+   <type name="HighBeamRange"/>
+   <type name="HighBeamRangeState"/>
+   <type name="HLow"/>
+   <type name="HLowP"/>
+   <type name="HLowT"/>
+   <type name="HOff"/>
+   <type name="Int"/>
+   <type name="KeyInIgnitionOnPosition"/>
+   <type name="KeyInserted"/>
+   <type name="Left"/>
+   <type name="LeftSide"/>
+   <type name="Little"/>
+   <type name="Low"/>
+   <type name="LowBeam"/>
+   <type name="LowBeamLeft"/>
+   <type name="LowBeamRight"/>
+   <type name="LRSAuto"/>
+   <type name="LRSOff"/>
+   <type name="LRSOn"/>
+   <type name="marketCode"/>
+   <type name="Max"/>
+   <type name="Menu"/>
+   <type name="Mid"/>
+   <type name="Middle"/>
+   <type name="Min"/>
+   <type name="Near"/>
+   <type name="NoKeyInserted"/>
+   <type name="NotReady"/>
+   <type name="Off"/>
+   <type name="OffC"/>
+   <type name="OffP"/>
+   <type name="On"/>
+   <type name="Overvoltage"/>
+   <type name="Ready"/>
+   <type name="Regular"/>
+   <type name="Right"/>
+   <type name="RightSide"/>
+   <type name="Slow"/>
+   <type name="Some"/>
+   <type name="Stopped"/>
+   <type name="String"/>
+   <type name="Subvoltage"/>
+   <type name="TailLamp"/>
+   <type name="TailLampLeft"/>
+   <type name="TailLampRight"/>
+   <type name="Temp"/>
+   <type name="UCP"/>
+   <type name="univ"/>
+   <type name="UpDownNeutral"/>
+   <type name="Upward5"/>
+   <type name="Upward5P"/>
+   <type name="Upward5T"/>
+   <type name="Upward7"/>
+   <type name="USA"/>
+   <type name="VoltageBatteryState"/>
+   <type name="VoltageOk"/>
+   <type name="Zero"/>
+   <type name="ordering/Ord"/>
+   <type name="seq/Int"/>
+</node>
+
+<node color="Gray">
+   <type name="DarknessModeSwitchOn"/>
+   <type name="HazardWarningSwitchOn"/>
+</node>
+
+<node color="White">
+   <type name="Side"/>
+</node>
+
+<node label="AllDoorsClosed">
+   <set name="$_alldoorsclosed" type="Car"/>
+</node>
+
+<node label="BrakeLightBlinking">
+   <set name="this/BrakeLightBlinking" type="BrakeLight"/>
+</node>
+
+<node label="EngineOn">
+   <set name="$_eon" type="Car"/>
+</node>
+
+<node label="OncommingTraffic">
+   <set name="$_oncommingtraffic" type="Car"/>
+</node>
+
+<node label="ReverseGearOn">
+   <set name="$_reversegear" type="Car"/>
+</node>
+
+<node shape="Box" color="Gray">
+   <type name="PitmanArmForthBack"/>
+   <type name="PitmanArmUpDown"/>
+</node>
+
+<node shape="Ellipse" color="Gray">
+   <type name="LightRotarySwitch"/>
+</node>
+
+<node shape="Hexagon" color="Gray">
+   <type name="AmbientLighting"/>
+   <type name="Blink"/>
+   <type name="BooleanSignal"/>
+   <type name="BrakeLight"/>
+   <type name="DaytimeLights"/>
+   <type name="Light"/>
+   <type name="ReverseLight"/>
+   <type name="Signal"/>
+</node>
+
+<node shape="Lined Square" color="White">
+   <type name="Car"/>
+</node>
+
+<node shape="Parallelogram">
+   <type name="KeyState"/>
+</node>
+
+<node showlabel="no">
+   <set name="this/CorneringLight" type="CorneringLightLeft"/>
+   <set name="this/CorneringLight" type="CorneringLightRight"/>
+</node>
+
+<node showlabel="no" color="Gray">
+   <set name="$_off" type="KeyState"/>
+</node>
+
+<node showlabel="no" color="Green">
+   <set name="$_onk" type="KeyState"/>
+</node>
+
+<node showlabel="no" color="Yellow">
+   <set name="$_half" type="univ"/>
+   <set name="$_key" type="KeyState"/>
+</node>
+
+<node showlabel="no" shape="House" color="Yellow">
+   <set name="$_up" type="univ"/>
+</node>
+
+<node showlabel="no" shape="Inv House" color="Yellow">
+   <set name="$_down" type="univ"/>
+</node>
+
+<node showlabel="no" style="Bold" color="Yellow">
+   <set name="$_far" type="univ"/>
+</node>
+
+<node showlabel="no" style="Bold" color="Yellow" label="On">
+   <set name="$_on" type="univ"/>
+</node>
+
+<node style="Bold" color="Yellow" label="On">
+   <set name="this/SignalOn" type="BooleanSignal"/>
+</node>
+
+<node visible="no">
+   <type name="AllDoorsClosed"/>
+   <type name="BrakePedal"/>
+   <type name="BrakePedalState"/>
+   <type name="BrightnessSensor"/>
+   <type name="BrightnessSensorState"/>
+   <type name="CameraState"/>
+   <type name="CurrentSpeed"/>
+   <type name="CurrentSpeedState"/>
+   <type name="Feature"/>
+   <type name="KeyStateState"/>
+   <type name="LightRotarySwitchState"/>
+   <type name="LightState"/>
+   <type name="OncommingTraffic"/>
+   <type name="PitmanArmUpDownState"/>
+   <type name="State"/>
+   <type name="SteeringAngle"/>
+   <type name="SteeringAngleState"/>
+   <type name="VoltageBattery"/>
+</node>
+
+<node visible="no" color="Gray">
+   <type name="ReverseGear"/>
+</node>
+
+<node visible="no" shape="Box">
+   <type name="PitmanArmForthBackState"/>
+</node>
+
+<edge color="Gray" constraint="no" label="interface">
+   <relation name="$_interface1"> <type name="univ"/> <type name="univ"/> </relation>
+   <relation name="$_interface2"> <type name="univ"/> <type name="Car"/> </relation>
+</edge>
+
+<edge color="Gray" label="actuators">
+   <relation name="$_actuators1"> <type name="Car"/> <type name="univ"/> </relation>
+   <relation name="$_actuators2"> <type name="Side"/> <type name="univ"/> </relation>
+</edge>
+
+<edge visible="no" attribute="yes">
+   <relation name="state"> <type name="BrakePedal"/> <type name="BrakePedalState"/> </relation>
+   <relation name="state"> <type name="BrightnessSensor"/> <type name="BrightnessSensorState"/> </relation>
+   <relation name="state"> <type name="CurrentSpeed"/> <type name="CurrentSpeedState"/> </relation>
+   <relation name="state"> <type name="HighBeamMotor"/> <type name="HighBeamMotorState"/> </relation>
+   <relation name="state"> <type name="HighBeamRange"/> <type name="HighBeamRangeState"/> </relation>
+   <relation name="state"> <type name="KeyState"/> <type name="KeyStateState"/> </relation>
+   <relation name="state"> <type name="Light"/> <type name="LightState"/> </relation>
+   <relation name="state"> <type name="LightRotarySwitch"/> <type name="LightRotarySwitchState"/> </relation>
+   <relation name="state"> <type name="PitmanArmForthBack"/> <type name="PitmanArmForthBackState"/> </relation>
+   <relation name="state"> <type name="PitmanArmUpDown"/> <type name="PitmanArmUpDownState"/> </relation>
+   <relation name="state"> <type name="SteeringAngle"/> <type name="SteeringAngleState"/> </relation>
+   <relation name="state"> <type name="VoltageBattery"/> <type name="VoltageBatteryState"/> </relation>
+</edge>
+
+<edge visible="no" attribute="yes" label="BrakePedal">
+   <relation name="$_brakepedal"> <type name="Car"/> <type name="BrakePedalState"/> </relation>
+</edge>
+
+<edge visible="no" attribute="yes" label="BrightnessSensor">
+   <relation name="$_lightsensor"> <type name="Car"/> <type name="BrightnessSensorState"/> </relation>
+</edge>
+
+<edge visible="no" attribute="yes" label="CameraState">
+   <relation name="$_camerastate"> <type name="Car"/> <type name="CameraStateState"/> </relation>
+</edge>
+
+<edge visible="no" attribute="yes" label="CurrentSpeed">
+   <relation name="$_speedsensor"> <type name="Car"/> <type name="CurrentSpeedState"/> </relation>
+</edge>
+
+<edge visible="no" attribute="yes" label="Parameters">
+   <relation name="$_features"> <type name="Car"/> <type name="Feature"/> </relation>
+</edge>
+
+<edge visible="no" attribute="yes" label="SteeringAngle">
+   <relation name="$_wheelangle"> <type name="Car"/> <type name="SteeringAngleState"/> </relation>
+</edge>
+
+<edge visible="no" attribute="yes" label="VoltageBattery">
+   <relation name="$_voltagebattery"> <type name="Car"/> <type name="VoltageBatteryState"/> </relation>
+</edge>
+
+</view>
+
+</alloy>

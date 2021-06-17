@@ -1,0 +1,1601 @@
+/**
+An Electrum model of the USA market variant of an Adaptive Exterior Light System (ELS)
+based on version 1.17 of the reference document at 
+https://abz2021.uni-ulm.de/resources/files/casestudyABZ2020v1.17.pdf and version 1.14
+of the validation sequences at
+https://abz2021.uni-ulm.de/resources/files/casestudyABZ2020v1.14.pdf, 
+launched as part of  the ABZ 2020 call for case study contributions.
+
+The document describing the model and its development can be found at
+http://haslab.github.io/TRUST/papers/abz20b.pdf.
+
+This model is available at https://github.com/haslab/Electrum2/wiki/ELS/els_USA.ele 
+and its visualizer theme at https://github.com/haslab/Electrum2/wiki/ELS/els.thm.
+
+@author: Nuno Macedo
+**/
+module ELS
+
+/** 
+ * Configuration parameters: USA market code (sec. 3).
+ */
+
+abstract sig State {}
+abstract sig Signal {}
+abstract sig BooleanSignal extends Signal {}
+var sig SignalOn in BooleanSignal {}
+
+/** 
+ * System environment, user interface (sec. 4.1).
+ */
+
+// the lightRotarySwitch signal
+one sig LightRotarySwitch extends Signal {
+	var state : one LightRotarySwitchState }
+abstract sig LightRotarySwitchState extends State {}
+one sig LRSOn, LRSAuto, LRSOff extends LightRotarySwitchState {}
+
+// the pitmanArm signal
+one sig PitmanArmUpDown extends Signal {
+	var state : one PitmanArmUpDownState }
+abstract sig PitmanArmUpDownState extends State {}
+one sig Upward7, Downward7, UpDownNeutral extends PitmanArmUpDownState {}
+abstract sig Upward5,Downward5 extends PitmanArmUpDownState {}
+// distinguish whether within the 0.5 seconds for tip-blinking
+one sig Downward5P, Downward5T extends Downward5 {}
+one sig Upward5P, Upward5T extends Upward5 {}
+
+one sig PitmanArmForthBack extends Signal {
+	var state : PitmanArmForthBackState }
+abstract sig PitmanArmForthBackState extends State {}
+one sig ForthBackNeutral, Backward, Forward extends PitmanArmForthBackState {}
+
+fact Env {
+	// when the steering wheel goes back to neutral, release the pitman arm (4.1).
+	always {
+		(PitmanArmUpDown.state in Downward7+Upward7 and SteeringAngle.state in Left+Right and SteeringAngle.state' in Middle) implies 
+			PitmanArmUpDown.state' in UpDownNeutral } }
+
+// the hazardWarningSwitchOn signal
+one sig HazardWarningSwitchOn extends BooleanSignal {}
+
+// the ambientLightning signal
+one sig AmbientLighting extends BooleanSignal {}
+
+// the daytimeLights signal
+one sig DaytimeLights extends BooleanSignal {}
+
+
+/** 
+ * System environment, sensors (sec. 4.2).
+ *
+ * Most of these sensors report numerical values. These have been abstracted to the ranges identified
+ * as relevant to the functional requirements.
+ *
+ * engineOn signal is derived from keyState, according to the FAQ.
+ * brightnessSensor, currentSpeed, streeringAngle, brakePedal and voltageBattery values abstracted to relevant ranges.
+ */
+
+// the keyState signal
+one sig KeyState extends Signal {
+	var state : one KeyStateState }
+abstract sig KeyStateState extends State {}
+one sig NoKeyInserted, KeyInserted, KeyInIgnitionOnPosition extends KeyStateState {}
+
+// the brightnessSensor signal
+one sig BrightnessSensor extends Signal {
+	var state : one BrightnessSensorState }
+// the relevant ranges are ]..200[ (Dark), [200,250] (Grey) and ]250..[ (Bright)
+abstract sig BrightnessSensorState extends State {}
+one sig Dark,Grey,Bright extends BrightnessSensorState {}
+
+// the brightnessSensor signal
+one sig CurrentSpeed extends Signal {
+	var state : one CurrentSpeedState }
+// the relevant ranges are [0] (Stopped), [1..10[ (Slow), [10,30[ (Regular) and [30..[ (Fast)
+abstract sig CurrentSpeedState extends State {}
+one sig Stopped,Slow,Regular,Fast extends CurrentSpeedState {}
+
+// the steeringAngle signal
+one sig SteeringAngle extends Signal {
+	var state : one SteeringAngleState }
+// the relevant ranges are ]..-10] (Left), ]-10,10[ (Middle) and [10..[ (Right)
+abstract sig SteeringAngleState extends State {}
+one sig Left,Middle,Right extends SteeringAngleState {}
+
+// the reverseGear signal
+one sig ReverseGear extends BooleanSignal {}
+
+// the brakePedal signal
+one sig BrakePedal extends Signal {
+	var state : one BrakePedalState }
+// the relevant ranges are [0,0] (Zero), ]0,1[ (Min), [1,3[ (Little), [3,..40[ (Some) and [40..[ (Full)
+abstract sig BrakePedalState extends State {}
+one sig Zero,Min,Little,Some,Max extends BrakePedalState {}
+
+// the allDoorsClosed signal
+one sig AllDoorsClosed extends BooleanSignal {}
+
+// the oncommingTraffic signal
+one sig OncommingTraffic extends BooleanSignal {}
+
+// the voltageBattery signal
+one sig VoltageBattery extends Signal {
+	var state : one VoltageBatteryState }
+// the relevant ranges are [0,85] (Subvoltage), [86,144] (Ok) and [145..[ (Overvoltage)
+abstract sig VoltageBatteryState extends State {}
+one sig Subvoltage,VoltageOk,Overvoltage extends VoltageBatteryState {}
+
+// the cameraState signal
+one sig CameraState extends Signal {
+	var state : one CameraStateState }
+abstract sig CameraStateState extends State {}
+one sig Ready, Dirty, NotReady extends CameraStateState {}
+
+
+/** 
+ * System environment, actuators (sec. 4.3).
+ *
+ * Most of these sensors report numerical values. These have been abstracted to the ranges identified
+ * as relevant to the functional requirements.
+ *
+ * blinkLeft, blinkRight, lowBeamLeft, lowBeamRight, tailLampLeft, tailLampRight, highBeamMotor 
+ * and highBeamRange values abstracted to relevant ranges.
+ *
+ * Some temporary states (e.g., temporary automatic low beams, ambient lights, moving high beam 
+ * range) are explicit to allow delays and timed events. For simplification not all such states are encoded 
+ * (e.g., fade out of cornering lights, energy saving of hazard lights).
+ *
+ * The blinking state of brake light is marked by a distinct state rather than explicitly encoded.
+ */
+
+abstract sig Light extends Signal {
+	var state : one LightState }
+// the low beams and tail lights may be turned on with 100% (On), 50% (Half) or 10% (Low) intensity
+abstract sig LightState extends State {}
+abstract sig Full,Off extends LightState {}
+one sig Half,Low extends LightState {}
+// for ambient lights (ELS-19) and automatic low beams (ELS-18), the temporary state is embodied in the state
+// for blinkers, tip-blinking cycles are identified 
+one sig On, Cycle3, Cycle2, Cycle1, Temp extends Full {}
+one sig OffC, Dark4, Dark3, Dark2, Dark1, OffP extends Off {}
+
+// the blinkRight and blinkLeft signals
+abstract sig Blink extends Light {} {
+	state in Half+On+Cycle3+Cycle2+Cycle1+Off
+}
+one sig BlinkLeft, BlinkRight extends Blink {}
+
+abstract sig Beam extends Light {} {
+	state in OffP+Low+Half+On+Temp }
+
+// the lowBeamRight and lowBeamLeft signals
+abstract sig LowBeam extends Beam {}
+one sig LowBeamLeft, LowBeamRight extends LowBeam {}
+
+// the tailLampRight and tailLampLeft signals
+abstract sig TailLamp extends Beam {}
+one sig TailLampLeft,TailLampRight extends TailLamp {}
+
+// the corneringLightRight and corneringLightLeft signals
+one sig CorneringLightLeft,CorneringLightRight extends BooleanSignal {}
+sig CorneringLight = CorneringLightLeft+CorneringLightRight {}
+
+// the reverseLight signal
+one sig ReverseLight extends BooleanSignal {}
+
+// the brakeLight signal
+one sig BrakeLight extends BooleanSignal {}
+var sig BrakeLightBlinking in BrakeLight {}
+
+// the highBeamOn signal
+one sig HighBeamOn extends BooleanSignal {}
+
+// the highBeamMotor signal
+one sig HighBeamMotor extends Signal {
+	var state : one HighBeamMotorState }
+// the considered ranges are [0] (Near), [1] (Mid) and [2..14] (Far)
+abstract sig HighBeamMotorState extends State {}
+one sig Near,Mid,Far extends HighBeamMotorState {}
+
+// the highBeamRange signal
+one sig HighBeamRange extends Signal {
+	var state : one HighBeamRangeState }
+// the considered ranges are [0] (HOff), [1,30] (HLow) and [31-100] (HFull)
+abstract sig HighBeamRangeState extends State {}
+one sig HOff,HFull extends HighBeamRangeState {}
+abstract sig HLow extends HighBeamRangeState {}
+// used to identify temporary states
+one sig HLowP,HLowT extends HLow {}
+
+/** 
+ * System modeling, functional requirements (sec. 4.4).
+ */
+
+// direction blinking function, ELS-1 - ELS-5, ELS-7, ELS-10
+// ELS-6 handled in low beam function
+pred directionBlinking {
+	// direction blinking pre-condition (p.7)
+	KeyState.state not in KeyInIgnitionOnPosition implies Blink.state' in OffP else {
+		directionBlinkingDir[BlinkLeft,Downward7,Downward5P,Downward5T]
+		directionBlinkingDir[BlinkRight,Upward7,Upward5P,Upward5T]
+	}
+}
+
+// direction blinking for concrete direction; a1 is the full movement of the arm, a2 the halfway movement and a3 halfway within the 0.5s
+pred directionBlinkingDir [l:Blink,a1:PitmanArmUpDownState,a2:PitmanArmUpDownState,a3:PitmanArmUpDownState] {
+	l.state' in (
+		// started in the middle of hazard lights cycle, allow for dark cycle, ELS-11
+		(Blink.state in Full and one Blink.state) implies Blink.state.(iden+Full->OffC) else
+		// if moved in other direction, turn off ELS-3, ELS-5 (hazard lights handled elsewhere); if on still move to the dark cycle, ELS-11, which may be propagated
+		(PitmanArmUpDown.state in PitmanArmUpDownState-(a1+a2+a3+UpDownNeutral)) implies (Blink.state not in Off implies l.state.(univ->OffC++OffP->OffP) else l.state.(OffC->OffC+univ->OffP)) else
+		// if moved halfway start tip-blinking, ELS-2, ELS-5; also interrupts current tip-blinking cycle, ELS-7
+		(PitmanArmUpDown.state in a3 and not PitmanArmUpDown.state' in a3) implies (Blink.state not in Off implies Dark4 else Cycle3+Dark4) else
+		// to detect continuous tip-blinking, ELS-4
+		// gurantees that cycles always end before next one, ELS-11
+		PitmanArmUpDown.state in a2  implies (let nxt = iden+Off->Cycle1+Full->Dark1 | l.state.nxt) else
+		// if moved down it's turned on with full power, ELS-1, ELS-5; also interrupts tip-blinking cycles, ELS-7
+		(PitmanArmUpDown.state in a1 and Blink.state in Off && (Blink-l).state' in OffC) implies l.state else
+		(PitmanArmUpDown.state in a1 and Blink.state in Off) implies l.state.(Off->On+OffC->OffC) else
+		// if kept halfway down, keep tip-blinking, ELS-4, ELS-5 (On+Off -> Cycle3 when recovering from hazard lights or key off)
+		// if other blinker on, force end of dark cycle
+		((Blink-l).state' not in Off and l.state in Dark1+OffC) implies OffP else
+		// otherwise, if on tip-blinking advance the cycle, ELS-4, else turn off (or just propagate state)
+		let nxt = iden + Dark4->Cycle3 + Dark3->Cycle2 + Dark2->Cycle1 + (Dark1+OffC)->OffP + On->OffC + Cycle3->Dark3 + Cycle2->Dark2 + Cycle1->Dark1 | l.state.nxt
+	)
+}
+
+// hazard warning light function, ELS-8 - ELS-9, ELS-12 - ELS-13
+// ELS-12 and ELS-13 actually implied by direction blinking function
+// NOTE: ELS-10 deal with durations, abstracted in the model
+pred hazardWarningLight {
+	// this guarantees that even a cycle from direction blinking terminates, ELS-11
+	some Blink.state & (Full+Half) implies (Blink <: state' in Blink <: state or Blink <: state' = Blink <: state . ((Full+Half)->OffC + Off -> OffP)) else { 
+		(Blink.state != OffP and Blink <: state = Blink <: state') or {
+			// blinking ratio, ELS-8, ELS-9
+			KeyState.state in NoKeyInserted implies Blink.state' = Half else // simplification: should allows delays ELS-9
+			Blink.state' in On
+		}
+	}
+}
+
+// low beam headlights and cornering lights functions, ELS-14 - ELS-29
+pred lowBeamsCorneringLights {
+	// if key on and switch on lights on, ELS-14
+	(KeyState.state in KeyInIgnitionOnPosition and LightRotarySwitch.state in LRSOn) implies LowBeam.state' in On else
+	// ELS-19 + ELS-21 (must be first to have priority over ELS-15) + ELS-44
+	let p = (AmbientLighting in SignalOn and VoltageBattery.state not in Subvoltage) |
+	(p and BrightnessSensor.state in Dark and before KeyState.state in KeyInIgnitionOnPosition and KeyState.state not in KeyInIgnitionOnPosition) implies LowBeam.state' in Temp else
+	(p and LowBeam.state in Temp and KeyState.state not in KeyInIgnitionOnPosition and before KeyState.state not in KeyState.state') implies LowBeam.state' in Temp else
+	(p and LowBeam.state in Temp and KeyState.state not in KeyInIgnitionOnPosition and before AllDoorsClosed&SignalOn != AllDoorsClosed&SignalOn') implies LowBeam.state' in Temp else
+	// ELS-15 + ELS-19 needed to allow indefinite Temp from ambient light
+	(p and KeyState.state in KeyInserted and LightRotarySwitch.state in LRSOn and LowBeam.state in Temp) implies (LowBeam.state'=Half or LowBeam.state'=Temp) else
+	// ELS-15
+	(KeyState.state in KeyInserted and LightRotarySwitch.state in LRSOn and (LowBeam.state in Half or before LightRotarySwitch.state not in LRSOn)) implies LowBeam.state' in Half else
+	// ELS-16
+	(KeyState.state not in KeyInIgnitionOnPosition and LightRotarySwitch.state in LRSAuto and not AmbientLighting in SignalOn) implies LowBeam.state' in Off else
+	// ELS-17
+	(DaytimeLights in SignalOn and KeyState.state in KeyInIgnitionOnPosition) implies {
+		// ELS-6
+		some BlinkLeft <: state'.(LightState-OffP) implies (LowBeamLeft.state' in Half) else LowBeamLeft.state' in On
+		// ELS-6
+		some BlinkRight <: state'.(LightState-OffP) implies (LowBeamRight.state' in Half) else LowBeamRight.state' in On
+	} else
+	// ELS-17
+	(DaytimeLights in SignalOn and LowBeam.state in On+Half and KeyState.state not in NoKeyInserted and not AmbientLighting in SignalOn) implies {
+		// ELS-6
+		some BlinkLeft <: state'.(LightState-Off) implies (LowBeamLeft.state' in Half and LowBeamRight.state' in On) else
+		// ELS-6
+		some BlinkRight <: state'.(LightState-Off) implies (LowBeamLeft.state' in On and LowBeamRight.state' in Half) else
+		LowBeam.state' in On
+	} else
+	// ELS-18
+	(LightRotarySwitch.state in LRSAuto and KeyState.state in KeyInIgnitionOnPosition) implies {
+		(BrightnessSensor.state in Dark) implies (one LowBeam.state' and LowBeam.state' in (LowBeam.state).(Off->Temp+On->On+Temp->(Temp+On))) else
+		(BrightnessSensor.state in Bright) implies (one LowBeam.state' and LowBeam.state' in (LowBeam.state).(univ->Off++Temp->(Temp+Off))) else
+		(BrightnessSensor.state in Grey and LowBeam.state not in Temp) implies LowBeam.state' in (LowBeam.state).(iden++Temp->(Temp+On))
+	} else
+	// ELS-28 + ELS-46
+	(KeyState.state in NoKeyInserted and LightRotarySwitch.state in LRSOn and PitmanArmUpDown.state in Upward7 and VoltageBattery.state not in Subvoltage) implies (LowBeamRight.state' in Low and LowBeamLeft.state' in Off) else
+	// ELS-28 + ELS-46
+	(KeyState.state in NoKeyInserted and LightRotarySwitch.state in LRSOn and PitmanArmUpDown.state in Downward7 and VoltageBattery.state not in Subvoltage) implies (LowBeamLeft.state' in Low and LowBeamRight.state' in Off) else
+	(one LowBeam.state' and LowBeam.state' in LowBeam.state.(univ->Off+Temp->(p implies Temp else Off)))
+
+	// ELS-45
+	(VoltageBattery.state in Subvoltage) implies no CorneringLight&SignalOn' else
+	// ELS-27
+	ReverseGear in SignalOn implies CorneringLight in SignalOn' else 
+	// ELS-24 + ELS-26
+	(Off not in LowBeam.state and (PitmanArmUpDown.state in Downward7+Upward7 or SteeringAngle.state in Left+Right) and CurrentSpeed.state in Slow) implies {
+		(PitmanArmUpDown.state in Downward7 or SteeringAngle.state in Left) implies CorneringLightLeft in SignalOn'
+		(PitmanArmUpDown.state in Upward7 or SteeringAngle.state in Right) implies CorneringLightRight in SignalOn' } else
+	CorneringLight&SignalOn' in CorneringLight&SignalOn // indefinite duration // simplification: turning off should allow delays ELS-24
+
+	// in USA, tail blinking is performed by tail lights (sec. 4.3)
+	// otherwise, tail lights are activated with low or high beams (ELS-22)
+	// not clear from ELS22 what the power of tail lights should be when high beams on
+	BlinkLeft.state not in OffP implies TailLampLeft.state in BlinkLeft.state.(Off->OffP+Full->On+Half->Half) else
+	LowBeamLeft.state in TailLampLeft.state and (HighBeamOn in SignalOn implies TailLampLeft.state not in Off)
+	BlinkRight.state not in OffP implies TailLampRight.state in BlinkRight.state.(Off->OffP+Full->On+Half->Half) else
+	LowBeamRight.state in TailLampRight.state and (HighBeamOn in SignalOn implies TailLampRight.state not in Off)
+}
+
+pred highBeam {
+	// ELS-30
+	PitmanArmForthBack.state in Forward implies (HighBeamOn in SignalOn' and HighBeamMotor.state' in Far and HighBeamRange.state' in HFull) else
+	// ELS-31
+	(PitmanArmForthBack.state in Backward and LightRotarySwitch.state in LRSOn) implies (HighBeamOn in SignalOn' and HighBeamMotor.state' in Far and HighBeamRange.state' in HFull) else
+	(PitmanArmForthBack.state in Backward and LightRotarySwitch.state in LRSAuto) implies {
+		// ELS-32
+		HighBeamOn in SignalOn'
+		// ELS-49
+		(CameraState.state not in Ready) implies (HighBeamMotor.state' in Far and HighBeamRange.state' in HFull) else
+		// ELS-33 (ignored curve, arithmetic operations)
+		(OncommingTraffic not in SignalOn and CurrentSpeed.state in Fast and HighBeamRange.state not in HLowP+HLowT) implies (HighBeamMotor.state' in Far and HighBeamRange.state' in HFull) else // simplification: should allow delays ELS-33
+		// ELS-35
+		(OncommingTraffic not in SignalOn and HighBeamRange.state in HLowP) implies (HighBeamMotor.state' in Near and HighBeamRange.state' in HLowT) else
+		// ELS-35
+		(OncommingTraffic not in SignalOn and HighBeamRange.state in HLowT) implies (((HighBeamMotor.state' in Near and HighBeamRange.state' in HLowT) or (HighBeamMotor.state' in Far and HighBeamRange.state' in HFull))) else
+		// ELS-34
+		(OncommingTraffic in SignalOn) implies (HighBeamMotor.state' in Near and HighBeamRange.state' in HLowP)  // simplification: should allow delays ELS-34
+	} else 
+	// ELS-38
+	(HighBeamOn not in SignalOn' and HighBeamRange.state' in HOff)
+}
+
+fact Fairness {
+	always {
+		LowBeam.state in Temp implies eventually LowBeam.state not in Temp
+		HighBeamRange.state in HLow implies eventually HighBeamRange.state not in HLow
+
+		PitmanArmUpDown.state in Downward5P implies (PitmanArmUpDown.state in Downward5P since PitmanArmUpDown.state in Downward5T)
+		PitmanArmUpDown.state in Upward5P implies (PitmanArmUpDown.state in Upward5P since PitmanArmUpDown.state in Upward5T)
+		
+		eventually (BlinkLeft.state != BlinkLeft.state' or BlinkLeft.state = OffP)
+		eventually (BlinkRight.state != BlinkRight.state' or BlinkRight.state = OffP)
+		eventually (BlinkLeft.state != BlinkLeft.state' or BlinkLeft.state = OffP)
+
+		always ((PitmanArmUpDown.state not in Downward7 and SteeringAngle.state not in Left) or CurrentSpeed.state not in Slow) implies eventually CorneringLightLeft not in SignalOn
+		always ((PitmanArmUpDown.state not in Upward7 and SteeringAngle.state not in Right) or CurrentSpeed.state not in Slow) implies eventually CorneringLightRight not in SignalOn
+	}
+}
+
+// emergency brake light function, ELS-39 - ELS-40
+pred emergencyBrakeLight {
+	// control whether the brake lights are on, ELS-39, ELS-40
+	(BrakePedal.state in Some+Max) implies BrakeLight in SignalOn' else
+	(BrakePedal.state in Zero) implies BrakeLight not in SignalOn' else
+	(BrakePedal.state in Min and some BrakeLightBlinking) implies BrakeLight in SignalOn' else
+	(BrakePedal.state in Min and no BrakeLightBlinking) implies BrakeLight not in SignalOn' else
+	(BrakePedal.state in Little) implies BrakeLight&SignalOn' = BrakeLight&SignalOn
+	// control whether the brake blink, ELS-40
+	(BrakePedal.state in Max) implies some BrakeLightBlinking' else
+	(BrakePedal.state in Some+Little+Min) implies BrakeLightBlinking' = BrakeLightBlinking else
+	no BrakeLightBlinking'
+}
+
+// reverse light function, ELS-41
+pred reverseLight {
+	// control whether the reverse light is on, ELS-41
+	ReverseGear in SignalOn iff ReverseLight in SignalOn'
+}
+
+// a default state for the actuators for the initial state
+pred defActuators {
+	HighBeamRange.state in HOff
+	HighBeamMotor.state in Near
+	Blink.state in OffP
+	(LowBeam+TailLamp).state in Off
+	no BrakeLightBlinking
+}
+
+// system modeling based on functional requirements (4.4)
+// state machine feeling, prime state updated based on current state (occasionally previous one)
+fact {
+	defActuators
+	always {
+		// the hazard lights have priority (ELS-3)
+		HazardWarningSwitchOn not in SignalOn implies directionBlinking
+		// the hazard lights are on (ELS-8)
+		HazardWarningSwitchOn in SignalOn implies hazardWarningLight
+		lowBeamsCorneringLights
+		emergencyBrakeLight
+		reverseLight
+		highBeam
+	}
+}
+
+/** 
+ * Basic validation scenarios, manually encoded, regression tests.
+ */
+
+// move and keep the pitman arm down 
+pred Blinkers1Env {
+	always HazardWarningSwitchOn not in SignalOn
+	always KeyState.state in KeyInIgnitionOnPosition
+	always PitmanArmUpDown.state in Downward7
+}
+pred Blinkers1Exp {
+	always BlinkRight.state in Off
+	always ((BlinkLeft.state in On;BlinkLeft.state in OffC) or (BlinkLeft.state in OffC;BlinkLeft.state in On))
+}
+
+pred Blinkers1aExp {
+	always BlinkRight.state in Off
+	BlinkLeft.state in On;BlinkLeft.state in On;BlinkLeft.state in OffC;BlinkLeft.state in OffC;always ((BlinkLeft.state in On;BlinkLeft.state in OffC) or (BlinkLeft.state in OffC;BlinkLeft.state in On))
+}
+
+// move and keep the pitman arm halfway up
+pred Blinkers2Env {
+	always HazardWarningSwitchOn not in SignalOn
+	always KeyState.state in KeyInIgnitionOnPosition
+	always PitmanArmUpDown.state in Upward5
+}
+pred Blinkers2Exp {
+	always BlinkLeft.state in Off
+	BlinkRight.state in Cycle3;BlinkRight.state in Dark1;always ((BlinkRight.state in Cycle1;BlinkRight.state in Dark1)or(BlinkRight.state in Dark1;BlinkRight.state in Cycle1))
+}
+
+pred Blinkers2aExp {
+	always BlinkLeft.state in Off
+	BlinkRight.state in Cycle3;BlinkRight.state in Cycle3;BlinkRight.state in Dark1;BlinkRight.state in Dark1;always ((BlinkRight.state in Cycle1;BlinkRight.state in Dark1)or(BlinkRight.state in Dark1;BlinkRight.state in Cycle1))
+}
+
+// keep the pitman arm neutral
+pred Blinkers3Env {
+	always HazardWarningSwitchOn not in SignalOn
+	always KeyState.state in KeyInIgnitionOnPosition
+	always PitmanArmUpDown.state in UpDownNeutral
+}
+pred Blinkers3Exp {
+	always Blink.state in OffP
+}
+
+// move the pitman arm down and release
+pred Blinkers4Env {
+	always HazardWarningSwitchOn not in SignalOn
+	always KeyState.state in KeyInIgnitionOnPosition
+	PitmanArmUpDown.state in Downward7;always PitmanArmUpDown.state in UpDownNeutral
+}
+pred Blinkers4Exp {
+	always BlinkRight.state in OffP
+	BlinkLeft.state in On;BlinkLeft.state in OffC;always BlinkLeft.state in OffP
+}
+pred Blinkers4aExp {
+	always BlinkRight.state in OffP
+	BlinkLeft.state in On;BlinkLeft.state in On;BlinkLeft.state in OffC;BlinkLeft.state in OffC;always BlinkLeft.state in OffP
+}
+
+// move the pitman arm halfway down and release
+pred Blinkers5Env {
+	always HazardWarningSwitchOn not in SignalOn
+	always KeyState.state in KeyInIgnitionOnPosition
+	PitmanArmUpDown.state in Downward5;always PitmanArmUpDown.state in UpDownNeutral
+}
+pred Blinkers5Exp {
+	always BlinkRight.state in OffP
+	BlinkLeft.state in Cycle3;BlinkLeft.state in Dark3;BlinkLeft.state in Cycle2;BlinkLeft.state in Dark2;BlinkLeft.state in Cycle1;BlinkLeft.state in Dark1;always Blink.state in OffP
+}
+pred Blinkers5aExp {
+	always BlinkRight.state in OffP
+	BlinkLeft.state in Cycle3;BlinkLeft.state in Cycle3;BlinkLeft.state in Dark3;BlinkLeft.state in Dark3;BlinkLeft.state in Cycle2;BlinkLeft.state in Dark2;BlinkLeft.state in Cycle1;BlinkLeft.state in Dark1;BlinkLeft.state in Dark1;always Blink.state in OffP
+}
+
+pred Blinkers5bEnv {
+	always HazardWarningSwitchOn not in SignalOn
+	always KeyState.state in KeyInIgnitionOnPosition
+	PitmanArmUpDown.state in Downward5;PitmanArmUpDown.state in Downward5;always PitmanArmUpDown.state in UpDownNeutral
+}
+pred Blinkers5bExp {
+	always BlinkRight.state in OffP
+	BlinkLeft.state in OffP;BlinkLeft.state in Cycle3;BlinkLeft.state in Dark3;BlinkLeft.state in Cycle2;BlinkLeft.state in Dark2;BlinkLeft.state in Cycle1;BlinkLeft.state in Dark1;always Blink.state in OffP
+}
+
+// move the pitman arm halfway down and cancel by moving up
+pred Blinkers6Env {
+	always HazardWarningSwitchOn not in SignalOn
+	always KeyState.state in KeyInIgnitionOnPosition
+	PitmanArmUpDown.state in Downward5;PitmanArmUpDown.state in Upward7;PitmanArmUpDown.state in Upward7;always PitmanArmUpDown.state in UpDownNeutral
+}
+pred Blinkers6Exp {
+	BlinkLeft.state in Cycle3;BlinkLeft.state in OffC;always BlinkLeft.state in OffP
+	BlinkRight.state in OffP;BlinkRight.state in OffP;BlinkRight.state in On;BlinkRight.state in OffC;always Blink.state in OffP
+}
+pred Blinkers6aExp {
+	BlinkLeft.state in Cycle3;BlinkLeft.state in OffC;BlinkLeft.state in OffC;always BlinkLeft.state in OffP
+	always BlinkRight.state in OffP
+}
+
+// move the pitman arm halfway down and cancel by moving halfway up
+pred Blinkers7Env {
+	always HazardWarningSwitchOn not in SignalOn
+	always KeyState.state in KeyInIgnitionOnPosition
+	PitmanArmUpDown.state in Downward5;PitmanArmUpDown.state in Upward5;always PitmanArmUpDown.state in UpDownNeutral
+}
+pred Blinkers7Exp {
+	BlinkRight.state in OffP;BlinkRight.state in Dark4;BlinkRight.state in Cycle3;BlinkRight.state in Dark3;BlinkRight.state in Cycle2;BlinkRight.state in Dark2;BlinkRight.state in Cycle1;BlinkRight.state in Dark1;always BlinkRight.state in OffP
+	BlinkLeft.state in Cycle3;BlinkLeft.state in OffC;always BlinkLeft.state in OffP
+}
+
+// move the pitman arm halfway down and then move it all the way down momentarily
+pred Blinkers8Env {
+	always HazardWarningSwitchOn not in SignalOn
+	always KeyState.state in KeyInIgnitionOnPosition
+	PitmanArmUpDown.state in Downward5;PitmanArmUpDown.state in Downward7;PitmanArmUpDown.state in Downward7;always PitmanArmUpDown.state in UpDownNeutral
+}
+pred Blinkers8Exp {
+	always BlinkRight.state in OffP
+	BlinkLeft.state in Cycle3;BlinkLeft.state in Dark3;BlinkLeft.state in On;BlinkLeft.state in OffC;always BlinkLeft.state in OffP
+}
+
+// move the pitman arm halfway down and then move it all the way down permanently
+pred Blinkers9Env {
+	always HazardWarningSwitchOn not in SignalOn
+	always KeyState.state in KeyInIgnitionOnPosition
+	PitmanArmUpDown.state in Downward5;always PitmanArmUpDown.state in Downward7
+}
+pred Blinkers9Exp {
+	always BlinkRight.state in OffP
+	BlinkLeft.state in Cycle3;BlinkLeft.state in Dark3;always ((BlinkLeft.state in On;BlinkLeft.state in OffC) or (BlinkLeft.state in OffC;BlinkLeft.state in On))
+}
+
+// move the pitman arm halfway down and then again during the previous BlinkCycle
+pred Blinkers10Env {
+	always HazardWarningSwitchOn not in SignalOn
+	always KeyState.state in KeyInIgnitionOnPosition
+	PitmanArmUpDown.state in Downward5;PitmanArmUpDown.state in UpDownNeutral;PitmanArmUpDown.state in Downward5;always PitmanArmUpDown.state in UpDownNeutral
+}
+pred Blinkers10Exp {
+	always BlinkRight.state in OffP
+	BlinkLeft.state in Cycle3;BlinkLeft.state in Dark3;BlinkLeft.state in Cycle3;BlinkLeft.state in Dark3;BlinkLeft.state in Cycle2;BlinkLeft.state in Dark2;BlinkLeft.state in Cycle1;BlinkLeft.state in Dark1;always BlinkLeft.state in OffP
+}
+
+// move the pitman arm halfway down and then again during the previous BlinkCycle
+pred Blinkers10aEnv {
+	always HazardWarningSwitchOn not in SignalOn
+	always KeyState.state in KeyInIgnitionOnPosition
+	PitmanArmUpDown.state in Downward5;PitmanArmUpDown.state in UpDownNeutral;PitmanArmUpDown.state in UpDownNeutral;PitmanArmUpDown.state in Downward5;always PitmanArmUpDown.state in UpDownNeutral
+}
+pred Blinkers10aExp {
+	always BlinkRight.state in OffP
+	BlinkLeft.state in Cycle3;BlinkLeft.state in Dark3;BlinkLeft.state in Cycle2;BlinkLeft.state in Dark4;BlinkLeft.state in Cycle3;BlinkLeft.state in Dark3;BlinkLeft.state in Cycle2;BlinkLeft.state in Dark2;BlinkLeft.state in Cycle1;BlinkLeft.state in Dark1;always BlinkLeft.state in OffP
+}
+
+// move the pitman arm halfway down and turn ignition off mid-BlinkCycle
+pred Blinkers11Env {
+	always HazardWarningSwitchOn not in SignalOn
+	KeyState.state in KeyInIgnitionOnPosition;always KeyState.state in KeyInserted
+	PitmanArmUpDown.state in Downward5;always PitmanArmUpDown.state in UpDownNeutral
+}
+pred Blinkers11Exp {
+	always BlinkRight.state in OffP
+	BlinkLeft.state in Cycle3;always BlinkLeft.state in OffP
+}
+
+// move and keep the pitman arm up and turn ignition off
+pred Blinkers12Env {
+	always HazardWarningSwitchOn not in SignalOn
+	KeyState.state in KeyInIgnitionOnPosition;always KeyState.state in KeyInserted
+	always PitmanArmUpDown.state in Downward7
+}
+pred Blinkers12Exp {
+	always BlinkRight.state in OffP
+	BlinkLeft.state in On;always BlinkLeft.state in OffP
+}
+
+// hazard lights on and stay on
+pred Blinkers13Env {
+	always KeyState.state in KeyInIgnitionOnPosition
+	always (HazardWarningSwitchOn in SignalOn)
+}
+pred Blinkers13Exp {
+	always ((Blink.state in On;Blink.state in OffC) or (Blink.state in OffC;Blink.state in On))
+}
+
+// hazard lights on and off
+pred Blinkers14Env {
+	HazardWarningSwitchOn in SignalOn;always HazardWarningSwitchOn not in SignalOn
+	always KeyState.state in KeyInIgnitionOnPosition
+	always PitmanArmUpDown.state in UpDownNeutral
+}
+pred Blinkers14Exp {
+	Blink.state in On;Blink.state in OffC;always Blink.state in OffP
+}
+
+// pitman arm down and hazard lights on
+pred Blinkers15Env {
+	HazardWarningSwitchOn not in SignalOn;always HazardWarningSwitchOn in SignalOn
+	always KeyState.state in KeyInIgnitionOnPosition
+	always PitmanArmUpDown.state in Downward7
+}
+pred Blinkers15Exp {
+	BlinkLeft.state in On;BlinkLeft.state in OffC;always ((BlinkLeft.state in On;BlinkLeft.state in OffC) or (BlinkLeft.state in OffC;BlinkLeft.state in On))
+	BlinkRight.state in OffP;BlinkRight.state in OffP;always ((BlinkRight.state in On;BlinkRight.state in OffC) or (BlinkRight.state in OffC;BlinkRight.state in On))
+}
+
+// pitman arm up and hazard lights on and off
+pred Blinkers16Env {
+	HazardWarningSwitchOn not in SignalOn;HazardWarningSwitchOn in SignalOn;HazardWarningSwitchOn in SignalOn;always HazardWarningSwitchOn not in SignalOn
+	always KeyState.state in KeyInIgnitionOnPosition
+	always PitmanArmUpDown.state in Upward7
+}
+pred Blinkers16Exp {
+	BlinkLeft.state in OffP;BlinkLeft.state in OffP;BlinkLeft.state in On;BlinkLeft.state in OffC;always BlinkLeft.state in OffP
+	BlinkRight.state in On;BlinkRight.state in OffC;BlinkRight.state in On;always ((BlinkRight.state in OffC;BlinkRight.state in On) or (BlinkRight.state in On;BlinkRight.state in OffC))
+}
+
+// pitman arm halfway up and hazard lights on
+pred Blinkers17Env {
+	HazardWarningSwitchOn not in SignalOn;always HazardWarningSwitchOn in SignalOn
+	always KeyState.state in KeyInIgnitionOnPosition
+	always PitmanArmUpDown.state in Upward5
+}
+pred Blinkers17Exp {
+	BlinkLeft.state in OffP;BlinkLeft.state in OffP;always ((BlinkLeft.state in On;BlinkLeft.state in OffC) or (BlinkLeft.state in OffC;BlinkLeft.state in On))
+	BlinkRight.state in Cycle3;BlinkRight.state in OffC;always ((BlinkRight.state in On;BlinkRight.state in OffC) or (BlinkRight.state in OffC;BlinkRight.state in On))
+}
+
+// pitman arm halfway down and hazard lights on and off
+pred Blinkers18Env {
+	HazardWarningSwitchOn not in SignalOn;HazardWarningSwitchOn in SignalOn;HazardWarningSwitchOn in SignalOn;always HazardWarningSwitchOn not in SignalOn
+ 	always KeyState.state in KeyInIgnitionOnPosition
+	always PitmanArmUpDown.state in Downward5
+}
+pred Blinkers18Exp {
+	BlinkRight.state in OffP;BlinkRight.state in OffP;BlinkRight.state in On;BlinkRight.state in OffC;always BlinkRight.state in OffP
+	BlinkLeft.state in Cycle3;BlinkLeft.state in OffC;BlinkLeft.state in On;BlinkLeft.state in OffC;BlinkLeft.state in Cycle3;BlinkLeft.state in Dark1;
+		always ((BlinkLeft.state in Cycle1;BlinkLeft.state in Dark1) or (BlinkLeft.state in Dark1;BlinkLeft.state in Cycle1))
+}
+
+// pitman arm halfway down and hazard lights on and off, key not on position
+pred Blinkers19Env {
+	HazardWarningSwitchOn not in SignalOn;HazardWarningSwitchOn in SignalOn;always HazardWarningSwitchOn not in SignalOn
+ 	always KeyState.state in KeyInserted
+	always PitmanArmUpDown.state in Downward5
+}
+pred Blinkers19Exp {
+	Blink.state in OffP;Blink.state in On;always Blink.state in OffP
+}
+
+// pitman arm halfway, key not on position mid-BlinkCycle (actually not in the spec)
+pred Blinkers20Env {
+	always HazardWarningSwitchOn not in SignalOn
+ 	KeyState.state in KeyInserted;KeyState.state in KeyInserted;always KeyState.state in KeyInIgnitionOnPosition
+	always PitmanArmUpDown.state in Downward5
+}
+pred Blinkers20Exp {
+	always BlinkRight.state in OffP
+	BlinkLeft.state in OffP;BlinkLeft.state in OffP;BlinkLeft.state in Cycle3;BlinkLeft.state in Dark1;
+		always ((BlinkLeft.state in Cycle1;BlinkLeft.state in Dark1) or (BlinkLeft.state in Dark1;BlinkLeft.state in Cycle1))
+}
+
+// hazard lights on, key turned off
+pred Blinkers21Env {
+	always HazardWarningSwitchOn in SignalOn
+ 	KeyState.state in KeyInIgnitionOnPosition;KeyState.state in KeyInserted;always KeyState.state in NoKeyInserted
+	always PitmanArmUpDown.state in UpDownNeutral
+}
+pred Blinkers21Exp {
+	Blink.state in On;Blink.state in OffC;always ((Blink.state in Half;Blink.state in OffC) or (Blink.state in OffC;Blink.state in Half))
+}
+pred Blinkers21aExp { // take 2 cycles to switch to half, currently not supported, expect unsat
+	Blink.state in On;Blink.state in OffC;Blink.state in On;Blink.state in OffC;always ((Blink.state in Half;Blink.state in OffC) or (Blink.state in OffC;Blink.state in Half))
+}
+
+// light rotary switch on engine on
+pred LowBeam1Env {
+ 	always KeyState.state in KeyInIgnitionOnPosition
+ 	always LightRotarySwitch.state in LRSOn
+}
+pred LowBeam1Exp {
+	always LowBeam.state in On
+}
+
+// light rotary switch on key inserted (must actually switch)
+pred LowBeam2Env {
+	always AmbientLighting not in SignalOn
+ 	always KeyState.state in KeyInserted
+ 	LightRotarySwitch.state in LRSOff;always LightRotarySwitch.state in LRSOn
+}
+pred LowBeam2Exp {
+	LowBeam.state in OffP;always LowBeam.state in Half
+}
+
+// light rotary switch auto no key
+pred LowBeam3Env {
+	always AmbientLighting not in SignalOn
+ 	always KeyState.state in NoKeyInserted
+ 	always LightRotarySwitch.state in LRSAuto
+}
+pred LowBeam3Exp {
+	always LowBeam.state in OffP
+}
+
+// light rotary switch on and off
+pred LowBeam4Env {
+ 	always KeyState.state in KeyInIgnitionOnPosition
+	always no SignalOn&(AmbientLighting+DaytimeLights)
+	LightRotarySwitch.state in LRSOff;LightRotarySwitch.state in LRSOn;always LightRotarySwitch.state in LRSOff
+}
+pred LowBeam4Exp {
+	LowBeam.state in OffP;LowBeam.state in On;always LowBeam.state in OffP
+}
+
+// light rotary switch on and key turned off
+pred LowBeam5Env {
+ 	KeyState.state in KeyInserted;KeyState.state in KeyInIgnitionOnPosition;always KeyState.state in KeyInserted
+	always no SignalOn&(AmbientLighting+DaytimeLights)
+	LightRotarySwitch.state in LRSOn;LightRotarySwitch.state in LRSOn;LightRotarySwitch.state in LRSOn;LightRotarySwitch.state in LRSOff;always LightRotarySwitch.state in LRSOn
+}
+pred LowBeam5Exp {
+	LowBeam.state in OffP;LowBeam.state in On;LowBeam.state in OffP;LowBeam.state in OffP;always LowBeam.state in Half
+}
+
+// daytime running light, key always inserted
+pred LowBeam6Env {
+	always KeyState.state in KeyInserted
+	always AmbientLighting not in SignalOn
+	always DaytimeLights in SignalOn
+	always LightRotarySwitch.state in LRSOff
+}
+pred LowBeam6Exp {
+	always LowBeam.state in OffP
+}
+
+// daytime running light, engine always on
+pred LowBeam7Env {
+	KeyState.state in KeyInserted;always KeyState.state in KeyInIgnitionOnPosition
+	always AmbientLighting not in SignalOn
+	always DaytimeLights in SignalOn
+	always LightRotarySwitch.state in LRSOff
+}
+pred LowBeam7Exp {
+	LowBeam.state in OffP;always LowBeam.state in On+Half
+}
+
+// daytime running light, engine on then off
+pred LowBeam8Env {
+	KeyState.state in KeyInserted;KeyState.state in KeyInIgnitionOnPosition;always KeyState.state in KeyInserted
+	always AmbientLighting not in SignalOn
+	always DaytimeLights in SignalOn
+	always LightRotarySwitch.state in LRSOff
+}
+pred LowBeam8Exp {
+	LowBeam.state in OffP;always LowBeam.state in On+Half
+}
+
+// daytime running light, engine on then off then no key
+pred LowBeam9Env {
+	KeyState.state in KeyInserted;KeyState.state in KeyInIgnitionOnPosition;KeyState.state in KeyInserted;always KeyState.state in NoKeyInserted
+	always AmbientLighting not in SignalOn
+	always DaytimeLights in SignalOn
+	always LightRotarySwitch.state in LRSOff
+}
+pred LowBeam9Exp {
+	LowBeam.state in OffP;LowBeam.state in On+Half;LowBeam.state in On+Half;always LowBeam.state in OffP
+}
+
+// daytime running light, engine on then off then no key, light switch auto
+pred LowBeam10Env {
+	KeyState.state in KeyInserted;KeyState.state in KeyInIgnitionOnPosition;KeyState.state in KeyInserted;always KeyState.state in NoKeyInserted
+	always AmbientLighting not in SignalOn
+	always DaytimeLights in SignalOn
+	always LightRotarySwitch.state in LRSAuto
+}
+pred LowBeam10Exp {
+	LowBeam.state in OffP;LowBeam.state in On+Half;always LowBeam.state in OffP
+}
+
+// light switch auto, darkness
+pred LowBeam11Env {
+	always KeyState.state in KeyInIgnitionOnPosition
+	always no SignalOn&(AmbientLighting+DaytimeLights)
+	always LightRotarySwitch.state in LRSAuto
+	always BrightnessSensor.state in Dark
+}
+pred LowBeam11Exp {
+	LowBeam.state in Temp;always LowBeam.state in On
+}
+
+// light switch auto, brightness
+pred LowBeam12Env {
+	always KeyState.state in KeyInIgnitionOnPosition
+	always no SignalOn&(AmbientLighting+DaytimeLights)
+	always LightRotarySwitch.state in LRSAuto
+	always BrightnessSensor.state in Bright
+}
+pred LowBeam12Exp {
+	always LowBeam.state in OffP
+}
+
+// light switch auto, brightness then darkness
+pred LowBeam13Env {
+	always KeyState.state in KeyInIgnitionOnPosition
+	always no SignalOn&(AmbientLighting+DaytimeLights)
+	always LightRotarySwitch.state in LRSAuto
+	BrightnessSensor.state in Bright;BrightnessSensor.state in Grey;always BrightnessSensor.state in Dark
+}
+pred LowBeam13Exp {
+	LowBeam.state in OffP;LowBeam.state in OffP;LowBeam.state in Temp;always LowBeam.state in On
+}
+
+// light switch auto, darkness then brightness
+pred LowBeam14Env {
+	always KeyState.state in KeyInIgnitionOnPosition
+	always no SignalOn&(AmbientLighting+DaytimeLights)
+	always LightRotarySwitch.state in LRSAuto
+	BrightnessSensor.state in Dark;BrightnessSensor.state in Grey;always BrightnessSensor.state in Bright
+}
+pred LowBeam14Exp {
+	LowBeam.state in Temp;LowBeam.state in On;always LowBeam.state in OffP
+}
+
+// light switch auto, darkness, engine turned off
+pred LowBeam15Env {
+	KeyState.state in KeyInIgnitionOnPosition;KeyState.state in KeyInIgnitionOnPosition;always KeyState.state in KeyInserted
+	always no SignalOn&(AmbientLighting+DaytimeLights)
+	always LightRotarySwitch.state in LRSAuto
+	always BrightnessSensor.state in Dark
+}
+pred LowBeam15Exp {
+	LowBeam.state in Temp;LowBeam.state in On;always LowBeam.state in OffP
+}
+
+// light switch auto, darkness, engine turned off
+pred LowBeam16Env {
+	KeyState.state in KeyInIgnitionOnPosition;KeyState.state in KeyInIgnitionOnPosition;always KeyState.state in KeyInserted
+	always AmbientLighting not in SignalOn
+	always DaytimeLights in SignalOn
+	always LightRotarySwitch.state in LRSAuto
+	always BrightnessSensor.state in Dark
+}
+pred LowBeam16Exp {
+	LowBeam.state in On+Half;LowBeam.state in On+Half;always LowBeam.state in OffP
+}
+
+// light switch auto, brightness, running lights
+pred LowBeam17Env {
+	always KeyState.state in KeyInIgnitionOnPosition
+	always AmbientLighting not in SignalOn
+	always DaytimeLights in SignalOn
+	always LightRotarySwitch.state in LRSAuto
+	always BrightnessSensor.state in Bright
+}
+pred LowBeam17Exp {
+	always LowBeam.state in On+Half
+}
+
+// ambient lights, dark
+pred LowBeam18Env {
+	// ambiguous whether should turn off or go to half (clarified)
+	KeyState.state in KeyInIgnitionOnPosition;always KeyState.state in KeyInserted
+	always AmbientLighting in SignalOn
+	always DaytimeLights not in SignalOn
+	always LightRotarySwitch.state in LRSOn
+	always BrightnessSensor.state in Dark
+	always AllDoorsClosed in SignalOn
+}
+pred LowBeam18Exp {
+	LowBeam.state in On;LowBeam.state in Temp;always LowBeam.state in Half
+}
+
+// ambient lights, dark, then key removed
+pred LowBeam19Env {
+	KeyState.state in KeyInIgnitionOnPosition;KeyState.state in KeyInserted;always KeyState.state in NoKeyInserted
+	always AmbientLighting in SignalOn
+	always DaytimeLights not in SignalOn
+	always LightRotarySwitch.state in LRSOn
+	always BrightnessSensor.state in Dark
+	always PitmanArmUpDown.state in UpDownNeutral
+	always AllDoorsClosed in SignalOn
+}
+pred LowBeam19Exp {
+	LowBeam.state in On;LowBeam.state in Temp;LowBeam.state in Temp;always LowBeam.state in OffP
+}
+
+// ambient lights, dark, then on again removed
+pred LowBeam20Env {
+	KeyState.state in KeyInIgnitionOnPosition;KeyState.state in KeyInserted;KeyState.state in KeyInserted;always KeyState.state in KeyInIgnitionOnPosition
+	always AmbientLighting in SignalOn
+	always DaytimeLights not in SignalOn
+	always LightRotarySwitch.state in LRSOn
+	always BrightnessSensor.state in Dark
+}
+pred LowBeam20Exp {
+	LowBeam.state in On;LowBeam.state in Temp;LowBeam.state in Temp;always LowBeam.state in On
+}
+
+// light rotary switch on and key turned off, but ambient lights and darkness
+// should the lights turn off after 30 seconds or go to half?
+pred LowBeam21Env {
+ 	KeyState.state in KeyInserted;KeyState.state in KeyInIgnitionOnPosition;always KeyState.state in KeyInserted
+	always BrightnessSensor.state in Dark
+	always DaytimeLights not in SignalOn
+	always AmbientLighting in SignalOn
+	always LightRotarySwitch.state in LRSOn
+	always AllDoorsClosed in SignalOn
+}
+pred LowBeam21Exp {
+	LowBeam.state in OffP;LowBeam.state in On;LowBeam.state in Temp;always LowBeam.state in Half
+}
+
+// light rotary switch auto no key, but ambient light and darkness
+pred LowBeam22Env {
+	always AmbientLighting in SignalOn
+ 	KeyState.state in KeyInserted;KeyState.state in KeyInIgnitionOnPosition;always KeyState.state in KeyInserted
+	always BrightnessSensor.state in Dark
+ 	always LightRotarySwitch.state in LRSAuto
+	always AllDoorsClosed in SignalOn
+}
+pred LowBeam22Exp {
+	LowBeam.state in OffP;LowBeam.state in On+Half;LowBeam.state in Temp;always LowBeam.state in OffP
+}
+
+// daytime running light, engine on then off, but ambient light and darkness
+pred LowBeam23Env {
+	KeyState.state in KeyInserted;KeyState.state in KeyInIgnitionOnPosition;always KeyState.state in KeyInserted
+	always BrightnessSensor.state in Dark
+	always AmbientLighting in SignalOn
+	always DaytimeLights in SignalOn
+	always LightRotarySwitch.state in LRSOff
+	always AllDoorsClosed in SignalOn
+}
+pred LowBeam23Exp {
+	LowBeam.state in OffP;LowBeam.state in On+Half;LowBeam.state in Temp;always LowBeam.state in OffP
+}
+
+// parking lights (ELS-28)
+pred LowBeam24Env {
+	always KeyState.state in NoKeyInserted
+	always LightRotarySwitch.state in LRSOn
+	PitmanArmUpDown.state in UpDownNeutral;PitmanArmUpDown.state in Downward7;PitmanArmUpDown.state in UpDownNeutral;PitmanArmUpDown.state in Upward7;always PitmanArmUpDown.state in UpDownNeutral
+}
+pred LowBeam24Exp {
+	LowBeamLeft.state in OffP;LowBeamLeft.state in Low;always LowBeamLeft.state in OffP
+	LowBeamRight.state in OffP;LowBeamRight.state in OffP;LowBeamRight.state in OffP;LowBeamRight.state in Low;always LowBeamRight.state in OffP
+}
+
+// parking lights + ambient lights (ELS-19 + ELS-28)
+pred LowBeam25Env {
+	KeyState.state in KeyInIgnitionOnPosition;always KeyState.state in NoKeyInserted
+	always AmbientLighting in SignalOn
+	always LightRotarySwitch.state in LRSOn
+	always BrightnessSensor.state in Dark
+	PitmanArmUpDown.state in UpDownNeutral;always PitmanArmUpDown.state in Downward7
+	always AllDoorsClosed in SignalOn
+}
+pred LowBeam25Exp {
+	LowBeam.state in On;LowBeam.state in Temp;always LowBeam.state in OffP+Low
+}
+
+// cornering lights due to blinkers (ELS-24)
+pred LowBeam26Env {
+	always KeyState.state in KeyInIgnitionOnPosition
+	always no SignalOn&(DaytimeLights+AmbientLighting)
+	always LightRotarySwitch.state in LRSOn
+	PitmanArmUpDown.state in UpDownNeutral;always PitmanArmUpDown.state in Downward7
+	always CurrentSpeed.state in Slow
+	always ReverseGear not in SignalOn
+}
+pred LowBeam26Exp {
+	always LowBeam.state in On
+	no CorneringLight&SignalOn;always CorneringLight&SignalOn = CorneringLightLeft
+}
+
+// cornering lights due to wheel (ELS-24)
+pred LowBeam27Env {
+	always KeyState.state in KeyInIgnitionOnPosition
+	always no SignalOn&(DaytimeLights+AmbientLighting)
+	always LightRotarySwitch.state in LRSOn
+	always PitmanArmUpDown.state in UpDownNeutral
+	always CurrentSpeed.state in Slow
+	always ReverseGear not in SignalOn
+	always SteeringAngle.state in Right
+}
+pred LowBeam27Exp {
+	always LowBeam.state in On
+	always CorneringLight&SignalOn = CorneringLightRight
+}
+
+//  (ELS-30)
+pred HighBeam1Env {
+	PitmanArmForthBack.state in Forward;always PitmanArmForthBack.state in ForthBackNeutral	
+}
+pred HighBeam1Exp {
+	HighBeamOn in SignalOn;always HighBeamOn not in SignalOn
+	HighBeamRange.state in HFull;always HighBeamRange.state in HOff
+	always HighBeamMotor.state in Far
+}
+
+// manual beams on and lights eventually off (ELS-31)
+pred HighBeam2Env {
+	LightRotarySwitch.state in LRSOn;LightRotarySwitch.state in LRSOn;LightRotarySwitch.state in LRSAuto;always LightRotarySwitch.state in LRSOff
+	always PitmanArmForthBack.state in Backward
+	always OncommingTraffic not in SignalOn
+}
+pred HighBeam2Exp {
+	HighBeamOn in SignalOn;HighBeamOn in SignalOn;HighBeamOn in SignalOn;always HighBeamOn not in SignalOn
+	HighBeamRange.state in HFull;HighBeamRange.state in HFull;always HighBeamRange.state in HOff
+	always HighBeamMotor.state in Far
+}
+
+// adaptive beams on, no traffic (ELS-32 + ELS-33)
+pred HighBeam3Env {
+	LightRotarySwitch.state in LRSAuto;LightRotarySwitch.state in LRSAuto;LightRotarySwitch.state in LRSAuto;always LightRotarySwitch.state in LRSOff
+	always PitmanArmForthBack.state in Backward
+	always OncommingTraffic not in SignalOn
+	always CurrentSpeed.state in Fast
+}
+pred HighBeam3Exp {
+	HighBeamOn in SignalOn;HighBeamOn in SignalOn;HighBeamOn in SignalOn;always HighBeamOn not in SignalOn
+	HighBeamRange.state in HFull;HighBeamRange.state in HFull;HighBeamRange.state in HFull;always HighBeamRange.state in HOff
+	always HighBeamMotor.state in Far
+}
+
+// adaptive beams on, traffic (ELS-32 + ELS-34)
+pred HighBeam4Env {
+	LightRotarySwitch.state in LRSAuto;LightRotarySwitch.state in LRSAuto;LightRotarySwitch.state in LRSAuto;always LightRotarySwitch.state in LRSOff
+	always PitmanArmForthBack.state in Backward
+	always OncommingTraffic in SignalOn
+	always CurrentSpeed.state in Fast
+}
+pred HighBeam4Exp {
+	HighBeamOn in SignalOn;HighBeamOn in SignalOn;HighBeamOn in SignalOn;always HighBeamOn not in SignalOn
+	HighBeamRange.state in HLowP;HighBeamRange.state in HLowP;HighBeamRange.state in HLowP;always HighBeamRange.state in HOff
+	always HighBeamMotor.state in Near
+}
+
+// adaptive beams on, lever neutral (ELS-32 + ELS-34 + ELS-38)
+pred HighBeam5Env {
+	always LightRotarySwitch.state in LRSAuto
+	PitmanArmForthBack.state in Backward;PitmanArmForthBack.state in Backward;always PitmanArmForthBack.state in ForthBackNeutral
+	always OncommingTraffic in SignalOn
+	always CurrentSpeed.state in Fast
+}
+pred HighBeam5Exp {
+	HighBeamOn in SignalOn;HighBeamOn in SignalOn;always HighBeamOn not in SignalOn
+	HighBeamRange.state in HLowP;HighBeamRange.state in HLowP;always HighBeamRange.state in HOff
+	always HighBeamMotor.state in Near
+}
+
+// adaptive beams on, traffic and then not (ELS-32 + ELS-34 + ELS-35)
+pred HighBeam6Env {
+	always LightRotarySwitch.state in LRSAuto
+	always PitmanArmForthBack.state in Backward
+	OncommingTraffic in SignalOn;OncommingTraffic in SignalOn;always OncommingTraffic not in SignalOn
+	always CurrentSpeed.state in Fast
+}
+pred HighBeam6aExp {
+	always HighBeamOn in SignalOn
+	HighBeamRange.state in HLowP;HighBeamRange.state in HLowP;HighBeamRange.state in HLowT;HighBeamRange.state in HFull
+	HighBeamMotor.state in Near;HighBeamMotor.state in Near;HighBeamMotor.state in Near;HighBeamMotor.state in Far
+}
+pred HighBeam6bExp {
+	always HighBeamOn in SignalOn
+	HighBeamRange.state in HLowP;HighBeamRange.state in HLowP;HighBeamRange.state in HLowT;HighBeamRange.state in HLowT;HighBeamRange.state in HFull
+	HighBeamMotor.state in Near;HighBeamMotor.state in Near;HighBeamMotor.state in Near;HighBeamMotor.state in Near;HighBeamMotor.state in Far
+}
+
+// brake lights (ELS-39)
+pred BrakeLights1Env {
+	BrakePedal.state in Zero;BrakePedal.state in Min;BrakePedal.state in Little;BrakePedal.state in Some;
+		BrakePedal.state in Little;BrakePedal.state in Min;always BrakePedal.state in Zero
+}
+pred BrakeLights1Exp {
+	let f = BrakeLight not in SignalOn, n = BrakeLight in SignalOn |
+	f;f;f;n;n;always f
+	always no BrakeLightBlinking
+}
+
+// brake lights with full-brake (ELS-39 + ELS-40)
+pred BrakeLights2Env {
+	BrakePedal.state in Zero;BrakePedal.state in Min;BrakePedal.state in Little;BrakePedal.state in Some;BrakePedal.state in Max;
+		BrakePedal.state in Little;BrakePedal.state in Min;always BrakePedal.state in Zero
+}
+pred BrakeLights2Exp {
+	let f = BrakeLight not in SignalOn, n = BrakeLight in SignalOn, c  = BrakeLight in SignalOn|
+	f;f;f;n;n;n;c;always f
+	let f = no BrakeLightBlinking, n = some BrakeLightBlinking |
+	f;f;f;f;n;n;n;always f
+}
+
+// reverse light (ELS-41)
+pred ReverseLight1Env {
+	ReverseGear not in SignalOn;ReverseGear in SignalOn;always ReverseGear not in SignalOn
+}
+pred ReverseLight1Exp {
+	ReverseLight not in SignalOn;ReverseLight in SignalOn;always ReverseLight not in SignalOn
+}
+
+run Blinkers1  {Blinkers1Env and after Blinkers1Exp}
+run Blinkers1a  {Blinkers1Env and after Blinkers1aExp} for 15 Time
+run Blinkers2  {Blinkers2Env and after Blinkers2Exp}
+run Blinkers2a  {Blinkers2Env and after Blinkers2aExp}
+run Blinkers3  {Blinkers3Env and after Blinkers3Exp}
+run Blinkers4  {Blinkers4Env and after Blinkers4Exp}
+run Blinkers4a {Blinkers4Env and after Blinkers4aExp}
+run Blinkers5  {Blinkers5Env and after Blinkers5Exp}
+run Blinkers5a  {Blinkers5Env and after Blinkers5aExp} for 15 Time
+run Blinkers5b  {Blinkers5bEnv and after Blinkers5bExp} for 15 Time
+run Blinkers6  {Blinkers6Env and after Blinkers6Exp}
+run Blinkers6a  {Blinkers6Env and after Blinkers6aExp}
+run Blinkers7  {Blinkers7Env and after Blinkers7Exp}
+run Blinkers8  {Blinkers8Env and after Blinkers8Exp}
+run Blinkers9  {Blinkers9Env and after Blinkers9Exp}
+run Blinkers10 {Blinkers10Env and after Blinkers10Exp}
+run Blinkers10a {Blinkers10aEnv and after Blinkers10aExp} for 15 Time
+run Blinkers11 {Blinkers11Env and after Blinkers11Exp}
+run Blinkers12 {Blinkers12Env and after Blinkers12Exp}
+run Blinkers13 {Blinkers13Env and after Blinkers13Exp}
+run Blinkers14 {Blinkers14Env and after Blinkers14Exp}
+run Blinkers15 {Blinkers15Env and after Blinkers15Exp}
+run Blinkers16 {Blinkers16Env and after Blinkers16Exp}
+run Blinkers17 {Blinkers17Env and after Blinkers17Exp}
+run Blinkers18 {Blinkers18Env and after Blinkers18Exp} for 20 Time
+run Blinkers19 {Blinkers19Env and after Blinkers19Exp}
+run Blinkers20 {Blinkers20Env and after Blinkers20Exp}
+run Blinkers21 {Blinkers21Env and after Blinkers21Exp}
+run Blinkers21a {Blinkers21Env and Blinkers21aExp}
+run LowBeam1  {LowBeam1Env and after LowBeam1Exp}
+run LowBeam2  {LowBeam2Env and after LowBeam2Exp}
+run LowBeam3  {LowBeam3Env and after LowBeam3Exp}
+run LowBeam4  {LowBeam4Env and after LowBeam4Exp}
+run LowBeam5  {LowBeam5Env and after LowBeam5Exp}
+run LowBeam6  {LowBeam6Env and after LowBeam6Exp}
+run LowBeam7  {LowBeam7Env and after LowBeam7Exp}
+run LowBeam8  {LowBeam8Env and after LowBeam8Exp}
+run LowBeam9  {LowBeam9Env and after LowBeam9Exp}
+run LowBeam10 {LowBeam10Env and after LowBeam10Exp}
+run LowBeam11 {LowBeam11Env and after LowBeam11Exp}
+run LowBeam12 {LowBeam12Env and after LowBeam12Exp}
+run LowBeam13 {LowBeam13Env and after LowBeam13Exp}
+run LowBeam14 {LowBeam14Env and after LowBeam14Exp}
+run LowBeam15 {LowBeam15Env and after LowBeam15Exp}
+run LowBeam16 {LowBeam16Env and after LowBeam16Exp}
+run LowBeam17 {LowBeam17Env and after LowBeam17Exp}
+run LowBeam18 {LowBeam18Env and after LowBeam18Exp}
+run LowBeam19 {LowBeam19Env and after LowBeam19Exp}
+run LowBeam20 {LowBeam20Env and after LowBeam20Exp}
+run LowBeam21 {LowBeam21Env and after LowBeam21Exp}
+run LowBeam22 {LowBeam22Env and after LowBeam22Exp}
+run LowBeam23 {LowBeam23Env and after LowBeam23Exp}
+run LowBeam24 {LowBeam24Env and after LowBeam24Exp}
+run LowBeam25 {LowBeam25Env and after LowBeam25Exp}
+run LowBeam26 {LowBeam26Env and after LowBeam26Exp}
+run LowBeam27 {LowBeam27Env and after LowBeam27Exp}
+run HighBeam1 {HighBeam1Env and after HighBeam1Exp}
+run HighBeam2 {HighBeam2Env and after HighBeam2Exp}
+run HighBeam3 {HighBeam3Env and after HighBeam3Exp}
+run HighBeam4 {HighBeam4Env and after HighBeam4Exp}
+run HighBeam5 {HighBeam5Env and after HighBeam5Exp}
+run HighBeam6a {HighBeam6Env and after HighBeam6aExp}
+run HighBeam6b {HighBeam6Env and after HighBeam6bExp}
+run BrakeLights1 {BrakeLights1Env and after BrakeLights1Exp}
+run BrakeLights2 {BrakeLights2Env and after BrakeLights2Exp}
+run ReverseLight1 {ReverseLight1Env and after ReverseLight1Exp}
+
+
+/** 
+ * Validation sequences provided by the specification document v1.8.
+ *
+ * Automatically generated by the validator.
+ */
+
+run Seq7AutoGenerated {
+let s0= this/KeyState . (this/KeyState <: state) in this/NoKeyInserted, s2= this/KeyState . (this/KeyState <: state) in this/KeyInIgnitionOnPosition |
+s0;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;always s2
+let s0= this/CurrentSpeed . (this/CurrentSpeed <: state) in this/Stopped |
+s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0
+let s0= some this/AllDoorsClosed & this/SignalOn |
+s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0
+let s0= some this/DaytimeLights & this/SignalOn |
+s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0
+let s1= no this/AmbientLighting & this/SignalOn |
+s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
+let s2= this/LightRotarySwitch . (this/LightRotarySwitch <: state) in this/LRSOff |
+s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;always s2
+let s0= this/PitmanArmForthBack . (this/PitmanArmForthBack <: state) in this/ForthBackNeutral |
+s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0
+let s0= this/PitmanArmUpDown . (this/PitmanArmUpDown <: state) in this/Upward7, s2= this/PitmanArmUpDown . (this/PitmanArmUpDown <: state) in this/UpDownNeutral, s3= this/PitmanArmUpDown . (this/PitmanArmUpDown <: state) in this/Upward5, s4= this/PitmanArmUpDown . (this/PitmanArmUpDown <: state) in this/Downward5 |
+s2;s2;s0;s0;s0;s2;s2;s2;s4;s2;s2;s2;s2;s3;s2;s2;s2;always s2
+let s0= some this/HazardWarningSwitchOn & this/SignalOn, s1= no this/HazardWarningSwitchOn & this/SignalOn |
+s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s0;s0;s0;s0;s0;s1;s1;always s1
+let s2= this/BrightnessSensor . (this/BrightnessSensor <: state) in this/Bright |
+s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;always s2
+let s1= no this/ReverseGear & this/SignalOn |
+s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
+let s1= this/VoltageBattery . (this/VoltageBattery <: state) in this/VoltageOk |
+s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
+let s1= this/SteeringAngle . (this/SteeringAngle <: state) in this/Middle |
+s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
+let s1= no this/OncommingTraffic & this/SignalOn |
+s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
+let s0= this/CameraState . (this/CameraState <: state) in this/Ready |
+s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0
+after {
+	let s1= no this/BrakeLight & this/SignalOn |
+	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
+	let s0= this/BlinkLeft . (this/Light <: state) in this/Full, s1= this/BlinkLeft . (this/Light <: state) in this/Off |
+	s1;s1;s1;s1;s1;s1;s1;s1;s0;s0;s1;s1;s0;s0;s0;s0;s1;always s1
+	let s0= this/BlinkRight . (this/Light <: state) in this/Full, s1= this/BlinkRight . (this/Light <: state) in this/Off |
+	s1;s1;s0;s1;s0;s0;s1;s1;s1;s1;s1;s1;s0;s0;s0;s0;s1;always s1
+	let s0= this/LowBeamLeft . (this/Light <: state) in this/Full, s1= this/LowBeamLeft . (this/Light <: state) in this/Off, s2= this/LowBeamLeft . (this/Light <: state) in this/Half |
+	s1;s0;s0;s0;s0;s0;s0;s0;s2;s2;s2;s2;s2;s2;s2;s2;s2;always s0
+	let s0= this/LowBeamRight . (this/Light <: state) in this/Full, s1= this/LowBeamRight . (this/Light <: state) in this/Off, s2= this/LowBeamRight . (this/Light <: state) in this/Half |
+	s1;s0;s2;s2;s2;s2;s2;s0;s0;s0;s0;s0;s2;s2;s2;s2;s2;always s0
+	let s0= this/TailLampLeft . (this/Light <: state) in this/Full, s1= this/TailLampLeft . (this/Light <: state) in this/Off |
+	// sequence seems wrong: at 15 should turn back on
+	s1;s0;s0;s0;s0;s0;s0;s0;s0;s0;s1;s1;s0;s0;s0;s0;s1;always s0
+	let s0= this/TailLampRight . (this/Light <: state) in this/Full, s1= this/TailLampRight . (this/Light <: state) in this/Off |
+	// sequence seems wrong: i) at 15 should turn back on; ii) at 10 secs is dark cycle of left blinking, switched to on
+	s1;s0;s0;s1;s0;s0;s1;s0;s0;s0;s0;s0;s0;s0;s0;s0;s1;always s0
+	let s1= no this/HighBeamOn & this/SignalOn |
+	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
+	let s0= this/HighBeamRange . (this/HighBeamRange <: state) in this/HOff |
+	s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0
+	let s0= this/HighBeamMotor . (this/HighBeamMotor <: state) in this/Near |
+	s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0
+	let s1= no this/CorneringLightLeft & this/SignalOn |
+	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
+	let s1= no this/CorneringLightRight & this/SignalOn |
+	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
+	let s1= no this/ReverseLight & this/SignalOn |
+	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
+}
+} for 16..22 Time
+
+/** 
+ * Verification of functional requirements over the system model (sec. 4.4).
+ */
+
+check ELS1 { // abstracted: 1Hz frequency
+	always (HazardWarningSwitchOn not in SignalOn and KeyState.state in KeyInIgnitionOnPosition) implies
+		// either it stays on dark cycle, or it changes mode correctly
+		always ((PitmanArmUpDown.state = Downward7 and some Blink.state & OffC and no Blink.state' & OffC) implies (BlinkLeft.state' in Full and eventually BlinkLeft.state' in Off)) // due to cycles
+} for 15 Time
+
+check ELS2 { // abstracted: actual 0.5s pitarm event
+	// avoid conflict with ELS3 and ELS7
+	always (HazardWarningSwitchOn not in SignalOn and KeyState.state in KeyInIgnitionOnPosition) implies
+	let d = PitmanArmUpDown.state in Downward5T, o = PitmanArmUpDown.state = UpDownNeutral |
+		always (((d;always o) and some Blink.state & OffC and no Blink.state' & OffC) implies eventually ( // avoid conflict with ELS3 and ELS7; also, if on another tip-blinking must wait for dark cycle
+			(BlinkLeft.state' in Full and eventually (BlinkLeft.state' in Off and eventually (
+		       BlinkLeft.state' in Full and eventually (BlinkLeft.state' in Off and eventually (
+			  BlinkLeft.state' in Full and eventually BlinkLeft.state' in Off)))))
+		))
+} for 15 Time
+
+check ELS3 {
+	always ( // left blinker no longer in tip-blinking (or propagates)
+		(BlinkLeft.state in Cycle3+Cycle2+Cycle1 and after always (HazardWarningSwitchOn in SignalOn or PitmanArmUpDown.state in (Upward5+Upward7))) implies 
+			always (BlinkLeft.state'=BlinkLeft.state or BlinkLeft.state' not in Cycle3+Cycle2+Cycle1)
+	)
+} for 15 Time
+
+check ELS4 { // abstracted: actual 0.5s pitarm event
+	always (HazardWarningSwitchOn not in SignalOn and KeyState.state in KeyInIgnitionOnPosition) implies
+		let pre = PitmanArmUpDown.state in Downward5P |
+			always (pre implies ((BlinkLeft.state' in Dark4+Cycle3+Cycle1+Dark1 until not pre) or always pre))
+} for 15 Time
+
+check ELS5a {
+	always (HazardWarningSwitchOn not in SignalOn and KeyState.state in KeyInIgnitionOnPosition) implies
+		// either it stays on dark cycle, or it changes mode correctly
+		always ((PitmanArmUpDown.state = Upward7 and some Blink.state & OffC and no Blink.state' & OffC) implies (BlinkRight.state' in Full and eventually BlinkRight.state' in Off)) // due to cycles
+} for 15 Time
+
+check ELS5b {
+	always (HazardWarningSwitchOn not in SignalOn and KeyState.state in KeyInIgnitionOnPosition) implies
+	let d = PitmanArmUpDown.state in Upward5T, o = PitmanArmUpDown.state = UpDownNeutral |
+		always (((d;always o) and some Blink.state & OffC and no Blink.state' & OffC) implies eventually ( // avoid conflict with ELS3 and ELS7; also, if on another tip-blinking must wait for dark cycle
+			(BlinkRight.state' in Full and eventually (BlinkRight.state' in Off and eventually (
+		       BlinkRight.state' in Full and eventually (BlinkRight.state' in Off and eventually (
+			  BlinkRight.state' in Full and eventually BlinkRight.state' in Off)))))
+		))
+} for 15 Time
+
+check ELS5c {
+	always ( // right blinker no longer in tip-blinking (or propagates)
+		(BlinkRight.state in Cycle3+Cycle2+Cycle1 and after always (HazardWarningSwitchOn in SignalOn or PitmanArmUpDown.state in (Downward5+Downward7))) implies 
+			always (BlinkRight.state'=BlinkRight.state or BlinkRight.state' not in Cycle3+Cycle2+Cycle1)
+	)
+} for 15 Time
+
+check ELS5d {
+	always (HazardWarningSwitchOn not in SignalOn and KeyState.state in KeyInIgnitionOnPosition) implies
+		let pre = PitmanArmUpDown.state in Upward5P |
+			always (pre implies ((BlinkRight.state' in Dark4+Cycle3+Dark3+Cycle2+Dark2+Cycle1+Dark1 until not pre) or always pre))
+} for 15 Time
+
+check ELS6 {
+		// this assumes that if the low beams are on due to the light rotary switch, then they are not affected (ELS-14)
+		always (HazardWarningSwitchOn not in SignalOn and KeyState.state in KeyInIgnitionOnPosition and LightRotarySwitch.state not in LRSOn) implies {
+			always ((DaytimeLights in SignalOn and BlinkLeft.state' in Full) implies LowBeamLeft.state' in Half)
+			always ((DaytimeLights in SignalOn and BlinkRight.state' in Full) implies LowBeamRight.state' in Half)		
+	}
+} for 15 Time
+
+check ELS7 {
+	always (HazardWarningSwitchOn not in SignalOn and KeyState.state in KeyInIgnitionOnPosition) implies {
+		always ((BlinkLeft.state in Dark3+Dark2+Dark1 and PitmanArmUpDown.state in Downward7 and BlinkLeft.state!=BlinkLeft.state') implies eventually BlinkLeft.state in On)
+		always ((BlinkLeft.state in Dark3+Dark2+Dark1 and PitmanArmUpDown.state in Downward5T and PitmanArmUpDown.state' not in Downward5T and BlinkLeft.state!=BlinkLeft.state') implies eventually BlinkLeft.state in Cycle3+Dark4)
+
+		always ((BlinkRight.state in Dark3+Dark2+Dark1 and PitmanArmUpDown.state in Upward7 and BlinkRight.state!=BlinkRight.state') implies eventually BlinkRight.state in On)
+		always ((BlinkRight.state in Dark3+Dark2+Dark1 and PitmanArmUpDown.state in Upward5T and PitmanArmUpDown.state' not in Upward5T and BlinkRight.state!=BlinkRight.state') implies eventually BlinkRight.state in Cycle3+Dark4)
+	}
+} for 15 Time
+
+check ELS8 {
+	 // distinction needs ELS9 due to delays
+	always ((HazardWarningSwitchOn in SignalOn and Blink.state in Full+Half) implies
+		(((Blink.state in Full+Half or Blink.state in OffC) until HazardWarningSwitchOn not in SignalOn) or always HazardWarningSwitchOn in SignalOn))
+} for 15 Time
+
+check ELS9 { 
+	let s = HazardWarningSwitchOn in SignalOn and KeyState.state in NoKeyInserted |
+	always ((always s) implies eventually (Blink.state in Half))
+} for 15 Time
+
+// ELS10 refers to the duration of a flashing cycle, abstracted
+
+check ELS11 {
+	always (KeyState.state in KeyInIgnitionOnPosition) implies {
+		always (BlinkLeft.state in Full+Half and BlinkLeft.state!=BlinkLeft.state' implies BlinkLeft.state' in Off)
+		always (BlinkRight.state in Full+Half and BlinkRight.state!=BlinkRight.state' implies BlinkRight.state' in Off)
+	}
+} for 15 Time
+
+check ELS12 {
+	always (KeyState.state in KeyInIgnitionOnPosition) implies {
+		always ((before HazardWarningSwitchOn in SignalOn and HazardWarningSwitchOn not in SignalOn and PitmanArmUpDown.state in Downward7 and Blink.state in OffP and BlinkLeft.state!=BlinkLeft.state') implies after BlinkLeft.state in Full)
+		always ((before HazardWarningSwitchOn in SignalOn and HazardWarningSwitchOn not in SignalOn and PitmanArmUpDown.state in Upward7 and Blink.state in OffP and BlinkRight.state!=BlinkLeft.state') implies after BlinkRight.state in Full)
+	}
+} for 15 Time
+
+check ELS13 {
+	always (HazardWarningSwitchOn in SignalOn implies {
+		(BlinkLeft.state'!=BlinkLeft.state implies BlinkLeft.state' not in Cycle3+Cycle2+Cycle1+Dark4+Dark3+Dark2+Dark1)
+		(BlinkRight.state'!=BlinkRight.state implies BlinkRight.state' not in Cycle3+Cycle2+Cycle1+Dark4+Dark3+Dark2+Dark1)
+	})
+} for 15 Time
+
+check ELS14 {
+	always ((KeyState.state in KeyInIgnitionOnPosition and LightRotarySwitch.state in LRSOn) implies LowBeam.state' in Full)
+} for 15 Time
+
+check ELS15 {
+	always (AmbientLighting not in SignalOn) implies
+		always ((KeyState.state in KeyInserted and (before LightRotarySwitch.state not in LRSOn) and LightRotarySwitch.state in LRSOn) implies LowBeam.state' in Half)
+} for 15 Time
+
+check ELS16 {
+	always ((KeyState.state in NoKeyInserted and LightRotarySwitch.state in LRSAuto and AmbientLighting not in SignalOn) implies LowBeam.state' in Off)
+} for 15 Time
+
+check ELS17 {
+	always (AmbientLighting not in SignalOn and DaytimeLights in SignalOn) implies
+		always (KeyState.state in KeyInIgnitionOnPosition implies ((LowBeam.state' in Full+Half until KeyState.state not in KeyInIgnitionOnPosition) or always KeyState.state in KeyInIgnitionOnPosition))
+} for 15 Time
+
+check ELS18 { // abstracted: actual 3s duration
+	always ((LightRotarySwitch.state in LRSAuto and KeyState.state in KeyInIgnitionOnPosition and BrightnessSensor.state = Dark) implies LowBeam.state' in Full+Half)
+
+	always (AmbientLighting not in SignalOn and DaytimeLights not in SignalOn) implies
+		always ((LightRotarySwitch.state in LRSAuto and KeyState.state in KeyInIgnitionOnPosition and BrightnessSensor.state = Bright and LowBeam.state' != Temp) implies LowBeam.state' in Off)
+} for 15 Time
+
+check ELS19 { // abstracted: actual 30s duration
+	always ((VoltageBattery.state' not in Subvoltage and AmbientLighting in SignalOn' and KeyState.state in KeyInIgnitionOnPosition and not KeyState.state' in KeyInIgnitionOnPosition and BrightnessSensor.state' = Dark) implies
+		 LowBeam.state'' in Temp)
+
+	always ((VoltageBattery.state' not in Subvoltage and AmbientLighting in SignalOn' and KeyState.state' not in KeyInIgnitionOnPosition and AllDoorsClosed&SignalOn != AllDoorsClosed&SignalOn' and LowBeam.state' in Temp) implies
+		 LowBeam.state'' in Temp)
+
+	always ((VoltageBattery.state' not in Subvoltage and AmbientLighting in SignalOn' and KeyState.state' not in KeyInIgnitionOnPosition and KeyState.state not in KeyState.state' and LowBeam.state' in Temp) implies
+		 LowBeam.state'' in Temp)
+} for 15 Time
+
+// ELS-21 only for armored vehicles
+
+check ELS22 {
+	always ((LowBeamLeft.state not in Off or HighBeamOn in SignalOn) implies (TailLampLeft.state not in Off or BlinkLeft.state not in OffP))
+	always ((LowBeamRight.state not in Off or HighBeamOn in SignalOn) implies (TailLampRight.state not in Off or BlinkRight.state not in OffP))
+} for 15 Time
+
+check ELS23 {
+	always BlinkLeft.state not in OffP implies TailLampLeft.state in BlinkLeft.state
+	always BlinkRight.state not in OffP implies TailLampRight.state in BlinkRight.state
+} for 15 Time
+
+// fade-out period has not been implemented (for simplicity)
+check ELS24 { // abstracted: actual 5s duration
+	// it was not clear whether "stopped" speed should be included, but would break sequence 1
+	always ((LowBeam.state in Full+Half and PitmanArmUpDown.state in Downward7 and CurrentSpeed.state in Slow and VoltageBattery.state not in Subvoltage) implies CorneringLightLeft in SignalOn')
+	always ((LowBeam.state in Full+Half and PitmanArmUpDown.state in Upward7 and CurrentSpeed.state in Slow and VoltageBattery.state not in Subvoltage) implies CorneringLightRight in SignalOn')
+} for 15 Time
+
+// ELS-25 only for armored vehicles
+
+check ELS26 {
+	always ((LowBeam.state in Full+Half and SteeringAngle.state = Left and CurrentSpeed.state in Slow and VoltageBattery.state not in Subvoltage) implies CorneringLightLeft in SignalOn')
+	always ((LowBeam.state in Full+Half and SteeringAngle.state = Right and CurrentSpeed.state in Slow and VoltageBattery.state not in Subvoltage) implies CorneringLightRight in SignalOn')
+} for 15 Time
+
+check ELS27 {
+	always ((ReverseGear in SignalOn and VoltageBattery.state not in Subvoltage) implies CorneringLight in SignalOn')
+} for 15 Time
+
+check ELS28 {
+	always ((KeyState.state in NoKeyInserted and LightRotarySwitch.state in LRSOn and PitmanArmUpDown.state in Downward7 and AmbientLighting not in SignalOn and VoltageBattery.state not in Subvoltage) implies (LowBeamLeft.state'+TailLampLeft.state' in Low or BlinkLeft.state' not in OffP))
+	always ((KeyState.state in NoKeyInserted and LightRotarySwitch.state in LRSOn and PitmanArmUpDown.state in Upward7 and AmbientLighting not in SignalOn and VoltageBattery.state not in Subvoltage) implies (LowBeamRight.state'+TailLampRight.state' in Low or BlinkRight.state' not in OffP)) 
+} for 15 Time
+
+// ELS29 refers to the concrete value of full beam intensity, abstracted
+
+check ELS30 {
+	always (PitmanArmForthBack.state in Forward implies (HighBeamOn in SignalOn' and HighBeamMotor.state' in Far and HighBeamRange.state' in HFull))
+} for 15 Time
+
+check ELS31 {
+	always ((PitmanArmForthBack.state in Backward and LightRotarySwitch.state in LRSOn) implies (HighBeamOn in SignalOn' and HighBeamMotor.state' in Far and HighBeamRange.state' in HFull))
+} for 15 Time
+
+check ELS32 {
+	always ((PitmanArmForthBack.state in Backward and LightRotarySwitch.state in LRSAuto) implies HighBeamOn in SignalOn')
+} for 15 Time
+
+// arithmetic operations not supported
+check ELS33 { // abstracted: actual 2s delay
+	always (always (PitmanArmForthBack.state in Backward and OncommingTraffic not in SignalOn and CurrentSpeed.state in Fast and LightRotarySwitch.state in LRSAuto) implies eventually (HighBeamMotor.state in Far and HighBeamRange.state in HFull))
+} for 15 Time
+
+// 0.5s delay period has not been implemented (for simplicity)
+check ELS34 {
+	always ((PitmanArmForthBack.state in Backward and OncommingTraffic in SignalOn and LightRotarySwitch.state in LRSAuto and CameraState.state in Ready) implies (HighBeamMotor.state' in Near and HighBeamRange.state' in HLowP))
+} for 15 Time
+
+check ELS35 { // abstracted: actual 2s delay
+	always ((PitmanArmForthBack.state in Backward and before OncommingTraffic in SignalOn and OncommingTraffic not in SignalOn and LightRotarySwitch.state in LRSAuto and HighBeamRange.state in HLowT) implies (HighBeamMotor.state' in Far and HighBeamRange.state' in HFull))
+} for 15 Time
+
+check ELS38 {
+	always (PitmanArmForthBack.state in ForthBackNeutral implies HighBeamOn not in SignalOn')
+} for 15 Time
+
+check ELS39 {
+	always (BrakePedal.state in Some+Max implies after (BrakePedal.state in Zero+Min releases BrakeLight in SignalOn))
+} for 15 Time
+
+// the actual blinking has not been implemented (for simplicity)
+check ELS40 {
+	always (BrakePedal.state = Max implies after (BrakePedal.state = Zero releases some BrakeLightBlinking))
+	always (some BrakeLightBlinking implies BrakeLight in SignalOn)
+} for 15 Time
+
+check ELS41 {
+	always (ReverseGear in SignalOn implies ReverseLight in SignalOn')
+} for 15 Time
+
+// ELS42 refers to the concrete value of subvoltage, abstracted
+
+check ELS43 {
+	always (PitmanArmForthBack.state in Backward and LightRotarySwitch.state in LRSAuto and VoltageBattery.state in Subvoltage) implies (HighBeamOn in SignalOn')
+} for 15 Time
+
+check ELS44 {
+	// ambient lights identified by Temp while engine off
+	always ((VoltageBattery.state in Subvoltage and KeyState.state not in KeyInIgnitionOnPosition) implies LowBeam.state' not in Temp)
+} for 15 Time
+
+check ELS45 {
+	always (VoltageBattery.state in Subvoltage implies no CorneringLight&SignalOn')
+} for 15 Time
+
+check ELS46 {
+	// parking light is identified by a Low beam intensity
+	VoltageBattery.state in Subvoltage implies no (LowBeam.state'+TailLamp.state')&Low
+} for 15 Time
+
+// ELS47 requires arithmetic operations to reduce beam power, not supported (could be abstracted by reducing full power beams)
+// ELS48 requires arithmetic operations high beam illumination, not supported
+
+check ELS49 {
+	always ((PitmanArmForthBack.state in Backward and LightRotarySwitch.state in LRSAuto and CameraState.state not in Ready) implies (HighBeamOn in SignalOn' and HighBeamMotor.state' in Far and HighBeamRange.state' in HFull))
+} for 15 Time
+
+
+/** 
+ * Vizualization elements
+ */
+
+one sig Car {}
+enum Side {LeftSide,RightSide,Menu,UCP}
+
+fun _eon : set Car {
+	some state.KeyInIgnitionOnPosition implies Car else none
+}
+
+fun _on : set univ {
+	state.Full+state.LRSOn
+}
+
+fun _half : set univ {
+	state.(Half+Low)+state.LRSAuto
+}
+
+fun _down : set univ {
+	state.(Downward7+Downward5) + state.Forward
+}
+
+fun _up : set univ {
+	state.(Upward7+Upward5) + state.Backward
+}
+
+fun _far : set univ {
+	state.(Upward7+Downward7) + state.(Backward+Forward)
+}
+
+fun _lightsensor : Car -> BrightnessSensorState {
+	Car -> BrightnessSensor.state
+}
+
+fun _speedsensor : Car -> CurrentSpeedState {
+	Car -> CurrentSpeed.state
+}
+
+fun _wheelangle : Car -> SteeringAngleState {
+	Car -> SteeringAngle.state
+}
+
+fun _brakepedal : Car -> BrakePedalState {
+	Car -> BrakePedal.state
+}
+
+fun _voltagebattery : Car -> VoltageBatteryState {
+	Car -> VoltageBattery.state
+}
+
+fun _camerastate : Car -> CameraStateState {
+	Car -> CameraState.state
+}
+
+fun _reversegear : set Car {
+	some ReverseGear&SignalOn implies Car else none
+}
+
+fun _alldoorsclosed : set Car {
+	some AllDoorsClosed&SignalOn implies Car else none
+}
+
+fun _oncommingtraffic : set Car {
+	some OncommingTraffic&SignalOn implies Car else none
+}
+
+fun _interface1 : univ -> univ {
+	(AmbientLighting+DaytimeLights) -> Menu + (HazardWarningSwitchOn) -> UCP
+}
+
+fun _interface2 : univ -> Car {
+	(PitmanArmUpDown+PitmanArmForthBack+KeyState+LightRotarySwitch+Menu+UCP) -> Car
+}
+
+fun _actuators1 : Car -> univ {
+	Car -> (LeftSide + RightSide+ReverseLight+BrakeLight+HighBeamOn+HighBeamRange+HighBeamMotor)
+}
+
+fun _actuators2 : Side -> univ {
+	LeftSide -> (BlinkLeft+LowBeamLeft+TailLampLeft+CorneringLightLeft) +
+	RightSide -> (BlinkRight+LowBeamRight+TailLampRight+CorneringLightRight)
+}
+
+fun _off : set KeyState {
+	state.NoKeyInserted
+}
+
+fun _key : set KeyState {
+	state.KeyInserted
+}
+
+fun _onk : set KeyState {
+	state.KeyInIgnitionOnPosition
+}
