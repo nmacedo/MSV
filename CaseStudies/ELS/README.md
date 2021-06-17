@@ -12,6 +12,7 @@ The ELS system is configurable, and several approaches to the modelling of the v
 ### History
 
 * The ELS models are described the paper ABZ'20 paper [_Validating Multiple Variants of an Automotive Light System with Electrum_](http://haslab.github.io/TRUST/papers/abz20b.pdf).
+* Although these models were initially developed for Electrum 2.0, they have since been updated for Electrum 2.1. Legacy versions are available [here](https://github.com/nmacedo/MSV/tree/06b67901df7bcaad7f874d7c079b0984f60317db/CaseStudies/ELS). The exception is the colorful model, whose prototype extension, available [here](https://github.com/haslab/Electrum/wiki/ELS/colorful-electrum-alpha.jar), has not been bumped to Electrum 2.1.
 
 ---
 

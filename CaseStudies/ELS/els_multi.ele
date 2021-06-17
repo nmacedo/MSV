@@ -774,8 +774,9 @@ pred LowBeam7Env {
 	always LightRotarySwitch.state in LRSOff
 }
 pred LowBeam7Exp {
-	let on = On+(some (USA+Canada)&Variant implies Half else none) |
-	LowBeam.state in OffP;always LowBeam.state in on
+	let on = On+(some (USA+Canada)&Variant implies Half else none) {
+		LowBeam.state in OffP;always LowBeam.state in on
+	}
 }
 
 // daytime running light, engine on then off
@@ -786,8 +787,9 @@ pred LowBeam8Env {
 	always LightRotarySwitch.state in LRSOff
 }
 pred LowBeam8Exp {
-	let on = On+(some (USA+Canada)&Variant implies Half else none) |
-	LowBeam.state in OffP;always LowBeam.state in on
+	let on = On+(some (USA+Canada)&Variant implies Half else none) {
+		LowBeam.state in OffP;always LowBeam.state in on
+	}
 }
 
 // daytime running light, engine on then off then no key
@@ -798,8 +800,9 @@ pred LowBeam9Env {
 	always LightRotarySwitch.state in LRSOff
 }
 pred LowBeam9Exp {
-	let on = On+(some (USA+Canada)&Variant implies Half else none) |
-	LowBeam.state in OffP;LowBeam.state in on;LowBeam.state in on;always LowBeam.state in OffP
+	let on = On+(some (USA+Canada)&Variant implies Half else none) {
+		LowBeam.state in OffP;LowBeam.state in on;LowBeam.state in on;always LowBeam.state in OffP
+	}
 }
 
 // daytime running light, engine on then off then no key, light switch auto
@@ -810,8 +813,9 @@ pred LowBeam10Env {
 	always LightRotarySwitch.state in LRSAuto
 }
 pred LowBeam10Exp {
-	let on = On+(some (USA+Canada)&Variant implies Half else none) |
-	LowBeam.state in OffP;LowBeam.state in on;always LowBeam.state in OffP
+	let on = On+(some (USA+Canada)&Variant implies Half else none) {
+		LowBeam.state in OffP;LowBeam.state in on;always LowBeam.state in OffP
+	}
 }
 
 // light switch auto, darkness
@@ -878,8 +882,9 @@ pred LowBeam16Env {
 	always BrightnessSensor.state in Dark
 }
 pred LowBeam16Exp {
-	let on = On+(some (USA+Canada)&Variant implies Half else none) |
-	LowBeam.state in on;LowBeam.state in on;always LowBeam.state in OffP
+	let on = On+(some (USA+Canada)&Variant implies Half else none) {
+		LowBeam.state in on;LowBeam.state in on;always LowBeam.state in OffP
+	}
 }
 
 // light switch auto, brightness, running lights
@@ -963,8 +968,9 @@ pred LowBeam22Env {
 	always AllDoorsClosed in SignalOn
 }
 pred LowBeam22Exp {
-	let on = On+(some (USA+Canada)&Variant implies Half else none) |
-	LowBeam.state in OffP;LowBeam.state in on;LowBeam.state in Temp;always LowBeam.state in OffP
+	let on = On+(some (USA+Canada)&Variant implies Half else none) {
+		LowBeam.state in OffP;LowBeam.state in on;LowBeam.state in Temp;always LowBeam.state in OffP
+	}
 }
 
 // daytime running light, engine on then off, but ambient light and darkness
@@ -978,8 +984,9 @@ pred LowBeam23Env {
 	always AllDoorsClosed in SignalOn
 }
 pred LowBeam23Exp {
-	let on = On+(some (USA+Canada)&Variant implies Half else none) |
-	LowBeam.state in OffP;LowBeam.state in on;LowBeam.state in Temp;always LowBeam.state in OffP
+	let on = On+(some (USA+Canada)&Variant implies Half else none) {
+		LowBeam.state in OffP;LowBeam.state in on;LowBeam.state in Temp;always LowBeam.state in OffP
+	}
 }
 
 // parking lights (ELS-28)
@@ -1137,8 +1144,9 @@ pred BrakeLights1Env {
 		BrakePedal.state in Little;BrakePedal.state in Min;always BrakePedal.state in Zero
 }
 pred BrakeLights1Exp {
-	let f = BrakeLight not in SignalOn, n = BrakeLight in SignalOn |
-	f;f;f;n;n;always f
+	let f = BrakeLight not in SignalOn, n = BrakeLight in SignalOn {
+		f;f;f;n;n;always f
+	}
 	always no BrakeLightBlinking
 }
 
@@ -1148,10 +1156,12 @@ pred BrakeLights2Env {
 		BrakePedal.state in Little;BrakePedal.state in Min;always BrakePedal.state in Zero
 }
 pred BrakeLights2Exp {
-	let f = BrakeLight not in SignalOn, n = BrakeLight in SignalOn, c  = BrakeLight in SignalOn|
-	f;f;f;n;n;n;c;always f
-	let f = no BrakeLightBlinking, n = some BrakeLightBlinking |
-	f;f;f;f;n;n;n;always f
+	let f = BrakeLight not in SignalOn, n = BrakeLight in SignalOn, c  = BrakeLight in SignalOn {
+		f;f;f;n;n;n;c;always f
+	}
+	let f = no BrakeLightBlinking, n = some BrakeLightBlinking {
+		f;f;f;f;n;n;n;always f
+	}
 }
 
 // reverse light (ELS-41)
@@ -1163,22 +1173,22 @@ pred ReverseLight1Exp {
 }
 
 run Blinkers1  {Blinkers1Env and after Blinkers1Exp}
-run Blinkers1a  {Blinkers1Env and after Blinkers1aExp} for 15 Time
+run Blinkers1a  {Blinkers1Env and after Blinkers1aExp} for 15 steps
 run Blinkers2  {Blinkers2Env and after Blinkers2Exp}
 run Blinkers2a  {Blinkers2Env and after Blinkers2aExp}
 run Blinkers3  {Blinkers3Env and after Blinkers3Exp}
 run Blinkers4  {Blinkers4Env and after Blinkers4Exp}
 run Blinkers4a {Blinkers4Env and after Blinkers4aExp}
 run Blinkers5  {Blinkers5Env and after Blinkers5Exp}
-run Blinkers5a  {Blinkers5Env and after Blinkers5aExp} for 15 Time
-run Blinkers5b  {Blinkers5bEnv and after Blinkers5bExp} for 15 Time
+run Blinkers5a  {Blinkers5Env and after Blinkers5aExp} for 15 steps
+run Blinkers5b  {Blinkers5bEnv and after Blinkers5bExp} for 15 steps
 run Blinkers6  {Blinkers6Env and after Blinkers6Exp}
 run Blinkers6a  {Blinkers6Env and after Blinkers6aExp}
 run Blinkers7  {Blinkers7Env and after Blinkers7Exp}
 run Blinkers8  {Blinkers8Env and after Blinkers8Exp}
 run Blinkers9  {Blinkers9Env and after Blinkers9Exp}
 run Blinkers10 {Blinkers10Env and after Blinkers10Exp}
-run Blinkers10a {Blinkers10aEnv and after Blinkers10aExp} for 15 Time
+run Blinkers10a {Blinkers10aEnv and after Blinkers10aExp} for 15 steps
 run Blinkers11 {Blinkers11Env and after Blinkers11Exp}
 run Blinkers12 {Blinkers12Env and after Blinkers12Exp}
 run Blinkers13 {Blinkers13Env and after Blinkers13Exp}
@@ -1186,7 +1196,7 @@ run Blinkers14 {Blinkers14Env and after Blinkers14Exp}
 run Blinkers15 {Blinkers15Env and after Blinkers15Exp}
 run Blinkers16 {Blinkers16Env and after Blinkers16Exp}
 run Blinkers17 {Blinkers17Env and after Blinkers17Exp}
-run Blinkers18 {Blinkers18Env and after Blinkers18Exp} for 20 Time
+run Blinkers18 {Blinkers18Env and after Blinkers18Exp} for 20 steps
 run Blinkers19 {Blinkers19Env and after Blinkers19Exp}
 run Blinkers20 {Blinkers20Env and after Blinkers20Exp}
 run Blinkers21 {Blinkers21Env and after Blinkers21Exp}
@@ -1238,627 +1248,627 @@ run ReverseLight1 {ReverseLight1Env and after ReverseLight1Exp}
  */
 
 run Seq1AutoGenerated {
-let s0= this/KeyState . (this/KeyState <: state) in this/NoKeyInserted, s2= this/KeyState . (this/KeyState <: state) in this/KeyInIgnitionOnPosition, s1= this/KeyState . (this/KeyState <: state) in this/KeyInserted |
-s0;s1;s2;s2;s2;s2;s2;s2;s2;s2;s2;s1;s1;s1;s0;s0;always s0
-let s0= this/CurrentSpeed . (this/CurrentSpeed <: state) in this/Stopped |
-s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0
-let s0= some this/AllDoorsClosed & this/SignalOn |
-s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0
-let s1= no this/DaytimeLights & this/SignalOn |
-s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-let s1= no this/AmbientLighting & this/SignalOn |
-s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-let s1= this/LightRotarySwitch . (this/LightRotarySwitch <: state) in this/LRSAuto, s0= this/LightRotarySwitch . (this/LightRotarySwitch <: state) in this/LRSOn, s2= this/LightRotarySwitch . (this/LightRotarySwitch <: state) in this/LRSOff |
-s2;s2;s2;s1;s1;s1;s1;s1;s1;s1;s0;s0;s1;s0;s0;s0;always s1
-let s0= this/PitmanArmForthBack . (this/PitmanArmForthBack <: state) in this/ForthBackNeutral |
-s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0
-let s2= this/PitmanArmUpDown . (this/PitmanArmUpDown <: state) in this/UpDownNeutral, s1= this/PitmanArmUpDown . (this/PitmanArmUpDown <: state) in this/Downward7 |
-s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s1;always s1
-let s1= no this/HazardWarningSwitchOn & this/SignalOn |
-s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-let s1= no this/DarknessModeSwitchOn & this/SignalOn |
-s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-let s0= this/BrightnessSensor . (this/BrightnessSensor <: state) in this/Dark, s1= this/BrightnessSensor . (this/BrightnessSensor <: state) in this/Grey, s2= this/BrightnessSensor . (this/BrightnessSensor <: state) in this/Bright |
-s2;s2;s2;s2;s1;s0;s2;s0;s2;s2;s2;s2;s2;s2;s2;s2;always s2
-let s1= no this/ReverseGear & this/SignalOn |
-s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-let s1= this/VoltageBattery . (this/VoltageBattery <: state) in this/VoltageOk |
-s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-let s1= this/SteeringAngle . (this/SteeringAngle <: state) in this/Middle |
-s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-let s1= no this/OncommingTraffic & this/SignalOn |
-s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-let s0= this/CameraState . (this/CameraState <: state) in this/Ready |
-s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0
-let s1= this/DriverPosition not in Variant |
-s1
-let s1= this/ArmoredVehicle not in Variant |
-s1
-let s1= this/EU in Variant |
-s1
+let s0= this/KeyState . (this/KeyState <: state) in this/NoKeyInserted, s2= this/KeyState . (this/KeyState <: state) in this/KeyInIgnitionOnPosition, s1= this/KeyState . (this/KeyState <: state) in this/KeyInserted {
+	s0;s1;s2;s2;s2;s2;s2;s2;s2;s2;s2;s1;s1;s1;s0;s0;always s0 }
+let s0= this/CurrentSpeed . (this/CurrentSpeed <: state) in this/Stopped {
+	s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0 }
+let s0= some this/AllDoorsClosed & this/SignalOn {
+	s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0 }
+let s1= no this/DaytimeLights & this/SignalOn {
+	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+let s1= no this/AmbientLighting & this/SignalOn {
+	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+let s1= this/LightRotarySwitch . (this/LightRotarySwitch <: state) in this/LRSAuto, s0= this/LightRotarySwitch . (this/LightRotarySwitch <: state) in this/LRSOn, s2= this/LightRotarySwitch . (this/LightRotarySwitch <: state) in this/LRSOff {
+	s2;s2;s2;s1;s1;s1;s1;s1;s1;s1;s0;s0;s1;s0;s0;s0;always s1 }
+let s0= this/PitmanArmForthBack . (this/PitmanArmForthBack <: state) in this/ForthBackNeutral {
+	s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0 }
+let s2= this/PitmanArmUpDown . (this/PitmanArmUpDown <: state) in this/UpDownNeutral, s1= this/PitmanArmUpDown . (this/PitmanArmUpDown <: state) in this/Downward7 {
+	s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s1;always s1 }
+let s1= no this/HazardWarningSwitchOn & this/SignalOn {
+	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+let s1= no this/DarknessModeSwitchOn & this/SignalOn {
+	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+let s0= this/BrightnessSensor . (this/BrightnessSensor <: state) in this/Dark, s1= this/BrightnessSensor . (this/BrightnessSensor <: state) in this/Grey, s2= this/BrightnessSensor . (this/BrightnessSensor <: state) in this/Bright {
+	s2;s2;s2;s2;s1;s0;s2;s0;s2;s2;s2;s2;s2;s2;s2;s2;always s2 }
+let s1= no this/ReverseGear & this/SignalOn {
+	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+let s1= this/VoltageBattery . (this/VoltageBattery <: state) in this/VoltageOk {
+	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+let s1= this/SteeringAngle . (this/SteeringAngle <: state) in this/Middle {
+	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+let s1= no this/OncommingTraffic & this/SignalOn {
+	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+let s0= this/CameraState . (this/CameraState <: state) in this/Ready {
+	s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0 }
+let s1= this/DriverPosition not in Variant {
+	s1 }
+let s1= this/ArmoredVehicle not in Variant {
+	s1 }
+let s1= this/EU in Variant {
+	s1 }
 after {
-	let s1= no this/BrakeLight & this/SignalOn |
-	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-	let s1= this/BlinkLeft . (this/Blink <: state) in this/Off |
-	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-	let s1= this/BlinkRight . (this/Blink <: state) in this/Off |
-	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-	let s0= this/LowBeamLeft . (this/Beam <: state) in this/Full, s3= this/LowBeamLeft . (this/Beam <: state) in this/Low, s1= this/LowBeamLeft . (this/Beam <: state) in this/Off, s2= this/LowBeamLeft . (this/Beam <: state) in this/Half |
-	s1;s1;s1;s1;s1;s0;s0;s0;s1;s1;s0;s1;s1;s2;s1;s3;always s1
-	let s0= this/LowBeamRight . (this/Beam <: state) in this/Full, s1= this/LowBeamRight . (this/Beam <: state) in this/Off, s2= this/LowBeamRight . (this/Beam <: state) in this/Half |
-	s1;s1;s1;s1;s1;s0;s0;s0;s1;s1;s0;s1;s1;s2;s1;s1;always s1
-	let s0= this/TailLampLeft . (this/Beam <: state) in this/Full, s3= this/TailLampLeft . (this/Beam <: state) in this/Low, s1= this/TailLampLeft . (this/Beam <: state) in this/Off, s2= this/TailLampLeft . (this/Beam <: state) in this/Half |
-	s1;s1;s1;s1;s1;s0;s0;s0;s1;s1;s0;s1;s1;s2;s1;s3;always s1
-	let s0= this/TailLampRight . (this/Beam <: state) in this/Full, s1= this/TailLampRight . (this/Beam <: state) in this/Off, s2= this/TailLampRight . (this/Beam <: state) in this/Half |
-	s1;s1;s1;s1;s1;s0;s0;s0;s1;s1;s0;s1;s1;s2;s1;s1;always s1
-	let s1= no this/HighBeamOn & this/SignalOn |
-	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-	let s0= this/HighBeamRange . (this/HighBeamRange <: state) in this/HOff |
-	s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0
-	let s0= this/HighBeamMotor . (this/HighBeamMotor <: state) in this/Near |
-	s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0
-	let s1= no this/CorneringLightLeft & this/SignalOn |
-	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-	let s1= no this/CorneringLightRight & this/SignalOn |
-	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-	let s1= no this/ReverseLight & this/SignalOn |
-	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
+	let s1= no this/BrakeLight & this/SignalOn {
+		s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+	let s1= this/BlinkLeft . (this/Blink <: state) in this/Off {
+		s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+	let s1= this/BlinkRight . (this/Blink <: state) in this/Off {
+		s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+	let s0= this/LowBeamLeft . (this/Beam <: state) in this/Full, s3= this/LowBeamLeft . (this/Beam <: state) in this/Low, s1= this/LowBeamLeft . (this/Beam <: state) in this/Off, s2= this/LowBeamLeft . (this/Beam <: state) in this/Half {
+		s1;s1;s1;s1;s1;s0;s0;s0;s1;s1;s0;s1;s1;s2;s1;s3;always s1 }
+	let s0= this/LowBeamRight . (this/Beam <: state) in this/Full, s1= this/LowBeamRight . (this/Beam <: state) in this/Off, s2= this/LowBeamRight . (this/Beam <: state) in this/Half {
+		s1;s1;s1;s1;s1;s0;s0;s0;s1;s1;s0;s1;s1;s2;s1;s1;always s1 }
+	let s0= this/TailLampLeft . (this/Beam <: state) in this/Full, s3= this/TailLampLeft . (this/Beam <: state) in this/Low, s1= this/TailLampLeft . (this/Beam <: state) in this/Off, s2= this/TailLampLeft . (this/Beam <: state) in this/Half {
+		s1;s1;s1;s1;s1;s0;s0;s0;s1;s1;s0;s1;s1;s2;s1;s3;always s1 }
+	let s0= this/TailLampRight . (this/Beam <: state) in this/Full, s1= this/TailLampRight . (this/Beam <: state) in this/Off, s2= this/TailLampRight . (this/Beam <: state) in this/Half {
+		s1;s1;s1;s1;s1;s0;s0;s0;s1;s1;s0;s1;s1;s2;s1;s1;always s1 }
+	let s1= no this/HighBeamOn & this/SignalOn {
+		s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+	let s0= this/HighBeamRange . (this/HighBeamRange <: state) in this/HOff {
+		s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0 }
+	let s0= this/HighBeamMotor . (this/HighBeamMotor <: state) in this/Near {
+		s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0 }
+	let s1= no this/CorneringLightLeft & this/SignalOn {
+		s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+	let s1= no this/CorneringLightRight & this/SignalOn {
+		s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+	let s1= no this/ReverseLight & this/SignalOn {
+		s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
 }
-} for 14..20 Time
+} for 14..20 steps
 
 run Seq2AutoGenerated {
-let s0= this/KeyState . (this/KeyState <: state) in this/NoKeyInserted, s2= this/KeyState . (this/KeyState <: state) in this/KeyInIgnitionOnPosition, s1= this/KeyState . (this/KeyState <: state) in this/KeyInserted |
-s0;s0;s0;s1;s2;s2;s1;s1;s0;s0;s0;always s0
-let s0= this/CurrentSpeed . (this/CurrentSpeed <: state) in this/Stopped |
-s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0
-let s0= some this/AllDoorsClosed & this/SignalOn, s1= no this/AllDoorsClosed & this/SignalOn |
-s0;s0;s0;s0;s0;s0;s0;s1;s1;s0;s0;always s0
-let s1= no this/DaytimeLights & this/SignalOn |
-s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-let s0= some this/AmbientLighting & this/SignalOn |
-s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0
-let s1= this/LightRotarySwitch . (this/LightRotarySwitch <: state) in this/LRSAuto, s0= this/LightRotarySwitch . (this/LightRotarySwitch <: state) in this/LRSOn, s2= this/LightRotarySwitch . (this/LightRotarySwitch <: state) in this/LRSOff |
-s2;s1;s0;s0;s0;s1;s1;s1;s1;s1;s1;always s1
-let s0= this/PitmanArmForthBack . (this/PitmanArmForthBack <: state) in this/ForthBackNeutral |
-s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0
-let s2= this/PitmanArmUpDown . (this/PitmanArmUpDown <: state) in this/UpDownNeutral |
-s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;always s2
-let s1= no this/HazardWarningSwitchOn & this/SignalOn |
-s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-let s1= no this/DarknessModeSwitchOn & this/SignalOn |
-s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-let s0= this/BrightnessSensor . (this/BrightnessSensor <: state) in this/Dark |
-s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0
-let s1= no this/ReverseGear & this/SignalOn |
-s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-let s1= this/VoltageBattery . (this/VoltageBattery <: state) in this/VoltageOk |
-s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-let s1= this/SteeringAngle . (this/SteeringAngle <: state) in this/Middle |
-s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-let s1= no this/OncommingTraffic & this/SignalOn |
-s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-let s0= this/CameraState . (this/CameraState <: state) in this/Ready |
-s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0
-let s1= this/DriverPosition not in Variant |
-s1
-let s1= this/ArmoredVehicle not in Variant |
-s1
-let s1= this/EU in Variant |
-s1
+let s0= this/KeyState . (this/KeyState <: state) in this/NoKeyInserted, s2= this/KeyState . (this/KeyState <: state) in this/KeyInIgnitionOnPosition, s1= this/KeyState . (this/KeyState <: state) in this/KeyInserted {
+	s0;s0;s0;s1;s2;s2;s1;s1;s0;s0;s0;always s0 }
+let s0= this/CurrentSpeed . (this/CurrentSpeed <: state) in this/Stopped {
+	s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0 }
+let s0= some this/AllDoorsClosed & this/SignalOn, s1= no this/AllDoorsClosed & this/SignalOn {
+	s0;s0;s0;s0;s0;s0;s0;s1;s1;s0;s0;always s0 }
+let s1= no this/DaytimeLights & this/SignalOn {
+	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+let s0= some this/AmbientLighting & this/SignalOn {
+	s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0 }
+let s1= this/LightRotarySwitch . (this/LightRotarySwitch <: state) in this/LRSAuto, s0= this/LightRotarySwitch . (this/LightRotarySwitch <: state) in this/LRSOn, s2= this/LightRotarySwitch . (this/LightRotarySwitch <: state) in this/LRSOff {
+	s2;s1;s0;s0;s0;s1;s1;s1;s1;s1;s1;always s1 }
+let s0= this/PitmanArmForthBack . (this/PitmanArmForthBack <: state) in this/ForthBackNeutral {
+	s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0 }
+let s2= this/PitmanArmUpDown . (this/PitmanArmUpDown <: state) in this/UpDownNeutral {
+	s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;always s2 }
+let s1= no this/HazardWarningSwitchOn & this/SignalOn {
+	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+let s1= no this/DarknessModeSwitchOn & this/SignalOn {
+	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+let s0= this/BrightnessSensor . (this/BrightnessSensor <: state) in this/Dark {
+	s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0 }
+let s1= no this/ReverseGear & this/SignalOn {
+	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+let s1= this/VoltageBattery . (this/VoltageBattery <: state) in this/VoltageOk {
+	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+let s1= this/SteeringAngle . (this/SteeringAngle <: state) in this/Middle {
+	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+let s1= no this/OncommingTraffic & this/SignalOn {
+	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+let s0= this/CameraState . (this/CameraState <: state) in this/Ready {
+	s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0 }
+let s1= this/DriverPosition not in Variant {
+	s1 }
+let s1= this/ArmoredVehicle not in Variant {
+	s1 }
+let s1= this/EU in Variant {
+	s1 }
 after {
-	let s1= no this/BrakeLight & this/SignalOn |
-	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-	let s1= this/BlinkLeft . (this/Blink <: state) in this/Off |
-	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-	let s1= this/BlinkRight . (this/Blink <: state) in this/Off |
-	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-	let s0= this/LowBeamLeft . (this/Beam <: state) in this/Full, s1= this/LowBeamLeft . (this/Beam <: state) in this/Off |
-	s1;s1;s1;s1;s0;s0;s0;s0;s0;s0;s0;always s1
-	let s0= this/LowBeamRight . (this/Beam <: state) in this/Full, s1= this/LowBeamRight . (this/Beam <: state) in this/Off |
-	s1;s1;s1;s1;s0;s0;s0;s0;s0;s0;s0;always s1
-	let s0= this/TailLampLeft . (this/Beam <: state) in this/Full, s1= this/TailLampLeft . (this/Beam <: state) in this/Off |
-	s1;s1;s1;s1;s0;s0;s0;s0;s0;s0;s0;always s1
-	let s0= this/TailLampRight . (this/Beam <: state) in this/Full, s1= this/TailLampRight . (this/Beam <: state) in this/Off |
-	s1;s1;s1;s1;s0;s0;s0;s0;s0;s0;s0;always s1
-	let s1= no this/HighBeamOn & this/SignalOn |
-	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-	let s0= this/HighBeamRange . (this/HighBeamRange <: state) in this/HOff |
-	s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0
-	let s0= this/HighBeamMotor . (this/HighBeamMotor <: state) in this/Near |
-	s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0
-	let s1= no this/CorneringLightLeft & this/SignalOn |
-	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-	let s1= no this/CorneringLightRight & this/SignalOn |
-	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-	let s1= no this/ReverseLight & this/SignalOn |
-	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
+	let s1= no this/BrakeLight & this/SignalOn {
+		s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+	let s1= this/BlinkLeft . (this/Blink <: state) in this/Off {
+		s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+	let s1= this/BlinkRight . (this/Blink <: state) in this/Off {
+		s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+	let s0= this/LowBeamLeft . (this/Beam <: state) in this/Full, s1= this/LowBeamLeft . (this/Beam <: state) in this/Off {
+		s1;s1;s1;s1;s0;s0;s0;s0;s0;s0;s0;always s1 }
+	let s0= this/LowBeamRight . (this/Beam <: state) in this/Full, s1= this/LowBeamRight . (this/Beam <: state) in this/Off {
+		s1;s1;s1;s1;s0;s0;s0;s0;s0;s0;s0;always s1 }
+	let s0= this/TailLampLeft . (this/Beam <: state) in this/Full, s1= this/TailLampLeft . (this/Beam <: state) in this/Off {
+		s1;s1;s1;s1;s0;s0;s0;s0;s0;s0;s0;always s1 }
+	let s0= this/TailLampRight . (this/Beam <: state) in this/Full, s1= this/TailLampRight . (this/Beam <: state) in this/Off {
+		s1;s1;s1;s1;s0;s0;s0;s0;s0;s0;s0;always s1 }
+	let s1= no this/HighBeamOn & this/SignalOn {
+		s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+	let s0= this/HighBeamRange . (this/HighBeamRange <: state) in this/HOff {
+		s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0 }
+	let s0= this/HighBeamMotor . (this/HighBeamMotor <: state) in this/Near {
+		s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0 }
+	let s1= no this/CorneringLightLeft & this/SignalOn {
+		s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+	let s1= no this/CorneringLightRight & this/SignalOn {
+		s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+	let s1= no this/ReverseLight & this/SignalOn {
+		s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
 }
-} for 11..20 Time
+} for 11..20 steps
 
 run Seq3AutoGenerated {
-let s2= this/KeyState . (this/KeyState <: state) in this/KeyInIgnitionOnPosition, s1= this/KeyState . (this/KeyState <: state) in this/KeyInserted, s0= this/KeyState . (this/KeyState <: state) in this/NoKeyInserted |
-s0;s1;s2;s2;s2;s1;s1;always s1
-let s0= this/CurrentSpeed . (this/CurrentSpeed <: state) in this/Stopped |
-s0;s0;s0;s0;s0;s0;s0;always s0
-let s0= some this/AllDoorsClosed & this/SignalOn |
-s0;s0;s0;s0;s0;s0;s0;always s0
-let s0= some this/DaytimeLights & this/SignalOn |
-s0;s0;s0;s0;s0;s0;s0;always s0
-let s1= no this/AmbientLighting & this/SignalOn |
-s1;s1;s1;s1;s1;s1;s1;always s1
-let s0= this/LightRotarySwitch . (this/LightRotarySwitch <: state) in this/LRSOn, s1= this/LightRotarySwitch . (this/LightRotarySwitch <: state) in this/LRSAuto, s2= this/LightRotarySwitch . (this/LightRotarySwitch <: state) in this/LRSOff |
-s2;s2;s2;s1;s0;s0;s1;always s0
-let s0= this/PitmanArmForthBack . (this/PitmanArmForthBack <: state) in this/ForthBackNeutral |
-s0;s0;s0;s0;s0;s0;s0;always s0
-let s2= this/PitmanArmUpDown . (this/PitmanArmUpDown <: state) in this/UpDownNeutral |
-s2;s2;s2;s2;s2;s2;s2;always s2
-let s1= no this/HazardWarningSwitchOn & this/SignalOn |
-s1;s1;s1;s1;s1;s1;s1;always s1
-let s1= no this/DarknessModeSwitchOn & this/SignalOn |
-s1;s1;s1;s1;s1;s1;s1;always s1
-let s2= this/BrightnessSensor . (this/BrightnessSensor <: state) in this/Bright |
-s2;s2;s2;s2;s2;s2;s2;always s2
-let s1= no this/ReverseGear & this/SignalOn |
-s1;s1;s1;s1;s1;s1;s1;always s1
-let s1= this/VoltageBattery . (this/VoltageBattery <: state) in this/VoltageOk |
-s1;s1;s1;s1;s1;s1;s1;always s1
-let s1= this/SteeringAngle . (this/SteeringAngle <: state) in this/Middle |
-s1;s1;s1;s1;s1;s1;s1;always s1
-let s1= no this/OncommingTraffic & this/SignalOn |
-s1;s1;s1;s1;s1;s1;s1;always s1
-let s0= this/CameraState . (this/CameraState <: state) in this/Ready |
-s0;s0;s0;s0;s0;s0;s0;always s0
-let s1= this/DriverPosition not in Variant |
-s1
-let s1= this/ArmoredVehicle not in Variant |
-s1
-let s1= this/EU in Variant |
-s1
+let s2= this/KeyState . (this/KeyState <: state) in this/KeyInIgnitionOnPosition, s1= this/KeyState . (this/KeyState <: state) in this/KeyInserted, s0= this/KeyState . (this/KeyState <: state) in this/NoKeyInserted {
+	s0;s1;s2;s2;s2;s1;s1;always s1 }
+let s0= this/CurrentSpeed . (this/CurrentSpeed <: state) in this/Stopped {
+	s0;s0;s0;s0;s0;s0;s0;always s0 }
+let s0= some this/AllDoorsClosed & this/SignalOn {
+	s0;s0;s0;s0;s0;s0;s0;always s0 }
+let s0= some this/DaytimeLights & this/SignalOn {
+	s0;s0;s0;s0;s0;s0;s0;always s0 }
+let s1= no this/AmbientLighting & this/SignalOn {
+	s1;s1;s1;s1;s1;s1;s1;always s1 }
+let s0= this/LightRotarySwitch . (this/LightRotarySwitch <: state) in this/LRSOn, s1= this/LightRotarySwitch . (this/LightRotarySwitch <: state) in this/LRSAuto, s2= this/LightRotarySwitch . (this/LightRotarySwitch <: state) in this/LRSOff {
+	s2;s2;s2;s1;s0;s0;s1;always s0 }
+let s0= this/PitmanArmForthBack . (this/PitmanArmForthBack <: state) in this/ForthBackNeutral {
+	s0;s0;s0;s0;s0;s0;s0;always s0 }
+let s2= this/PitmanArmUpDown . (this/PitmanArmUpDown <: state) in this/UpDownNeutral {
+	s2;s2;s2;s2;s2;s2;s2;always s2 }
+let s1= no this/HazardWarningSwitchOn & this/SignalOn {
+	s1;s1;s1;s1;s1;s1;s1;always s1 }
+let s1= no this/DarknessModeSwitchOn & this/SignalOn {
+	s1;s1;s1;s1;s1;s1;s1;always s1 }
+let s2= this/BrightnessSensor . (this/BrightnessSensor <: state) in this/Bright {
+	s2;s2;s2;s2;s2;s2;s2;always s2 }
+let s1= no this/ReverseGear & this/SignalOn {
+	s1;s1;s1;s1;s1;s1;s1;always s1 }
+let s1= this/VoltageBattery . (this/VoltageBattery <: state) in this/VoltageOk {
+	s1;s1;s1;s1;s1;s1;s1;always s1 }
+let s1= this/SteeringAngle . (this/SteeringAngle <: state) in this/Middle {
+	s1;s1;s1;s1;s1;s1;s1;always s1 }
+let s1= no this/OncommingTraffic & this/SignalOn {
+	s1;s1;s1;s1;s1;s1;s1;always s1 }
+let s0= this/CameraState . (this/CameraState <: state) in this/Ready {
+	s0;s0;s0;s0;s0;s0;s0;always s0 }
+let s1= this/DriverPosition not in Variant {
+	s1 }
+let s1= this/ArmoredVehicle not in Variant {
+	s1 }
+let s1= this/EU in Variant {
+	s1 }
 after {
-	let s1= no this/BrakeLight & this/SignalOn |
-	s1;s1;s1;s1;s1;s1;s1;always s1
-	let s1= this/BlinkLeft . (this/Blink <: state) in this/Off |
-	s1;s1;s1;s1;s1;s1;s1;always s1
-	let s1= this/BlinkRight . (this/Blink <: state) in this/Off |
-	s1;s1;s1;s1;s1;s1;s1;always s1
-	let s0= this/LowBeamLeft . (this/Beam <: state) in this/Full, s1= this/LowBeamLeft . (this/Beam <: state) in this/Off, s2= this/LowBeamLeft . (this/Beam <: state) in this/Half |
-	s1;s1;s0;s0;s0;s0;s1;always s2
-	let s0= this/LowBeamRight . (this/Beam <: state) in this/Full, s1= this/LowBeamRight . (this/Beam <: state) in this/Off, s2= this/LowBeamRight . (this/Beam <: state) in this/Half |
-	s1;s1;s0;s0;s0;s0;s1;always s2
-	let s0= this/TailLampLeft . (this/Beam <: state) in this/Full, s1= this/TailLampLeft . (this/Beam <: state) in this/Off, s2= this/TailLampLeft . (this/Beam <: state) in this/Half |
-	s1;s1;s0;s0;s0;s0;s1;always s2
-	let s0= this/TailLampRight . (this/Beam <: state) in this/Full, s1= this/TailLampRight . (this/Beam <: state) in this/Off, s2= this/TailLampRight . (this/Beam <: state) in this/Half |
-	s1;s1;s0;s0;s0;s0;s1;always s2
-	let s1= no this/HighBeamOn & this/SignalOn |
-	s1;s1;s1;s1;s1;s1;s1;always s1
-	let s0= this/HighBeamRange . (this/HighBeamRange <: state) in this/HOff |
-	s0;s0;s0;s0;s0;s0;s0;always s0
-	let s0= this/HighBeamMotor . (this/HighBeamMotor <: state) in this/Near |
-	s0;s0;s0;s0;s0;s0;s0;always s0
-	let s1= no this/CorneringLightLeft & this/SignalOn |
-	s1;s1;s1;s1;s1;s1;s1;always s1
-	let s1= no this/CorneringLightRight & this/SignalOn |
-	s1;s1;s1;s1;s1;s1;s1;always s1
-	let s1= no this/ReverseLight & this/SignalOn |
-	s1;s1;s1;s1;s1;s1;s1;always s1
+	let s1= no this/BrakeLight & this/SignalOn {
+		s1;s1;s1;s1;s1;s1;s1;always s1 }
+	let s1= this/BlinkLeft . (this/Blink <: state) in this/Off {
+		s1;s1;s1;s1;s1;s1;s1;always s1 }
+	let s1= this/BlinkRight . (this/Blink <: state) in this/Off {
+		s1;s1;s1;s1;s1;s1;s1;always s1 }
+	let s0= this/LowBeamLeft . (this/Beam <: state) in this/Full, s1= this/LowBeamLeft . (this/Beam <: state) in this/Off, s2= this/LowBeamLeft . (this/Beam <: state) in this/Half {
+		s1;s1;s0;s0;s0;s0;s1;always s2 }
+	let s0= this/LowBeamRight . (this/Beam <: state) in this/Full, s1= this/LowBeamRight . (this/Beam <: state) in this/Off, s2= this/LowBeamRight . (this/Beam <: state) in this/Half {
+		s1;s1;s0;s0;s0;s0;s1;always s2 }
+	let s0= this/TailLampLeft . (this/Beam <: state) in this/Full, s1= this/TailLampLeft . (this/Beam <: state) in this/Off, s2= this/TailLampLeft . (this/Beam <: state) in this/Half {
+		s1;s1;s0;s0;s0;s0;s1;always s2 }
+	let s0= this/TailLampRight . (this/Beam <: state) in this/Full, s1= this/TailLampRight . (this/Beam <: state) in this/Off, s2= this/TailLampRight . (this/Beam <: state) in this/Half {
+		s1;s1;s0;s0;s0;s0;s1;always s2 }
+	let s1= no this/HighBeamOn & this/SignalOn {
+		s1;s1;s1;s1;s1;s1;s1;always s1 }
+	let s0= this/HighBeamRange . (this/HighBeamRange <: state) in this/HOff {
+		s0;s0;s0;s0;s0;s0;s0;always s0 }
+	let s0= this/HighBeamMotor . (this/HighBeamMotor <: state) in this/Near {
+		s0;s0;s0;s0;s0;s0;s0;always s0 }
+	let s1= no this/CorneringLightLeft & this/SignalOn {
+		s1;s1;s1;s1;s1;s1;s1;always s1 }
+	let s1= no this/CorneringLightRight & this/SignalOn {
+		s1;s1;s1;s1;s1;s1;s1;always s1 }
+	let s1= no this/ReverseLight & this/SignalOn {
+		s1;s1;s1;s1;s1;s1;s1;always s1 }
 }
-} for 6..20 Time
+} for 6..20 steps
 
 run Seq4AutoGenerated {
-let s2= this/KeyState . (this/KeyState <: state) in this/KeyInIgnitionOnPosition, s0= this/KeyState . (this/KeyState <: state) in this/NoKeyInserted |
-s0;s2;s2;s0;s0;always s0
-let s0= this/CurrentSpeed . (this/CurrentSpeed <: state) in this/Stopped |
-s0;s0;s0;s0;s0;always s0
-let s0= some this/AllDoorsClosed & this/SignalOn |
-s0;s0;s0;s0;s0;always s0
-let s0= some this/DaytimeLights & this/SignalOn |
-s0;s0;s0;s0;s0;always s0
-let s0= some this/AmbientLighting & this/SignalOn |
-s0;s0;s0;s0;s0;always s0
-let s1= this/LightRotarySwitch . (this/LightRotarySwitch <: state) in this/LRSAuto, s2= this/LightRotarySwitch . (this/LightRotarySwitch <: state) in this/LRSOff |
-s2;s2;s1;s1;s1;always s1
-let s0= this/PitmanArmForthBack . (this/PitmanArmForthBack <: state) in this/ForthBackNeutral |
-s0;s0;s0;s0;s0;always s0
-let s2= this/PitmanArmUpDown . (this/PitmanArmUpDown <: state) in this/UpDownNeutral |
-s2;s2;s2;s2;s2;always s2
-let s1= no this/HazardWarningSwitchOn & this/SignalOn |
-s1;s1;s1;s1;s1;always s1
-let s1= no this/DarknessModeSwitchOn & this/SignalOn |
-s1;s1;s1;s1;s1;always s1
-let s2= this/BrightnessSensor . (this/BrightnessSensor <: state) in this/Bright, s0= this/BrightnessSensor . (this/BrightnessSensor <: state) in this/Dark |
-s0;s0;s0;s0;s2;always s2
-let s1= no this/ReverseGear & this/SignalOn |
-s1;s1;s1;s1;s1;always s1
-let s1= this/VoltageBattery . (this/VoltageBattery <: state) in this/VoltageOk |
-s1;s1;s1;s1;s1;always s1
-let s1= this/SteeringAngle . (this/SteeringAngle <: state) in this/Middle |
-s1;s1;s1;s1;s1;always s1
-let s1= no this/OncommingTraffic & this/SignalOn |
-s1;s1;s1;s1;s1;always s1
-let s0= this/CameraState . (this/CameraState <: state) in this/Ready |
-s0;s0;s0;s0;s0;always s0
-let s1= this/DriverPosition not in Variant |
-s1
-let s1= this/ArmoredVehicle not in Variant |
-s1
-let s1= this/EU in Variant |
-s1
+let s2= this/KeyState . (this/KeyState <: state) in this/KeyInIgnitionOnPosition, s0= this/KeyState . (this/KeyState <: state) in this/NoKeyInserted {
+	s0;s2;s2;s0;s0;always s0 }
+let s0= this/CurrentSpeed . (this/CurrentSpeed <: state) in this/Stopped {
+	s0;s0;s0;s0;s0;always s0 }
+let s0= some this/AllDoorsClosed & this/SignalOn {
+	s0;s0;s0;s0;s0;always s0 }
+let s0= some this/DaytimeLights & this/SignalOn {
+	s0;s0;s0;s0;s0;always s0 }
+let s0= some this/AmbientLighting & this/SignalOn {
+	s0;s0;s0;s0;s0;always s0 }
+let s1= this/LightRotarySwitch . (this/LightRotarySwitch <: state) in this/LRSAuto, s2= this/LightRotarySwitch . (this/LightRotarySwitch <: state) in this/LRSOff {
+	s2;s2;s1;s1;s1;always s1 }
+let s0= this/PitmanArmForthBack . (this/PitmanArmForthBack <: state) in this/ForthBackNeutral {
+	s0;s0;s0;s0;s0;always s0 }
+let s2= this/PitmanArmUpDown . (this/PitmanArmUpDown <: state) in this/UpDownNeutral {
+	s2;s2;s2;s2;s2;always s2 }
+let s1= no this/HazardWarningSwitchOn & this/SignalOn {
+	s1;s1;s1;s1;s1;always s1 }
+let s1= no this/DarknessModeSwitchOn & this/SignalOn {
+	s1;s1;s1;s1;s1;always s1 }
+let s2= this/BrightnessSensor . (this/BrightnessSensor <: state) in this/Bright, s0= this/BrightnessSensor . (this/BrightnessSensor <: state) in this/Dark {
+	s0;s0;s0;s0;s2;always s2 }
+let s1= no this/ReverseGear & this/SignalOn {
+	s1;s1;s1;s1;s1;always s1 }
+let s1= this/VoltageBattery . (this/VoltageBattery <: state) in this/VoltageOk {
+	s1;s1;s1;s1;s1;always s1 }
+let s1= this/SteeringAngle . (this/SteeringAngle <: state) in this/Middle {
+	s1;s1;s1;s1;s1;always s1 }
+let s1= no this/OncommingTraffic & this/SignalOn {
+	s1;s1;s1;s1;s1;always s1 }
+let s0= this/CameraState . (this/CameraState <: state) in this/Ready {
+	s0;s0;s0;s0;s0;always s0 }
+let s1= this/DriverPosition not in Variant {
+	s1 }
+let s1= this/ArmoredVehicle not in Variant {
+	s1 }
+let s1= this/EU in Variant {
+	s1 }
 after {
-	let s1= no this/BrakeLight & this/SignalOn |
-	s1;s1;s1;s1;s1;always s1
-	let s1= this/BlinkLeft . (this/Blink <: state) in this/Off |
-	s1;s1;s1;s1;s1;always s1
-	let s1= this/BlinkRight . (this/Blink <: state) in this/Off |
-	s1;s1;s1;s1;s1;always s1
-	let s0= this/LowBeamLeft . (this/Beam <: state) in this/Full, s1= this/LowBeamLeft . (this/Beam <: state) in this/Off |
-	s1;s0;s0;s0;s0;always s1
-	let s0= this/LowBeamRight . (this/Beam <: state) in this/Full, s1= this/LowBeamRight . (this/Beam <: state) in this/Off |
-	s1;s0;s0;s0;s0;always s1
-	let s0= this/TailLampLeft . (this/Beam <: state) in this/Full, s1= this/TailLampLeft . (this/Beam <: state) in this/Off |
-	s1;s0;s0;s0;s0;always s1
-	let s0= this/TailLampRight . (this/Beam <: state) in this/Full, s1= this/TailLampRight . (this/Beam <: state) in this/Off |
-	s1;s0;s0;s0;s0;always s1
-	let s1= no this/HighBeamOn & this/SignalOn |
-	s1;s1;s1;s1;s1;always s1
-	let s0= this/HighBeamRange . (this/HighBeamRange <: state) in this/HOff |
-	s0;s0;s0;s0;s0;always s0
-	let s0= this/HighBeamMotor . (this/HighBeamMotor <: state) in this/Near |
-	s0;s0;s0;s0;s0;always s0
-	let s1= no this/CorneringLightLeft & this/SignalOn |
-	s1;s1;s1;s1;s1;always s1
-	let s1= no this/CorneringLightRight & this/SignalOn |
-	s1;s1;s1;s1;s1;always s1
-	let s1= no this/ReverseLight & this/SignalOn |
-	s1;s1;s1;s1;s1;always s1
+	let s1= no this/BrakeLight & this/SignalOn {
+		s1;s1;s1;s1;s1;always s1 }
+	let s1= this/BlinkLeft . (this/Blink <: state) in this/Off {
+		s1;s1;s1;s1;s1;always s1 }
+	let s1= this/BlinkRight . (this/Blink <: state) in this/Off {
+		s1;s1;s1;s1;s1;always s1 }
+	let s0= this/LowBeamLeft . (this/Beam <: state) in this/Full, s1= this/LowBeamLeft . (this/Beam <: state) in this/Off {
+		s1;s0;s0;s0;s0;always s1 }
+	let s0= this/LowBeamRight . (this/Beam <: state) in this/Full, s1= this/LowBeamRight . (this/Beam <: state) in this/Off {
+		s1;s0;s0;s0;s0;always s1 }
+	let s0= this/TailLampLeft . (this/Beam <: state) in this/Full, s1= this/TailLampLeft . (this/Beam <: state) in this/Off {
+		s1;s0;s0;s0;s0;always s1 }
+	let s0= this/TailLampRight . (this/Beam <: state) in this/Full, s1= this/TailLampRight . (this/Beam <: state) in this/Off {
+		s1;s0;s0;s0;s0;always s1 }
+	let s1= no this/HighBeamOn & this/SignalOn {
+		s1;s1;s1;s1;s1;always s1 }
+	let s0= this/HighBeamRange . (this/HighBeamRange <: state) in this/HOff {
+		s0;s0;s0;s0;s0;always s0 }
+	let s0= this/HighBeamMotor . (this/HighBeamMotor <: state) in this/Near {
+		s0;s0;s0;s0;s0;always s0 }
+	let s1= no this/CorneringLightLeft & this/SignalOn {
+		s1;s1;s1;s1;s1;always s1 }
+	let s1= no this/CorneringLightRight & this/SignalOn {
+		s1;s1;s1;s1;s1;always s1 }
+	let s1= no this/ReverseLight & this/SignalOn {
+		s1;s1;s1;s1;s1;always s1 }
 }
-} for 4..20 Time
+} for 4..20 steps
 
 run Seq5AutoGenerated {
-let s2= this/KeyState . (this/KeyState <: state) in this/KeyInIgnitionOnPosition, s1= this/KeyState . (this/KeyState <: state) in this/KeyInserted, s0= this/KeyState . (this/KeyState <: state) in this/NoKeyInserted |
-s0;s0;s2;s1;s1;s1;always s0
-let s0= this/CurrentSpeed . (this/CurrentSpeed <: state) in this/Stopped |
-s0;s0;s0;s0;s0;s0;always s0
-let s0= some this/AllDoorsClosed & this/SignalOn |
-s0;s0;s0;s0;s0;s0;always s0
-let s1= no this/DaytimeLights & this/SignalOn |
-s1;s1;s1;s1;s1;s1;always s1
-let s0= some this/AmbientLighting & this/SignalOn |
-s0;s0;s0;s0;s0;s0;always s0
-let s0= this/LightRotarySwitch . (this/LightRotarySwitch <: state) in this/LRSOn, s1= this/LightRotarySwitch . (this/LightRotarySwitch <: state) in this/LRSAuto, s2= this/LightRotarySwitch . (this/LightRotarySwitch <: state) in this/LRSOff |
-s2;s1;s1;s1;s0;s0;always s0
-let s0= this/PitmanArmForthBack . (this/PitmanArmForthBack <: state) in this/ForthBackNeutral |
-s0;s0;s0;s0;s0;s0;always s0
-let s2= this/PitmanArmUpDown . (this/PitmanArmUpDown <: state) in this/UpDownNeutral |
-s2;s2;s2;s2;s2;s2;always s2
-let s1= no this/HazardWarningSwitchOn & this/SignalOn |
-s1;s1;s1;s1;s1;s1;always s1
-let s1= no this/DarknessModeSwitchOn & this/SignalOn |
-s1;s1;s1;s1;s1;s1;always s1
-let s0= this/BrightnessSensor . (this/BrightnessSensor <: state) in this/Dark |
-s0;s0;s0;s0;s0;s0;always s0
-let s1= no this/ReverseGear & this/SignalOn |
-s1;s1;s1;s1;s1;s1;always s1
-let s1= this/VoltageBattery . (this/VoltageBattery <: state) in this/VoltageOk |
-s1;s1;s1;s1;s1;s1;always s1
-let s1= this/SteeringAngle . (this/SteeringAngle <: state) in this/Middle |
-s1;s1;s1;s1;s1;s1;always s1
-let s1= no this/OncommingTraffic & this/SignalOn |
-s1;s1;s1;s1;s1;s1;always s1
-let s0= this/CameraState . (this/CameraState <: state) in this/Ready |
-s0;s0;s0;s0;s0;s0;always s0
-let s1= this/DriverPosition not in Variant |
-s1
-let s1= this/ArmoredVehicle not in Variant |
-s1
-let s1= this/EU in Variant |
-s1
+let s2= this/KeyState . (this/KeyState <: state) in this/KeyInIgnitionOnPosition, s1= this/KeyState . (this/KeyState <: state) in this/KeyInserted, s0= this/KeyState . (this/KeyState <: state) in this/NoKeyInserted {
+	s0;s0;s2;s1;s1;s1;always s0 }
+let s0= this/CurrentSpeed . (this/CurrentSpeed <: state) in this/Stopped {
+	s0;s0;s0;s0;s0;s0;always s0 }
+let s0= some this/AllDoorsClosed & this/SignalOn {
+	s0;s0;s0;s0;s0;s0;always s0 }
+let s1= no this/DaytimeLights & this/SignalOn {
+	s1;s1;s1;s1;s1;s1;always s1 }
+let s0= some this/AmbientLighting & this/SignalOn {
+	s0;s0;s0;s0;s0;s0;always s0 }
+let s0= this/LightRotarySwitch . (this/LightRotarySwitch <: state) in this/LRSOn, s1= this/LightRotarySwitch . (this/LightRotarySwitch <: state) in this/LRSAuto, s2= this/LightRotarySwitch . (this/LightRotarySwitch <: state) in this/LRSOff {
+	s2;s1;s1;s1;s0;s0;always s0 }
+let s0= this/PitmanArmForthBack . (this/PitmanArmForthBack <: state) in this/ForthBackNeutral {
+	s0;s0;s0;s0;s0;s0;always s0 }
+let s2= this/PitmanArmUpDown . (this/PitmanArmUpDown <: state) in this/UpDownNeutral {
+	s2;s2;s2;s2;s2;s2;always s2 }
+let s1= no this/HazardWarningSwitchOn & this/SignalOn {
+	s1;s1;s1;s1;s1;s1;always s1 }
+let s1= no this/DarknessModeSwitchOn & this/SignalOn {
+	s1;s1;s1;s1;s1;s1;always s1 }
+let s0= this/BrightnessSensor . (this/BrightnessSensor <: state) in this/Dark {
+	s0;s0;s0;s0;s0;s0;always s0 }
+let s1= no this/ReverseGear & this/SignalOn {
+	s1;s1;s1;s1;s1;s1;always s1 }
+let s1= this/VoltageBattery . (this/VoltageBattery <: state) in this/VoltageOk {
+	s1;s1;s1;s1;s1;s1;always s1 }
+let s1= this/SteeringAngle . (this/SteeringAngle <: state) in this/Middle {
+	s1;s1;s1;s1;s1;s1;always s1 }
+let s1= no this/OncommingTraffic & this/SignalOn {
+	s1;s1;s1;s1;s1;s1;always s1 }
+let s0= this/CameraState . (this/CameraState <: state) in this/Ready {
+	s0;s0;s0;s0;s0;s0;always s0 }
+let s1= this/DriverPosition not in Variant {
+	s1 }
+let s1= this/ArmoredVehicle not in Variant {
+	s1 }
+let s1= this/EU in Variant {
+	s1 }
 after {
-	let s1= no this/BrakeLight & this/SignalOn |
-	s1;s1;s1;s1;s1;s1;always s1
-	let s1= this/BlinkLeft . (this/Blink <: state) in this/Off |
-	s1;s1;s1;s1;s1;s1;always s1
-	let s1= this/BlinkRight . (this/Blink <: state) in this/Off |
-	s1;s1;s1;s1;s1;s1;always s1
-	let s0= this/LowBeamLeft . (this/Beam <: state) in this/Full, s1= this/LowBeamLeft . (this/Beam <: state) in this/Off, s2= this/LowBeamLeft . (this/Beam <: state) in this/Half |
-	s1;s1;s0;s0;s0;s2;always s1
-	let s0= this/LowBeamRight . (this/Beam <: state) in this/Full, s1= this/LowBeamRight . (this/Beam <: state) in this/Off, s2= this/LowBeamRight . (this/Beam <: state) in this/Half |
-	s1;s1;s0;s0;s0;s2;always s1
-	let s0= this/TailLampLeft . (this/Beam <: state) in this/Full, s1= this/TailLampLeft . (this/Beam <: state) in this/Off, s2= this/TailLampLeft . (this/Beam <: state) in this/Half |
-	s1;s1;s0;s0;s0;s2;always s1
-	let s0= this/TailLampRight . (this/Beam <: state) in this/Full, s1= this/TailLampRight . (this/Beam <: state) in this/Off, s2= this/TailLampRight . (this/Beam <: state) in this/Half |
-	s1;s1;s0;s0;s0;s2;always s1
-	let s1= no this/HighBeamOn & this/SignalOn |
-	s1;s1;s1;s1;s1;s1;always s1
-	let s0= this/HighBeamRange . (this/HighBeamRange <: state) in this/HOff |
-	s0;s0;s0;s0;s0;s0;always s0
-	let s0= this/HighBeamMotor . (this/HighBeamMotor <: state) in this/Near |
-	s0;s0;s0;s0;s0;s0;always s0
-	let s1= no this/CorneringLightLeft & this/SignalOn |
-	s1;s1;s1;s1;s1;s1;always s1
-	let s1= no this/CorneringLightRight & this/SignalOn |
-	s1;s1;s1;s1;s1;s1;always s1
-	let s1= no this/ReverseLight & this/SignalOn |
-	s1;s1;s1;s1;s1;s1;always s1
+	let s1= no this/BrakeLight & this/SignalOn {
+		s1;s1;s1;s1;s1;s1;always s1 }
+	let s1= this/BlinkLeft . (this/Blink <: state) in this/Off {
+		s1;s1;s1;s1;s1;s1;always s1 }
+	let s1= this/BlinkRight . (this/Blink <: state) in this/Off {
+		s1;s1;s1;s1;s1;s1;always s1 }
+	let s0= this/LowBeamLeft . (this/Beam <: state) in this/Full, s1= this/LowBeamLeft . (this/Beam <: state) in this/Off, s2= this/LowBeamLeft . (this/Beam <: state) in this/Half {
+		s1;s1;s0;s0;s0;s2;always s1 }
+	let s0= this/LowBeamRight . (this/Beam <: state) in this/Full, s1= this/LowBeamRight . (this/Beam <: state) in this/Off, s2= this/LowBeamRight . (this/Beam <: state) in this/Half {
+		s1;s1;s0;s0;s0;s2;always s1 }
+	let s0= this/TailLampLeft . (this/Beam <: state) in this/Full, s1= this/TailLampLeft . (this/Beam <: state) in this/Off, s2= this/TailLampLeft . (this/Beam <: state) in this/Half {
+		s1;s1;s0;s0;s0;s2;always s1 }
+	let s0= this/TailLampRight . (this/Beam <: state) in this/Full, s1= this/TailLampRight . (this/Beam <: state) in this/Off, s2= this/TailLampRight . (this/Beam <: state) in this/Half {
+		s1;s1;s0;s0;s0;s2;always s1 }
+	let s1= no this/HighBeamOn & this/SignalOn {
+		s1;s1;s1;s1;s1;s1;always s1 }
+	let s0= this/HighBeamRange . (this/HighBeamRange <: state) in this/HOff {
+		s0;s0;s0;s0;s0;s0;always s0 }
+	let s0= this/HighBeamMotor . (this/HighBeamMotor <: state) in this/Near {
+		s0;s0;s0;s0;s0;s0;always s0 }
+	let s1= no this/CorneringLightLeft & this/SignalOn {
+		s1;s1;s1;s1;s1;s1;always s1 }
+	let s1= no this/CorneringLightRight & this/SignalOn {
+		s1;s1;s1;s1;s1;s1;always s1 }
+	let s1= no this/ReverseLight & this/SignalOn {
+		s1;s1;s1;s1;s1;s1;always s1 }
 }
-} for 6..20 Time
+} for 6..20 steps
 
 run Seq6AutoGenerated {
-let s2= this/KeyState . (this/KeyState <: state) in this/KeyInIgnitionOnPosition, s0= this/KeyState . (this/KeyState <: state) in this/NoKeyInserted |
-s0;s0;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;always s2
-let s0= this/CurrentSpeed . (this/CurrentSpeed <: state) in this/Stopped |
-s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0
-let s0= some this/AllDoorsClosed & this/SignalOn |
-s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0
-let s1= no this/DaytimeLights & this/SignalOn |
-s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-let s1= no this/AmbientLighting & this/SignalOn |
-s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-let s2= this/LightRotarySwitch . (this/LightRotarySwitch <: state) in this/LRSOff |
-s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;always s2
-let s0= this/PitmanArmForthBack . (this/PitmanArmForthBack <: state) in this/ForthBackNeutral |
-s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0
-let s2= this/PitmanArmUpDown . (this/PitmanArmUpDown <: state) in this/UpDownNeutral, s3= this/PitmanArmUpDown . (this/PitmanArmUpDown <: state) in this/Upward5, s4= this/PitmanArmUpDown . (this/PitmanArmUpDown <: state) in this/Downward5 |
-s2;s4;s2;s4;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s4;s2;s2;s2;s3;s3;s3;s3;s3;s3;always s2
-let s1= no this/HazardWarningSwitchOn & this/SignalOn |
-s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-let s1= no this/DarknessModeSwitchOn & this/SignalOn |
-s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-let s2= this/BrightnessSensor . (this/BrightnessSensor <: state) in this/Bright |
-s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;always s2
-let s1= no this/ReverseGear & this/SignalOn |
-s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-let s1= this/VoltageBattery . (this/VoltageBattery <: state) in this/VoltageOk |
-s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-let s1= this/SteeringAngle . (this/SteeringAngle <: state) in this/Middle |
-s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-let s1= no this/OncommingTraffic & this/SignalOn |
-s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-let s0= this/CameraState . (this/CameraState <: state) in this/Ready |
-s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0
-let s1= this/DriverPosition not in Variant |
-s1
-let s1= this/ArmoredVehicle not in Variant |
-s1
-let s1= this/EU in Variant |
-s1
+let s2= this/KeyState . (this/KeyState <: state) in this/KeyInIgnitionOnPosition, s0= this/KeyState . (this/KeyState <: state) in this/NoKeyInserted {
+	s0;s0;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;always s2 }
+let s0= this/CurrentSpeed . (this/CurrentSpeed <: state) in this/Stopped {
+	s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0 }
+let s0= some this/AllDoorsClosed & this/SignalOn {
+	s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0 }
+let s1= no this/DaytimeLights & this/SignalOn {
+	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+let s1= no this/AmbientLighting & this/SignalOn {
+	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+let s2= this/LightRotarySwitch . (this/LightRotarySwitch <: state) in this/LRSOff {
+	s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;always s2 }
+let s0= this/PitmanArmForthBack . (this/PitmanArmForthBack <: state) in this/ForthBackNeutral {
+	s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0 }
+let s2= this/PitmanArmUpDown . (this/PitmanArmUpDown <: state) in this/UpDownNeutral, s3= this/PitmanArmUpDown . (this/PitmanArmUpDown <: state) in this/Upward5, s4= this/PitmanArmUpDown . (this/PitmanArmUpDown <: state) in this/Downward5 {
+	s2;s4;s2;s4;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s4;s2;s2;s2;s3;s3;s3;s3;s3;s3;always s2 }
+let s1= no this/HazardWarningSwitchOn & this/SignalOn {
+	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+let s1= no this/DarknessModeSwitchOn & this/SignalOn {
+	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+let s2= this/BrightnessSensor . (this/BrightnessSensor <: state) in this/Bright {
+	s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;always s2 }
+let s1= no this/ReverseGear & this/SignalOn {
+	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+let s1= this/VoltageBattery . (this/VoltageBattery <: state) in this/VoltageOk {
+	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+let s1= this/SteeringAngle . (this/SteeringAngle <: state) in this/Middle {
+	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+let s1= no this/OncommingTraffic & this/SignalOn {
+	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+let s0= this/CameraState . (this/CameraState <: state) in this/Ready {
+	s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0 }
+let s1= this/DriverPosition not in Variant {
+	s1 }
+let s1= this/ArmoredVehicle not in Variant {
+	s1 }
+let s1= this/EU in Variant {
+	s1 }
 after {
-	let s1= no this/BrakeLight & this/SignalOn |
-	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-	let s0= this/BlinkLeft . (this/Blink <: state) in this/Full, s1= this/BlinkLeft . (this/Blink <: state) in this/Off |
-	s1;s1;s1;s0;s0;s0;s1;s1;s0;s0;s1;s1;s0;s0;s1;s1;s1;s0;s1;s1;s1;s1;s1;s1;s1;always s1
-	let s0= this/BlinkRight . (this/Blink <: state) in this/Full, s1= this/BlinkRight . (this/Blink <: state) in this/Off |
-	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s0;s0;s1;s1;s0;always s1
-	let s1= this/LowBeamLeft . (this/Beam <: state) in this/Off |
-	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-	let s1= this/LowBeamRight . (this/Beam <: state) in this/Off |
-	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-	let s1= this/TailLampLeft . (this/Beam <: state) in this/Off |
-	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-	let s1= this/TailLampRight . (this/Beam <: state) in this/Off |
-	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-	let s1= no this/HighBeamOn & this/SignalOn |
-	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-	let s0= this/HighBeamRange . (this/HighBeamRange <: state) in this/HOff |
-	s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0
-	let s0= this/HighBeamMotor . (this/HighBeamMotor <: state) in this/Near |
-	s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0
-	let s1= no this/CorneringLightLeft & this/SignalOn |
-	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-	let s1= no this/CorneringLightRight & this/SignalOn |
-	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-	let s1= no this/ReverseLight & this/SignalOn |
-	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
+	let s1= no this/BrakeLight & this/SignalOn {
+		s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+	let s0= this/BlinkLeft . (this/Blink <: state) in this/Full, s1= this/BlinkLeft . (this/Blink <: state) in this/Off {
+		s1;s1;s1;s0;s0;s0;s1;s1;s0;s0;s1;s1;s0;s0;s1;s1;s1;s0;s1;s1;s1;s1;s1;s1;s1;always s1 }
+	let s0= this/BlinkRight . (this/Blink <: state) in this/Full, s1= this/BlinkRight . (this/Blink <: state) in this/Off {
+		s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s0;s0;s1;s1;s0;always s1 }
+	let s1= this/LowBeamLeft . (this/Beam <: state) in this/Off {
+		s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+	let s1= this/LowBeamRight . (this/Beam <: state) in this/Off {
+		s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+	let s1= this/TailLampLeft . (this/Beam <: state) in this/Off {
+		s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+	let s1= this/TailLampRight . (this/Beam <: state) in this/Off {
+		s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+	let s1= no this/HighBeamOn & this/SignalOn {
+		s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+	let s0= this/HighBeamRange . (this/HighBeamRange <: state) in this/HOff {
+		s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0 }
+	let s0= this/HighBeamMotor . (this/HighBeamMotor <: state) in this/Near {
+		s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0 }
+	let s1= no this/CorneringLightLeft & this/SignalOn {
+		s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+	let s1= no this/CorneringLightRight & this/SignalOn {
+		s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+	let s1= no this/ReverseLight & this/SignalOn {
+		s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
 }
-} for 26..32 Time
+} for 26..32 steps
 
 run Seq7AutoGenerated {
-let s0= this/KeyState . (this/KeyState <: state) in this/NoKeyInserted, s2= this/KeyState . (this/KeyState <: state) in this/KeyInIgnitionOnPosition |
-s0;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;always s2
-let s0= this/CurrentSpeed . (this/CurrentSpeed <: state) in this/Stopped |
-s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0
-let s0= some this/AllDoorsClosed & this/SignalOn |
-s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0
-let s0= some this/DaytimeLights & this/SignalOn |
-s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0
-let s1= no this/AmbientLighting & this/SignalOn |
-s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-let s2= this/LightRotarySwitch . (this/LightRotarySwitch <: state) in this/LRSOff |
-s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;always s2
-let s0= this/PitmanArmForthBack . (this/PitmanArmForthBack <: state) in this/ForthBackNeutral |
-s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0
-let s0= this/PitmanArmUpDown . (this/PitmanArmUpDown <: state) in this/Upward7, s2= this/PitmanArmUpDown . (this/PitmanArmUpDown <: state) in this/UpDownNeutral, s3= this/PitmanArmUpDown . (this/PitmanArmUpDown <: state) in this/Upward5, s4= this/PitmanArmUpDown . (this/PitmanArmUpDown <: state) in this/Downward5 |
-s2;s2;s0;s0;s0;s2;s2;s2;s4;s2;s2;s2;s2;s3;s2;s2;s2;always s2
-let s0= some this/HazardWarningSwitchOn & this/SignalOn, s1= no this/HazardWarningSwitchOn & this/SignalOn |
-s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s0;s0;s0;s0;s0;s1;s1;always s1
-let s1= no this/DarknessModeSwitchOn & this/SignalOn |
-s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-let s2= this/BrightnessSensor . (this/BrightnessSensor <: state) in this/Bright |
-s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;always s2
-let s1= no this/ReverseGear & this/SignalOn |
-s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-let s1= this/VoltageBattery . (this/VoltageBattery <: state) in this/VoltageOk |
-s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-let s1= this/SteeringAngle . (this/SteeringAngle <: state) in this/Middle |
-s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-let s1= no this/OncommingTraffic & this/SignalOn |
-s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-let s0= this/CameraState . (this/CameraState <: state) in this/Ready |
-s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0
-let s1= this/DriverPosition not in Variant |
-s1
-let s1= this/ArmoredVehicle not in Variant |
-s1
-let s1= this/USA in Variant |
-s1
+let s0= this/KeyState . (this/KeyState <: state) in this/NoKeyInserted, s2= this/KeyState . (this/KeyState <: state) in this/KeyInIgnitionOnPosition {
+	s0;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;always s2 }
+let s0= this/CurrentSpeed . (this/CurrentSpeed <: state) in this/Stopped {
+	s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0 }
+let s0= some this/AllDoorsClosed & this/SignalOn {
+	s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0 }
+let s0= some this/DaytimeLights & this/SignalOn {
+	s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0 }
+let s1= no this/AmbientLighting & this/SignalOn {
+	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+let s2= this/LightRotarySwitch . (this/LightRotarySwitch <: state) in this/LRSOff {
+	s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;always s2 }
+let s0= this/PitmanArmForthBack . (this/PitmanArmForthBack <: state) in this/ForthBackNeutral {
+	s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0 }
+let s0= this/PitmanArmUpDown . (this/PitmanArmUpDown <: state) in this/Upward7, s2= this/PitmanArmUpDown . (this/PitmanArmUpDown <: state) in this/UpDownNeutral, s3= this/PitmanArmUpDown . (this/PitmanArmUpDown <: state) in this/Upward5, s4= this/PitmanArmUpDown . (this/PitmanArmUpDown <: state) in this/Downward5 {
+	s2;s2;s0;s0;s0;s2;s2;s2;s4;s2;s2;s2;s2;s3;s2;s2;s2;always s2 }
+let s0= some this/HazardWarningSwitchOn & this/SignalOn, s1= no this/HazardWarningSwitchOn & this/SignalOn {
+	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s0;s0;s0;s0;s0;s1;s1;always s1 }
+let s1= no this/DarknessModeSwitchOn & this/SignalOn {
+	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+let s2= this/BrightnessSensor . (this/BrightnessSensor <: state) in this/Bright {
+	s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;always s2 }
+let s1= no this/ReverseGear & this/SignalOn {
+	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+let s1= this/VoltageBattery . (this/VoltageBattery <: state) in this/VoltageOk {
+	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+let s1= this/SteeringAngle . (this/SteeringAngle <: state) in this/Middle {
+	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+let s1= no this/OncommingTraffic & this/SignalOn {
+	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+let s0= this/CameraState . (this/CameraState <: state) in this/Ready {
+	s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0 }
+let s1= this/DriverPosition not in Variant {
+	s1 }
+let s1= this/ArmoredVehicle not in Variant {
+	s1 }
+let s1= this/USA in Variant {
+	s1 }
 after {
-	let s1= no this/BrakeLight & this/SignalOn |
-	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-	let s0= this/BlinkLeft . (this/Light <: state) in this/Full, s1= this/BlinkLeft . (this/Light <: state) in this/Off |
-	s1;s1;s1;s1;s1;s1;s1;s1;s0;s0;s1;s1;s0;s0;s0;s0;s1;always s1
-	let s0= this/BlinkRight . (this/Light <: state) in this/Full, s1= this/BlinkRight . (this/Light <: state) in this/Off |
-	s1;s1;s0;s1;s0;s0;s1;s1;s1;s1;s1;s1;s0;s0;s0;s0;s1;always s1
-	let s0= this/LowBeamLeft . (this/Light <: state) in this/Full, s1= this/LowBeamLeft . (this/Light <: state) in this/Off, s2= this/LowBeamLeft . (this/Light <: state) in this/Half |
-	s1;s0;s0;s0;s0;s0;s0;s0;s2;s2;s2;s2;s2;s2;s2;s2;s2;always s0
-	let s0= this/LowBeamRight . (this/Light <: state) in this/Full, s1= this/LowBeamRight . (this/Light <: state) in this/Off, s2= this/LowBeamRight . (this/Light <: state) in this/Half |
-	s1;s0;s2;s2;s2;s2;s2;s0;s0;s0;s0;s0;s2;s2;s2;s2;s2;always s0
-	let s0= this/TailLampLeft . (this/Light <: state) in this/Full, s1= this/TailLampLeft . (this/Light <: state) in this/Off |
-	// sequence seems wrong: at 15 should turn back on
-	s1;s0;s0;s0;s0;s0;s0;s0;s0;s0;s1;s1;s0;s0;s0;s0;s1;always s0
-	let s0= this/TailLampRight . (this/Light <: state) in this/Full, s1= this/TailLampRight . (this/Light <: state) in this/Off |
-	// sequence seems wrong: i) at 15 should turn back on; ii) at 10 secs is dark cycle of left blinking, switched to on
-	s1;s0;s0;s1;s0;s0;s1;s0;s0;s0;s0;s0;s0;s0;s0;s0;s1;always s0
-	let s1= no this/HighBeamOn & this/SignalOn |
-	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-	let s0= this/HighBeamRange . (this/HighBeamRange <: state) in this/HOff |
-	s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0
-	let s0= this/HighBeamMotor . (this/HighBeamMotor <: state) in this/Near |
-	s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0
-	let s1= no this/CorneringLightLeft & this/SignalOn |
-	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-	let s1= no this/CorneringLightRight & this/SignalOn |
-	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-	let s1= no this/ReverseLight & this/SignalOn |
-	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
+	let s1= no this/BrakeLight & this/SignalOn {
+		s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+	let s0= this/BlinkLeft . (this/Light <: state) in this/Full, s1= this/BlinkLeft . (this/Light <: state) in this/Off {
+		s1;s1;s1;s1;s1;s1;s1;s1;s0;s0;s1;s1;s0;s0;s0;s0;s1;always s1 }
+	let s0= this/BlinkRight . (this/Light <: state) in this/Full, s1= this/BlinkRight . (this/Light <: state) in this/Off {
+		s1;s1;s0;s1;s0;s0;s1;s1;s1;s1;s1;s1;s0;s0;s0;s0;s1;always s1 }
+	let s0= this/LowBeamLeft . (this/Light <: state) in this/Full, s1= this/LowBeamLeft . (this/Light <: state) in this/Off, s2= this/LowBeamLeft . (this/Light <: state) in this/Half {
+		s1;s0;s0;s0;s0;s0;s0;s0;s2;s2;s2;s2;s2;s2;s2;s2;s2;always s0 }
+	let s0= this/LowBeamRight . (this/Light <: state) in this/Full, s1= this/LowBeamRight . (this/Light <: state) in this/Off, s2= this/LowBeamRight . (this/Light <: state) in this/Half {
+		s1;s0;s2;s2;s2;s2;s2;s0;s0;s0;s0;s0;s2;s2;s2;s2;s2;always s0 }
+	let s0= this/TailLampLeft . (this/Light <: state) in this/Full, s1= this/TailLampLeft . (this/Light <: state) in this/Off {
+		// sequence seems wrong: at 15 should turn back on
+		s1;s0;s0;s0;s0;s0;s0;s0;s0;s0;s1;s1;s0;s0;s0;s0;s1;always s0 }
+	let s0= this/TailLampRight . (this/Light <: state) in this/Full, s1= this/TailLampRight . (this/Light <: state) in this/Off {
+		// sequence seems wrong: i) at 15 should turn back on; ii) at 10 secs is dark cycle of left blinking, switched to on
+		s1;s0;s0;s1;s0;s0;s1;s0;s0;s0;s0;s0;s0;s0;s0;s0;s1;always s0 }
+	let s1= no this/HighBeamOn & this/SignalOn {
+		s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+	let s0= this/HighBeamRange . (this/HighBeamRange <: state) in this/HOff {
+		s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0 }
+	let s0= this/HighBeamMotor . (this/HighBeamMotor <: state) in this/Near {
+		s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0 }
+	let s1= no this/CorneringLightLeft & this/SignalOn {
+		s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+	let s1= no this/CorneringLightRight & this/SignalOn {
+		s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+	let s1= no this/ReverseLight & this/SignalOn {
+		s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
 }
-} for 16..22 Time
+} for 16..22 steps
 
 run Seq8AutoGenerated {
-let s2= this/KeyState . (this/KeyState <: state) in this/KeyInIgnitionOnPosition, s0= this/KeyState . (this/KeyState <: state) in this/NoKeyInserted |
-s0;s2;s2;s2;s2;s2;always s2
-let s0= this/CurrentSpeed . (this/CurrentSpeed <: state) in this/Stopped |
-s0;s0;s0;s0;s0;s0;always s0
-let s0= some this/AllDoorsClosed & this/SignalOn |
-s0;s0;s0;s0;s0;s0;always s0
-let s1= no this/DaytimeLights & this/SignalOn |
-s1;s1;s1;s1;s1;s1;always s1
-let s1= no this/AmbientLighting & this/SignalOn |
-s1;s1;s1;s1;s1;s1;always s1
-let s0= this/LightRotarySwitch . (this/LightRotarySwitch <: state) in this/LRSOn, s2= this/LightRotarySwitch . (this/LightRotarySwitch <: state) in this/LRSOff |
-s2;s2;s2;s0;s0;s0;always s0
-let s1= this/PitmanArmForthBack . (this/PitmanArmForthBack <: state) in this/Backward, s2= this/PitmanArmForthBack . (this/PitmanArmForthBack <: state) in this/Forward, s0= this/PitmanArmForthBack . (this/PitmanArmForthBack <: state) in this/ForthBackNeutral |
-s0;s0;s1;s1;s0;s2;always s0
-let s2= this/PitmanArmUpDown . (this/PitmanArmUpDown <: state) in this/UpDownNeutral |
-s2;s2;s2;s2;s2;s2;always s2
-let s1= no this/HazardWarningSwitchOn & this/SignalOn |
-s1;s1;s1;s1;s1;s1;always s1
-let s1= no this/DarknessModeSwitchOn & this/SignalOn |
-s1;s1;s1;s1;s1;s1;always s1
-let s2= this/BrightnessSensor . (this/BrightnessSensor <: state) in this/Bright |
-s2;s2;s2;s2;s2;s2;always s2
-let s1= no this/ReverseGear & this/SignalOn |
-s1;s1;s1;s1;s1;s1;always s1
-let s1= this/VoltageBattery . (this/VoltageBattery <: state) in this/VoltageOk |
-s1;s1;s1;s1;s1;s1;always s1
-let s1= this/SteeringAngle . (this/SteeringAngle <: state) in this/Middle |
-s1;s1;s1;s1;s1;s1;always s1
-let s1= no this/OncommingTraffic & this/SignalOn |
-s1;s1;s1;s1;s1;s1;always s1
-let s0= this/CameraState . (this/CameraState <: state) in this/Ready |
-s0;s0;s0;s0;s0;s0;always s0
-let s1= this/DriverPosition not in Variant |
-s1
-let s1= this/ArmoredVehicle not in Variant |
-s1
-let s1= this/EU in Variant |
-s1
+let s2= this/KeyState . (this/KeyState <: state) in this/KeyInIgnitionOnPosition, s0= this/KeyState . (this/KeyState <: state) in this/NoKeyInserted {
+	s0;s2;s2;s2;s2;s2;always s2 }
+let s0= this/CurrentSpeed . (this/CurrentSpeed <: state) in this/Stopped {
+	s0;s0;s0;s0;s0;s0;always s0 }
+let s0= some this/AllDoorsClosed & this/SignalOn {
+	s0;s0;s0;s0;s0;s0;always s0 }
+let s1= no this/DaytimeLights & this/SignalOn {
+	s1;s1;s1;s1;s1;s1;always s1 }
+let s1= no this/AmbientLighting & this/SignalOn {
+	s1;s1;s1;s1;s1;s1;always s1 }
+let s0= this/LightRotarySwitch . (this/LightRotarySwitch <: state) in this/LRSOn, s2= this/LightRotarySwitch . (this/LightRotarySwitch <: state) in this/LRSOff {
+	s2;s2;s2;s0;s0;s0;always s0 }
+let s1= this/PitmanArmForthBack . (this/PitmanArmForthBack <: state) in this/Backward, s2= this/PitmanArmForthBack . (this/PitmanArmForthBack <: state) in this/Forward, s0= this/PitmanArmForthBack . (this/PitmanArmForthBack <: state) in this/ForthBackNeutral {
+	s0;s0;s1;s1;s0;s2;always s0 }
+let s2= this/PitmanArmUpDown . (this/PitmanArmUpDown <: state) in this/UpDownNeutral {
+	s2;s2;s2;s2;s2;s2;always s2 }
+let s1= no this/HazardWarningSwitchOn & this/SignalOn {
+	s1;s1;s1;s1;s1;s1;always s1 }
+let s1= no this/DarknessModeSwitchOn & this/SignalOn {
+	s1;s1;s1;s1;s1;s1;always s1 }
+let s2= this/BrightnessSensor . (this/BrightnessSensor <: state) in this/Bright {
+	s2;s2;s2;s2;s2;s2;always s2 }
+let s1= no this/ReverseGear & this/SignalOn {
+	s1;s1;s1;s1;s1;s1;always s1 }
+let s1= this/VoltageBattery . (this/VoltageBattery <: state) in this/VoltageOk {
+	s1;s1;s1;s1;s1;s1;always s1 }
+let s1= this/SteeringAngle . (this/SteeringAngle <: state) in this/Middle {
+	s1;s1;s1;s1;s1;s1;always s1 }
+let s1= no this/OncommingTraffic & this/SignalOn {
+	s1;s1;s1;s1;s1;s1;always s1 }
+let s0= this/CameraState . (this/CameraState <: state) in this/Ready {
+	s0;s0;s0;s0;s0;s0;always s0 }
+let s1= this/DriverPosition not in Variant {
+	s1 }
+let s1= this/ArmoredVehicle not in Variant {
+	s1 }
+let s1= this/EU in Variant {
+	s1 }
 after {
-	let s1= no this/BrakeLight & this/SignalOn |
-	s1;s1;s1;s1;s1;s1;always s1
-	let s1= this/BlinkLeft . (this/Blink <: state) in this/Off |
-	s1;s1;s1;s1;s1;s1;always s1
-	let s1= this/BlinkRight . (this/Blink <: state) in this/Off |
-	s1;s1;s1;s1;s1;s1;always s1
-	let s0= this/LowBeamLeft . (this/Beam <: state) in this/Full, s1= this/LowBeamLeft . (this/Beam <: state) in this/Off |
-	s1;s1;s1;s0;s0;s0;always s0
-	let s0= this/LowBeamRight . (this/Beam <: state) in this/Full, s1= this/LowBeamRight . (this/Beam <: state) in this/Off |
-	s1;s1;s1;s0;s0;s0;always s0
-	let s0= this/TailLampLeft . (this/Beam <: state) in this/Full, s1= this/TailLampLeft . (this/Beam <: state) in this/Off |
-	s1;s1;s1;s0;s0;s0;always s0
-	let s0= this/TailLampRight . (this/Beam <: state) in this/Full, s1= this/TailLampRight . (this/Beam <: state) in this/Off |
-	s1;s1;s1;s0;s0;s0;always s0
-	let s0= some this/HighBeamOn & this/SignalOn, s1= no this/HighBeamOn & this/SignalOn |
-	s1;s1;s1;s0;s1;s0;always s1
-	let s1= this/HighBeamRange . (this/HighBeamRange <: state) in this/HFull, s0= this/HighBeamRange . (this/HighBeamRange <: state) in this/HOff |
-	s0;s0;s0;s1;s0;s1;always s0
-	let s0= this/HighBeamMotor . (this/HighBeamMotor <: state) in this/Near, s2= this/HighBeamMotor . (this/HighBeamMotor <: state) in this/Far |
-	s0;s0;s0;s2;s0;s2;always s0
-	let s1= no this/CorneringLightLeft & this/SignalOn |
-	s1;s1;s1;s1;s1;s1;always s1
-	let s1= no this/CorneringLightRight & this/SignalOn |
-	s1;s1;s1;s1;s1;s1;always s1
-	let s1= no this/ReverseLight & this/SignalOn |
-	s1;s1;s1;s1;s1;s1;always s1
+	let s1= no this/BrakeLight & this/SignalOn {
+		s1;s1;s1;s1;s1;s1;always s1 }
+	let s1= this/BlinkLeft . (this/Blink <: state) in this/Off {
+		s1;s1;s1;s1;s1;s1;always s1 }
+	let s1= this/BlinkRight . (this/Blink <: state) in this/Off {
+		s1;s1;s1;s1;s1;s1;always s1 }
+	let s0= this/LowBeamLeft . (this/Beam <: state) in this/Full, s1= this/LowBeamLeft . (this/Beam <: state) in this/Off {
+		s1;s1;s1;s0;s0;s0;always s0 }
+	let s0= this/LowBeamRight . (this/Beam <: state) in this/Full, s1= this/LowBeamRight . (this/Beam <: state) in this/Off {
+		s1;s1;s1;s0;s0;s0;always s0 }
+	let s0= this/TailLampLeft . (this/Beam <: state) in this/Full, s1= this/TailLampLeft . (this/Beam <: state) in this/Off {
+		s1;s1;s1;s0;s0;s0;always s0 }
+	let s0= this/TailLampRight . (this/Beam <: state) in this/Full, s1= this/TailLampRight . (this/Beam <: state) in this/Off {
+		s1;s1;s1;s0;s0;s0;always s0 }
+	let s0= some this/HighBeamOn & this/SignalOn, s1= no this/HighBeamOn & this/SignalOn {
+		s1;s1;s1;s0;s1;s0;always s1 }
+	let s1= this/HighBeamRange . (this/HighBeamRange <: state) in this/HFull, s0= this/HighBeamRange . (this/HighBeamRange <: state) in this/HOff {
+		s0;s0;s0;s1;s0;s1;always s0 }
+	let s0= this/HighBeamMotor . (this/HighBeamMotor <: state) in this/Near, s2= this/HighBeamMotor . (this/HighBeamMotor <: state) in this/Far {
+		s0;s0;s0;s2;s0;s2;always s0 }
+	let s1= no this/CorneringLightLeft & this/SignalOn {
+		s1;s1;s1;s1;s1;s1;always s1 }
+	let s1= no this/CorneringLightRight & this/SignalOn {
+		s1;s1;s1;s1;s1;s1;always s1 }
+	let s1= no this/ReverseLight & this/SignalOn {
+		s1;s1;s1;s1;s1;s1;always s1 }
 }
-} for 6..20 Time
+} for 6..20 steps
 
 run Seq9AutoGenerated {
-let s0= this/KeyState . (this/KeyState <: state) in this/NoKeyInserted, s2= this/KeyState . (this/KeyState <: state) in this/KeyInIgnitionOnPosition |
-s0;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;always s2
-let s2= this/CurrentSpeed . (this/CurrentSpeed <: state) in this/Regular, s3= this/CurrentSpeed . (this/CurrentSpeed <: state) in this/Fast, s0= this/CurrentSpeed . (this/CurrentSpeed <: state) in this/Stopped |
-s0;s0;s2;s2;s2;s3;s3;s3;s3;s3;s3;s3;s3;always s3
-let s0= some this/AllDoorsClosed & this/SignalOn |
-s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0
-let s1= no this/DaytimeLights & this/SignalOn |
-s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-let s1= no this/AmbientLighting & this/SignalOn |
-s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-let s1= this/LightRotarySwitch . (this/LightRotarySwitch <: state) in this/LRSAuto, s2= this/LightRotarySwitch . (this/LightRotarySwitch <: state) in this/LRSOff |
-s2;s2;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-let s1= this/PitmanArmForthBack . (this/PitmanArmForthBack <: state) in this/Backward, s0= this/PitmanArmForthBack . (this/PitmanArmForthBack <: state) in this/ForthBackNeutral |
-s0;s0;s0;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-let s2= this/PitmanArmUpDown . (this/PitmanArmUpDown <: state) in this/UpDownNeutral |
-s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;always s2
-let s1= no this/HazardWarningSwitchOn & this/SignalOn |
-s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-let s1= no this/DarknessModeSwitchOn & this/SignalOn |
-s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-let s0= this/BrightnessSensor . (this/BrightnessSensor <: state) in this/Dark |
-s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0
-let s1= no this/ReverseGear & this/SignalOn |
-s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-let s1= this/VoltageBattery . (this/VoltageBattery <: state) in this/VoltageOk |
-s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-let s1= this/SteeringAngle . (this/SteeringAngle <: state) in this/Middle |
-s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-let s0= some this/OncommingTraffic & this/SignalOn, s1= no this/OncommingTraffic & this/SignalOn |
-s1;s1;s1;s1;s1;s1;s1;s1;s0;s0;s1;s1;s1;always s1
-let s0= this/CameraState . (this/CameraState <: state) in this/Ready |
-s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0
-let s1= this/DriverPosition not in Variant |
-s1
-let s1= this/ArmoredVehicle not in Variant |
-s1
-let s1= this/EU in Variant |
-s1
+let s0= this/KeyState . (this/KeyState <: state) in this/NoKeyInserted, s2= this/KeyState . (this/KeyState <: state) in this/KeyInIgnitionOnPosition {
+	s0;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;always s2 }
+let s2= this/CurrentSpeed . (this/CurrentSpeed <: state) in this/Regular, s3= this/CurrentSpeed . (this/CurrentSpeed <: state) in this/Fast, s0= this/CurrentSpeed . (this/CurrentSpeed <: state) in this/Stopped {
+	s0;s0;s2;s2;s2;s3;s3;s3;s3;s3;s3;s3;s3;always s3 }
+let s0= some this/AllDoorsClosed & this/SignalOn {
+	s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0 }
+let s1= no this/DaytimeLights & this/SignalOn {
+	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+let s1= no this/AmbientLighting & this/SignalOn {
+	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+let s1= this/LightRotarySwitch . (this/LightRotarySwitch <: state) in this/LRSAuto, s2= this/LightRotarySwitch . (this/LightRotarySwitch <: state) in this/LRSOff {
+	s2;s2;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+let s1= this/PitmanArmForthBack . (this/PitmanArmForthBack <: state) in this/Backward, s0= this/PitmanArmForthBack . (this/PitmanArmForthBack <: state) in this/ForthBackNeutral {
+	s0;s0;s0;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+let s2= this/PitmanArmUpDown . (this/PitmanArmUpDown <: state) in this/UpDownNeutral {
+	s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;s2;always s2 }
+let s1= no this/HazardWarningSwitchOn & this/SignalOn {
+	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+let s1= no this/DarknessModeSwitchOn & this/SignalOn {
+	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+let s0= this/BrightnessSensor . (this/BrightnessSensor <: state) in this/Dark {
+	s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0 }
+let s1= no this/ReverseGear & this/SignalOn {
+	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+let s1= this/VoltageBattery . (this/VoltageBattery <: state) in this/VoltageOk {
+	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+let s1= this/SteeringAngle . (this/SteeringAngle <: state) in this/Middle {
+	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+let s0= some this/OncommingTraffic & this/SignalOn, s1= no this/OncommingTraffic & this/SignalOn {
+	s1;s1;s1;s1;s1;s1;s1;s1;s0;s0;s1;s1;s1;always s1 }
+let s0= this/CameraState . (this/CameraState <: state) in this/Ready {
+	s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0 }
+let s1= this/DriverPosition not in Variant {
+	s1 }
+let s1= this/ArmoredVehicle not in Variant {
+	s1 }
+let s1= this/EU in Variant {
+	s1 }
 after {
-	let s1= no this/BrakeLight & this/SignalOn |
-	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-	let s1= this/BlinkLeft . (this/Light <: state) in this/Off |
-	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-	let s1= this/BlinkRight . (this/Light <: state) in this/Off |
-	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-	let s0= this/LowBeamLeft . (this/Light <: state) in this/Full, s1= this/LowBeamLeft . (this/Light <: state) in this/Off |
-	s1;s1;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0
-	let s0= this/LowBeamRight . (this/Light <: state) in this/Full, s1= this/LowBeamRight . (this/Light <: state) in this/Off |
-	s1;s1;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0
-	let s0= this/TailLampLeft . (this/Light <: state) in this/Full, s1= this/TailLampLeft . (this/Light <: state) in this/Off |
-	s1;s1;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0
-	let s0= this/TailLampRight . (this/Light <: state) in this/Full, s1= this/TailLampRight . (this/Light <: state) in this/Off |
-	s1;s1;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0
-	let s0= some this/HighBeamOn & this/SignalOn, s1= no this/HighBeamOn & this/SignalOn |
- 	s1;s1;s1;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0
-	let s1= this/HighBeamRange . (this/HighBeamRange <: state) in this/HFull, s2= this/HighBeamRange . (this/HighBeamRange <: state) in this/HLow, s0= this/HighBeamRange . (this/HighBeamRange <: state) in this/HOff |
-	s0;s0;s0;s0;s0;s1;s1;s1;s2;s2;s2;s2;s1;always s1 // no support for arithmetics, so 3 states changed into s1
-	let s0= this/HighBeamMotor . (this/HighBeamMotor <: state) in this/Near, s2= this/HighBeamMotor . (this/HighBeamMotor <: state) in this/Far, s1= this/HighBeamMotor . (this/HighBeamMotor <: state) in this/Mid |
-	s0;s0;s0;s0;s0;s2;s2;s2;s0;s0;s0;s0;s2;always s2 // no support for arithmetics, so 3 states changed into s2, and all s1 into s0
-	let s1= no this/CorneringLightLeft & this/SignalOn |
-	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-	let s1= no this/CorneringLightRight & this/SignalOn |
-	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
-	let s1= no this/ReverseLight & this/SignalOn |
-	s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1
+	let s1= no this/BrakeLight & this/SignalOn {
+		s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+	let s1= this/BlinkLeft . (this/Light <: state) in this/Off {
+		s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+	let s1= this/BlinkRight . (this/Light <: state) in this/Off {
+		s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+	let s0= this/LowBeamLeft . (this/Light <: state) in this/Full, s1= this/LowBeamLeft . (this/Light <: state) in this/Off {
+		s1;s1;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0 }
+	let s0= this/LowBeamRight . (this/Light <: state) in this/Full, s1= this/LowBeamRight . (this/Light <: state) in this/Off {
+		s1;s1;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0 }
+	let s0= this/TailLampLeft . (this/Light <: state) in this/Full, s1= this/TailLampLeft . (this/Light <: state) in this/Off {
+		s1;s1;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0 }
+	let s0= this/TailLampRight . (this/Light <: state) in this/Full, s1= this/TailLampRight . (this/Light <: state) in this/Off {
+		s1;s1;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0 }
+	let s0= some this/HighBeamOn & this/SignalOn, s1= no this/HighBeamOn & this/SignalOn {
+	 	s1;s1;s1;s0;s0;s0;s0;s0;s0;s0;s0;s0;s0;always s0 }
+	let s1= this/HighBeamRange . (this/HighBeamRange <: state) in this/HFull, s2= this/HighBeamRange . (this/HighBeamRange <: state) in this/HLow, s0= this/HighBeamRange . (this/HighBeamRange <: state) in this/HOff {
+		s0;s0;s0;s0;s0;s1;s1;s1;s2;s2;s2;s2;s1;always s1 } // no support for arithmetics, so 3 states changed into s1
+	let s0= this/HighBeamMotor . (this/HighBeamMotor <: state) in this/Near, s2= this/HighBeamMotor . (this/HighBeamMotor <: state) in this/Far, s1= this/HighBeamMotor . (this/HighBeamMotor <: state) in this/Mid {
+		s0;s0;s0;s0;s0;s2;s2;s2;s0;s0;s0;s0;s2;always s2 } // no support for arithmetics, so 3 states changed into s2, and all s1 into s0
+	let s1= no this/CorneringLightLeft & this/SignalOn {
+		s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+	let s1= no this/CorneringLightRight & this/SignalOn {
+		s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
+	let s1= no this/ReverseLight & this/SignalOn {
+		s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;s1;always s1 }
 }
-} for 12..20 Time
+} for 12..20 steps
 
 
 /** 
@@ -1869,7 +1879,7 @@ check ELS1 { // abstracted: 1Hz frequency
 	always (HazardWarningSwitchOn not in SignalOn and KeyState.state in KeyInIgnitionOnPosition) implies
 		// either it stays on dark cycle, or it changes mode correctly
 		always ((PitmanArmUpDown.state = Downward7 and some Blink.state & OffC and no Blink.state' & OffC) implies (BlinkLeft.state' in Full and eventually BlinkLeft.state' in Off)) // due to cycles
-} for 15 Time
+} for 15 steps
 
 check ELS2 { // abstracted: actual 0.5s pitarm event
 	// avoid conflict with ELS3 and ELS7
@@ -1880,26 +1890,26 @@ check ELS2 { // abstracted: actual 0.5s pitarm event
 		       BlinkLeft.state' in Full and eventually (BlinkLeft.state' in Off and eventually (
 			  BlinkLeft.state' in Full and eventually BlinkLeft.state' in Off)))))
 	))
-} for 15 Time
+} for 15 steps
 
 check ELS3 {
 	always ( // left blinker no longer in tip-blinking (or propagates)
 		(BlinkLeft.state in Cycle3+Cycle2+Cycle1 and after always (HazardWarningSwitchOn in SignalOn or PitmanArmUpDown.state in (Upward5+Upward7))) implies 
 			always (BlinkLeft.state'=BlinkLeft.state or BlinkLeft.state' not in Cycle3+Cycle2+Cycle1)
 	)
-} for 15 Time
+} for 15 steps
 
 check ELS4 { // abstracted: actual 0.5s pitarm event
 	always (HazardWarningSwitchOn not in SignalOn and KeyState.state in KeyInIgnitionOnPosition) implies
 		let pre = PitmanArmUpDown.state in Downward5P |
 			always (pre implies ((BlinkLeft.state' in Dark4+Cycle3+Cycle1+Dark1 until not pre) or always pre))
-} for 15 Time
+} for 15 steps
 
 check ELS5a {
 	always (HazardWarningSwitchOn not in SignalOn and KeyState.state in KeyInIgnitionOnPosition) implies
 		// either it stays on dark cycle, or it changes mode correctly
 		always ((PitmanArmUpDown.state = Upward7 and some Blink.state & OffC and no Blink.state' & OffC) implies (BlinkRight.state' in Full and eventually BlinkRight.state' in Off)) // due to cycles
-} for 15 Time
+} for 15 steps
 
 check ELS5b {
 	always (HazardWarningSwitchOn not in SignalOn and KeyState.state in KeyInIgnitionOnPosition) implies
@@ -1909,20 +1919,20 @@ check ELS5b {
 		       BlinkRight.state' in Full and eventually (BlinkRight.state' in Off and eventually (
 			  BlinkRight.state' in Full and eventually BlinkRight.state' in Off)))))
 		))
-} for 15 Time
+} for 15 steps
 
 check ELS5c {
 	always ( // right blinker no longer in tip-blinking (or propagates)
 		(BlinkRight.state in Cycle3+Cycle2+Cycle1 and after always (HazardWarningSwitchOn in SignalOn or PitmanArmUpDown.state in (Downward5+Downward7))) implies 
 			always (BlinkRight.state'=BlinkRight.state or BlinkRight.state' not in Cycle3+Cycle2+Cycle1)
 	)
-} for 15 Time
+} for 15 steps
 
 check ELS5d {
 	always (HazardWarningSwitchOn not in SignalOn and KeyState.state in KeyInIgnitionOnPosition) implies
 		let pre = PitmanArmUpDown.state in Upward5P |
 			always (pre implies ((BlinkRight.state' in Dark4+Cycle3+Dark3+Cycle2+Dark2+Cycle1+Dark1 until not pre) or always pre))
-} for 15 Time
+} for 15 steps
 
 check ELS6 {
 	some (USA+Canada)&Variant implies // this assumes that if the low beams are on due to the light rotary switch, then they are not affected (ELS-14)
@@ -1930,7 +1940,7 @@ check ELS6 {
 			always ((DaytimeLights in SignalOn and BlinkLeft.state' in Full) implies LowBeamLeft.state' in Half)
 			always ((DaytimeLights in SignalOn and BlinkRight.state' in Full) implies LowBeamRight.state' in Half)		
 	}
-} for 15 Time
+} for 15 steps
 
 check ELS7 {
 	always (HazardWarningSwitchOn not in SignalOn and KeyState.state in KeyInIgnitionOnPosition) implies {
@@ -1940,18 +1950,18 @@ check ELS7 {
 		always ((BlinkRight.state in Dark3+Dark2+Dark1 and PitmanArmUpDown.state in Upward7 and BlinkRight.state!=BlinkRight.state') implies eventually BlinkRight.state in On)
 		always ((BlinkRight.state in Dark3+Dark2+Dark1 and PitmanArmUpDown.state in Upward5T and PitmanArmUpDown.state' not in Upward5T and BlinkRight.state!=BlinkRight.state') implies eventually BlinkRight.state in Cycle3+Dark4)
 	}
-} for 15 Time
+} for 15 steps
 
 check ELS8 {
 	 // distinction needs ELS9 due to delays
 	always ((HazardWarningSwitchOn in SignalOn and Blink.state in Full+Half) implies
 		(((Blink.state in Full+Half or Blink.state in OffC) until HazardWarningSwitchOn not in SignalOn) or always HazardWarningSwitchOn in SignalOn))
-} for 15 Time
+} for 15 steps
 
 check ELS9 { 
 	let s = HazardWarningSwitchOn in SignalOn and KeyState.state in NoKeyInserted |
 	always ((always s) implies eventually (Blink.state in Half))
-} for 15 Time
+} for 15 steps
 
 // ELS10 refers to the duration of a flashing cycle, abstracted
 
@@ -1960,46 +1970,46 @@ check ELS11 {
 		always (BlinkLeft.state in Full+Half and BlinkLeft.state!=BlinkLeft.state' implies BlinkLeft.state' in Off)
 		always (BlinkRight.state in Full+Half and BlinkRight.state!=BlinkRight.state' implies BlinkRight.state' in Off)
 	}
-} for 15 Time
+} for 15 steps
 
 check ELS12 {
 	always (KeyState.state in KeyInIgnitionOnPosition) implies {
 		always ((before HazardWarningSwitchOn in SignalOn and HazardWarningSwitchOn not in SignalOn and PitmanArmUpDown.state in Downward7 and Blink.state in OffP and BlinkLeft.state!=BlinkLeft.state') implies after BlinkLeft.state in Full)
 		always ((before HazardWarningSwitchOn in SignalOn and HazardWarningSwitchOn not in SignalOn and PitmanArmUpDown.state in Upward7 and Blink.state in OffP and BlinkRight.state!=BlinkLeft.state') implies after BlinkRight.state in Full)
 	}
-} for 15 Time
+} for 15 steps
 
 check ELS13 {
 	always (HazardWarningSwitchOn in SignalOn implies {
 		(BlinkLeft.state'!=BlinkLeft.state implies BlinkLeft.state' not in Cycle3+Cycle2+Cycle1+Dark4+Dark3+Dark2+Dark1)
 		(BlinkRight.state'!=BlinkRight.state implies BlinkRight.state' not in Cycle3+Cycle2+Cycle1+Dark4+Dark3+Dark2+Dark1)
 	})
-} for 15 Time
+} for 15 steps
 
 check ELS14 {
 	always ((KeyState.state in KeyInIgnitionOnPosition and LightRotarySwitch.state in LRSOn) implies LowBeam.state' in Full)
-} for 15 Time
+} for 15 steps
 
 check ELS15 {
 	always (AmbientLighting not in SignalOn) implies
 		always ((KeyState.state in KeyInserted and (before LightRotarySwitch.state not in LRSOn) and LightRotarySwitch.state in LRSOn) implies LowBeam.state' in Half)
-} for 15 Time
+} for 15 steps
 
 check ELS16 {
 	always ((KeyState.state in NoKeyInserted and LightRotarySwitch.state in LRSAuto and AmbientLighting not in SignalOn) implies LowBeam.state' in Off)
-} for 15 Time
+} for 15 steps
 
 check ELS17 {
 	always (AmbientLighting not in SignalOn and DaytimeLights in SignalOn) implies
 		always (KeyState.state in KeyInIgnitionOnPosition implies ((LowBeam.state' in Full+Half until KeyState.state not in KeyInIgnitionOnPosition) or always KeyState.state in KeyInIgnitionOnPosition))
-} for 15 Time
+} for 15 steps
 
 check ELS18 { // abstracted: actual 3s duration
 	always ((LightRotarySwitch.state in LRSAuto and KeyState.state in KeyInIgnitionOnPosition and BrightnessSensor.state = Dark) implies LowBeam.state' in Full+Half)
 
 	always (AmbientLighting not in SignalOn and DaytimeLights not in SignalOn) implies
 		always ((LightRotarySwitch.state in LRSAuto and KeyState.state in KeyInIgnitionOnPosition and BrightnessSensor.state = Bright and LowBeam.state' != Temp) implies LowBeam.state' in Off)
-} for 15 Time
+} for 15 steps
 
 check ELS19 { // abstracted: actual 30s duration
 	always ((not (ArmoredVehicle in Variant and DarknessModeSwitchOn in SignalOn') and VoltageBattery.state' not in Subvoltage and AmbientLighting in SignalOn' and KeyState.state in KeyInIgnitionOnPosition and not KeyState.state' in KeyInIgnitionOnPosition and BrightnessSensor.state' = Dark) implies
@@ -2010,12 +2020,12 @@ check ELS19 { // abstracted: actual 30s duration
 
 	always ((not (ArmoredVehicle in Variant and DarknessModeSwitchOn in SignalOn') and VoltageBattery.state' not in Subvoltage and AmbientLighting in SignalOn' and KeyState.state' not in KeyInIgnitionOnPosition and KeyState.state not in KeyState.state' and LowBeam.state' in Temp) implies
 		 LowBeam.state'' in Temp)
-} for 15 Time
+} for 15 steps
 
 check ELS21 {
 	// ambient lights identified by Temp while engine off
 	always ((ArmoredVehicle in Variant and DarknessModeSwitchOn in SignalOn and KeyState.state not in KeyInIgnitionOnPosition) implies LowBeam.state' not in Temp)
-} for 15 Time
+} for 15 steps
 
 check ELS22 {
 	// unless blinking in USA/Canada (ELS-23)
@@ -2027,34 +2037,34 @@ check ELS22 {
 		always ((LowBeamLeft.state not in Off or HighBeamOn in SignalOn) implies (TailLampLeft.state not in Off or BlinkLeft.state not in OffP))
 		always ((LowBeamRight.state not in Off or HighBeamOn in SignalOn) implies (TailLampRight.state not in Off or BlinkRight.state not in OffP))
 	}
-} for 15 Time
+} for 15 steps
 
 check ELS23 {
 	some (USA+Canada)&Variant implies {
 		always BlinkLeft.state not in OffP implies TailLampLeft.state in BlinkLeft.state
 		always BlinkRight.state not in OffP implies TailLampRight.state in BlinkRight.state
 	}
-} for 15 Time
+} for 15 steps
 
 // fade-out period has not been implemented (for simplicity)
 check ELS24 { // abstracted: actual 5s duration
 	// it was not clear whether "stopped" speed should be included, but would break sequence 1
 	always ((LowBeam.state in Full+Half and PitmanArmUpDown.state in Downward7 and CurrentSpeed.state in Slow and not (ArmoredVehicle in Variant and DarknessModeSwitchOn in SignalOn) and VoltageBattery.state not in Subvoltage) implies CorneringLightLeft in SignalOn')
 	always ((LowBeam.state in Full+Half and PitmanArmUpDown.state in Upward7 and CurrentSpeed.state in Slow and not (ArmoredVehicle in Variant and DarknessModeSwitchOn in SignalOn) and VoltageBattery.state not in Subvoltage) implies CorneringLightRight in SignalOn')
-} for 15 Time
+} for 15 steps
 
 check ELS25 {
 	always ((ArmoredVehicle in Variant and DarknessModeSwitchOn in SignalOn) implies no CorneringLightLeft&SignalOn')
-} for 15 Time
+} for 15 steps
 
 check ELS26 {
 	always ((LowBeam.state in Full+Half and SteeringAngle.state = Left and CurrentSpeed.state in Slow and not (ArmoredVehicle in Variant and DarknessModeSwitchOn in SignalOn) and VoltageBattery.state not in Subvoltage) implies CorneringLightLeft in SignalOn')
 	always ((LowBeam.state in Full+Half and SteeringAngle.state = Right and CurrentSpeed.state in Slow and not (ArmoredVehicle in Variant and DarknessModeSwitchOn in SignalOn) and VoltageBattery.state not in Subvoltage) implies CorneringLightRight in SignalOn')
-} for 15 Time
+} for 15 steps
 
 check ELS27 {
 	always ((ReverseGear in SignalOn and not (ArmoredVehicle in Variant and DarknessModeSwitchOn in SignalOn) and VoltageBattery.state not in Subvoltage) implies CorneringLight in SignalOn')
-} for 15 Time
+} for 15 steps
 
 check ELS28 {
 	// unless blinking in USA/Canada (ELS-23)
@@ -2066,80 +2076,80 @@ check ELS28 {
 		always ((KeyState.state in NoKeyInserted and LightRotarySwitch.state in LRSOn and PitmanArmUpDown.state in Downward7 and AmbientLighting not in SignalOn and VoltageBattery.state not in Subvoltage) implies (LowBeamLeft.state'+TailLampLeft.state' in Low or BlinkLeft.state' not in OffP))
 		always ((KeyState.state in NoKeyInserted and LightRotarySwitch.state in LRSOn and PitmanArmUpDown.state in Upward7 and AmbientLighting not in SignalOn and VoltageBattery.state not in Subvoltage) implies (LowBeamRight.state'+TailLampRight.state' in Low or BlinkRight.state' not in OffP)) 
 	}
-} for 15 Time
+} for 15 steps
 
 // ELS29 refers to the concrete value of full beam intensity, abstracted
 
 check ELS30 {
 	always (PitmanArmForthBack.state in Forward implies (HighBeamOn in SignalOn' and HighBeamMotor.state' in Far and HighBeamRange.state' in HFull))
-} for 15 Time
+} for 15 steps
 
 check ELS31 {
 	always ((PitmanArmForthBack.state in Backward and LightRotarySwitch.state in LRSOn) implies (HighBeamOn in SignalOn' and HighBeamMotor.state' in Far and HighBeamRange.state' in HFull))
-} for 15 Time
+} for 15 steps
 
 check ELS32 {
 	always ((PitmanArmForthBack.state in Backward and LightRotarySwitch.state in LRSAuto) implies HighBeamOn in SignalOn')
-} for 15 Time
+} for 15 steps
 
 // arithmetic operations not supported
 check ELS33 { // abstracted: actual 2s delay
 	always (always (PitmanArmForthBack.state in Backward and OncommingTraffic not in SignalOn and CurrentSpeed.state in Fast and LightRotarySwitch.state in LRSAuto) implies eventually (HighBeamMotor.state in Far and HighBeamRange.state in HFull))
-} for 15 Time
+} for 15 steps
 
 // 0.5s delay period has not been implemented (for simplicity)
 check ELS34 {
 	always ((PitmanArmForthBack.state in Backward and OncommingTraffic in SignalOn and LightRotarySwitch.state in LRSAuto and CameraState.state in Ready) implies (HighBeamMotor.state' in Near and HighBeamRange.state' in HLowP))
-} for 15 Time
+} for 15 steps
 
 check ELS35 { // abstracted: actual 2s delay
 	always ((PitmanArmForthBack.state in Backward and before OncommingTraffic in SignalOn and OncommingTraffic not in SignalOn and LightRotarySwitch.state in LRSAuto and HighBeamRange.state in HLowT) implies (HighBeamMotor.state' in Far and HighBeamRange.state' in HFull))
-} for 15 Time
+} for 15 steps
 
 check ELS38 {
 	always (PitmanArmForthBack.state in ForthBackNeutral implies HighBeamOn not in SignalOn')
-} for 15 Time
+} for 15 steps
 
 check ELS39 {
 	always (BrakePedal.state in Some+Max implies after (BrakePedal.state in Zero+Min releases BrakeLight in SignalOn))
-} for 15 Time
+} for 15 steps
 
 // the actual blinking has not been implemented (for simplicity)
 check ELS40 {
 	always (BrakePedal.state = Max implies after (BrakePedal.state = Zero releases some BrakeLightBlinking))
 	always (some BrakeLightBlinking implies BrakeLight in SignalOn)
-} for 15 Time
+} for 15 steps
 
 check ELS41 {
 	always (ReverseGear in SignalOn implies ReverseLight in SignalOn')
-} for 15 Time
+} for 15 steps
 
 // ELS42 refers to the concrete value of subvoltage, abstracted
 
 check ELS43 {
 	always (PitmanArmForthBack.state in Backward and LightRotarySwitch.state in LRSAuto and VoltageBattery.state in Subvoltage) implies (HighBeamOn in SignalOn')
-} for 15 Time
+} for 15 steps
 
 check ELS44 {
 	// ambient lights identified by Temp while engine off
 	always ((VoltageBattery.state in Subvoltage and KeyState.state not in KeyInIgnitionOnPosition) implies LowBeam.state' not in Temp)
-} for 15 Time
+} for 15 steps
 
 check ELS45 {
 	always (VoltageBattery.state in Subvoltage implies no CorneringLight&SignalOn')
-} for 15 Time
+} for 15 steps
 
 check ELS46 {
 	// parking light is identified by a Low beam intensity
 	VoltageBattery.state in Subvoltage implies no (LowBeam.state'+TailLamp.state')&Low
-} for 15 Time
+} for 15 steps
 
 // ELS47 requires arithmetic operations to reduce beam power, not supported (could be abstracted by reducing full power beams)
 // ELS48 requires arithmetic operations high beam illumination, not supported
 
 check ELS49 {
 	always ((PitmanArmForthBack.state in Backward and LightRotarySwitch.state in LRSAuto and CameraState.state not in Ready) implies (HighBeamOn in SignalOn' and HighBeamMotor.state' in Far and HighBeamRange.state' in HFull))
-} for 15 Time
+} for 15 steps
 
 
 /** 
