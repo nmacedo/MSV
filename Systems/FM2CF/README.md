@@ -5,10 +5,9 @@ A very minimal example related to SPL engineering.
 ### FM2CFs
 The [fm2cfs.qvtr](Resources/fm2cfs.qvtr) transformation is a (very) simplified SPL scenario between a feature model and 2 system configurations.
 
-The Alloy models demonstrate a solver-based apprach to multidirectional transformations.
-
-#### Overview
 Every mandatory feature on the feature model must be present in the configurations, while every feature selected in the configuration must belong to the feature model.
+
+The provided Alloy models provide an encoding of the class diagram and database schemes and of the QVT-r transformation, demonstrating a solver-based approach to multidirectional transformations. An instantiation for a particular transformation example, described below, is also provided.
 
 #### Meta-models
 | [FM.ecore](Resources/FM.ecore) for feature models | [CF.ecore](Resources/CF.ecore) for the first configuration | [CF.ecore](Resources/CF.ecore) for the second configuration |
@@ -21,7 +20,7 @@ Every mandatory feature on the feature model must be present in the configuratio
 
 ### History
 * This example has been used to illustrate the BX'14 *[Towards a framework for multi-directional model transformations](http://nmacedo.github.io/pubs.html#bx14)* paper and N. Macedo's *[PhD Thesis](http://nmacedo.github.io/pubs.html#phd14)*.
-* All models have been developed and analyzed under the *Alloy Analyzer 4.2_2012-09-25*, and subsequently tested for support under version *4.2_2015-02-22*.
+* All models have been developed and analyzed under the *Alloy Analyzer 4.2_2012-09-25*, and subsequently tested for support under version *5.0.0.201804081720*.
 
 ---
 
