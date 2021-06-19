@@ -3,8 +3,9 @@
 ### UML2RDBMS
 The [uml2rdbms_simple.qvtr](Resources/uml2rdbms_simple.qvtr) transformation is a (very) simplified version of the classical object-relational mapping, between class diagrams and database schemes, used as a running example in the QVT standard.
 
-#### Overview
 Every persistent Class on the UML class diagram is matched to a Table in the relational database scheme, with a Column for every Attribute, including those inherited from super-classes.
+
+The provided Alloy models provide an encoding of the class diagram and database schemes, of the bidirectional transformation, as well as the encoding of a particular transformation example, described below.
 
 #### Meta-models
 | [UML.ecore](Resources/UML.ecore) for UML class diagrams | [RDBMS.ecore](Resources/RDBMS.ecore) for relational database schemes |
@@ -21,7 +22,7 @@ Every persistent Class on the UML class diagram is matched to a Table in the rel
 * This example has been used to illustrate the SoSyM *[Least-change bidirectional model transformation with QVT-R and ATL](http://nmacedo.github.io/pubs.html#sosym16)* and FASE'13 *[Implementing QVT-R bidirectional model transformations using Alloy](http://nmacedo.github.io/pubs.html#fase13)* papers, and N. Macedo's *[PhD Thesis](http://nmacedo.github.io/pubs.html#phd14)*.
 * A version with [associations and keys](../CD2DBS_keys) has been used to illustrate the ASE'13 *[Model repair and transformation with Echo](http://nmacedo.github.io/pubs.html#ase13)* paper.
 * The [benchmarks](Resources/Benchmarks) procedurally generated to evaluate the SAT-based bidirectional transformation approach are also from this example.
-* All models have been developed and analyzed under the *Alloy Analyzer 4.2_2012-09-25*, and subsequently tested for support under version *4.2_2015-02-22*.
+* All models have been developed and analyzed under the *Alloy Analyzer 4.2_2012-09-25*, and subsequently tested for support under version *5.0.0.201804081720*.
 
 <!-- Warning: resource URIs -->
 
