@@ -5,7 +5,7 @@ The [uml2rdbms_simple.qvtr](Resources/uml2rdbms_simple.qvtr) transformation is a
 
 Every persistent Class on the UML class diagram is matched to a Table in the relational database scheme, with a Column for every Attribute, including those inherited from super-classes.
 
-The provided Alloy models provide an encoding of the class diagram and database schemes and of the bidirectional transformation. An instantiation for a particular transformation example, described below, is also provided.
+The provided Alloy models provide an encoding of the class diagram and database schemes and of the QVT-r transformation, demonstrating a solver-based approach to bidirectional transformations. An instantiation for a particular transformation example, described below, is also provided.
 
 #### Meta-models
 | [UML.ecore](Resources/UML.ecore) for UML class diagrams | [RDBMS.ecore](Resources/RDBMS.ecore) for relational database schemes |
