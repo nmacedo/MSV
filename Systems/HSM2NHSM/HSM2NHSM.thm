@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<alloy>
+
+<view nodetheme="Martha">
+
+<projection> <type name="H2N/Model"/> </projection>
+
+<defaultnode/>
+
+<defaultedge/>
+
+<node>
+   <type name="C"/>
+   <type name="HSM"/>
+   <type name="HSM&apos;"/>
+   <type name="Int"/>
+   <type name="NM"/>
+   <type name="NSM"/>
+   <type name="S1"/>
+   <type name="S2"/>
+   <type name="S3"/>
+   <type name="S4"/>
+   <type name="S5"/>
+   <type name="SM"/>
+   <type name="T1"/>
+   <type name="T2"/>
+   <type name="T3"/>
+   <type name="univ"/>
+   <type name="H2N/Source"/>
+   <type name="H2N/Target"/>
+   <type name="seq/Int"/>
+</node>
+
+<node showlabel="no">
+   <set name="CompositeState_" type="H2N/HSM/CompositeState"/>
+</node>
+
+<node style="Bold">
+   <type name="H2N/HSM/CompositeState"/>
+</node>
+
+<node visible="no">
+   <type name="String"/>
+   <type name="H2N/Model"/>
+</node>
+
+<node visible="no" shape="Ellipse">
+   <type name="H2N/HSM/State"/>
+   <type name="H2N/NHSM/State"/>
+</node>
+
+<node visible="no" shape="House" color="Blue">
+   <type name="H2N/HSM/Transition"/>
+   <type name="H2N/NHSM/Transition"/>
+</node>
+
+<node visible="no" shape="Trapezoid">
+   <type name="H2N/HSM/SMachine"/>
+   <type name="H2N/NHSM/SMachine"/>
+</node>
+
+<node visible="yes" showlabel="no">
+   <set name="SMachine_" type="H2N/HSM/SMachine"/>
+   <set name="SMachine_" type="H2N/NHSM/SMachine"/>
+   <set name="State_" type="H2N/HSM/State"/>
+   <set name="State_" type="H2N/NHSM/State"/>
+   <set name="Transition_" type="H2N/HSM/Transition"/>
+   <set name="Transition_" type="H2N/NHSM/Transition"/>
+</node>
+
+<edge visible="no" attribute="yes">
+   <relation name="name"> <type name="H2N/HSM/SMachine"/> <type name="String"/> </relation>
+   <relation name="name"> <type name="H2N/HSM/State"/> <type name="String"/> </relation>
+   <relation name="name"> <type name="H2N/NHSM/SMachine"/> <type name="String"/> </relation>
+   <relation name="name"> <type name="H2N/NHSM/State"/> <type name="String"/> </relation>
+</edge>
+
+</view>
+
+</alloy>
