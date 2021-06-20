@@ -1,4 +1,4 @@
-# I am my own grandpa (Alloy)
+# I am my own grandpa
 
 A model of the song "I Am My Own Grandpa" by Dwight B. Latham and Moe Jaffe.
 
