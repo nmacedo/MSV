@@ -2,6 +2,10 @@
 
 A simple adaptation of the hotel room locking system model that comes packaged with the Alloy Analyzer, proposed by D. Jackson in _Software Abstractions: Logic, Language, and Analysis_.
 
+###
+
+These models were developed with the goal of exploring analysis rich in structural and behavioural constraints.
+
 #### Structural model
 * the universe of guests and rooms is variable;
 * the number of keys is exact and must form a total order;
@@ -22,6 +26,8 @@ The original Alloy model considers a variable universe for guests and rooms. Thi
 
 ### Development history
 * The original model, by Daniel Jackson, is a running example in the book *Software Abstractions: Logic, Language, and Analysis* and is distributed with the Alloy Analyzer.
+* The Alloy, B and TLA+ models were developed for the paper [_Alloy meets TLA+: An exploratory study_](http://macedo.github.io/pubs/CoRR16.pdf), and used as running examples and in the benchmarks.
+* The Electrum model were developed for the paper [_Lightweight specification and analysis of dynamic systems with rich configurations_](http://macedo.github.io/pubs/FSE16.pdf), and used as running examples and in the benchmarks.
 * Models for fixed configurations are also available [here](../HotelLocking_fixcfg), that require only dynamic analysis.
 
 ---
