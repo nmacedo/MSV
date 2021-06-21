@@ -2,10 +2,12 @@
 
 A very minimal example related to SPL engineering.
 
-### FM2CFs
+### Description
 The [fm2cfs.qvtr](Resources/fm2cfs.qvtr) transformation is a (very) simplified SPL scenario between a feature model and 2 system configurations.
 
 Every mandatory feature on the feature model must be present in the configurations, while every feature selected in the configuration must belong to the feature model.
+
+Meta-models and models are specified in the Eclipse Modelling Framework (EMF).
 
 The provided Alloy models provide an encoding of the class diagram and database schemes and of the QVT-r transformation, demonstrating a solver-based approach to multidirectional transformations. An instantiation for a particular transformation example, described below, is also provided.
 
