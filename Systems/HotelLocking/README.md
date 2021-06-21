@@ -2,8 +2,6 @@
 
 A simple adaptation of the hotel room locking system model that comes packaged with the Alloy Analyzer, proposed by D. Jackson in _Software Abstractions: Logic, Language, and Analysis_.
 
-<http://alloy.mit.edu/alloy/download.html>
-
 #### Structural model
 * the universe of guests and rooms is variable;
 * the number of keys is exact and must form a total order;
@@ -20,6 +18,7 @@ A simple adaptation of the hotel room locking system model that comes packaged w
 * Safety: can a guest other than the room's occupant enter that room?
 
 _Comments:_
+* The original model, by Daniel Jackson, is a running example in the book *Software Abstractions: Logic, Language, and Analysis* and is distributed with the Alloy Analyzer.
 * The specification is broken depending on whether a "no intervening" constraint is enforced.
 * The original Alloy model considers a variable scope for guests and rooms. This encumbers other model checkers, so an alternative version with exact scopes is provided (files with `exact` suffix).
 
