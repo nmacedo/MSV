@@ -1,12 +1,14 @@
 # Company human resources synchronization (minimal)
 
-### WorldToCompany
-
 A very minimal example for company human resources synchronization.
+
+### Description
 
 The [WorldToCompany.atl](Resources/WorldToCompany.atl) transformation is a (very) simplified transformation between person and employees registers.
 
-Every person is mapped to a emplyee with the same name, which additionally have salaries.
+Meta-models and models are specified in the Eclipse Modelling Framework (EMF).
+
+Every person is mapped to a employee with the same name, which additionally have salaries.
 
 #### Meta-models
 | [World.ecore](Resources/World.ecore) for world models | [Company.ecore](Resources/Company.ecore) for company models |
