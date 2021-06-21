@@ -16,12 +16,11 @@ A simple adaptation of the hotel room locking system model that comes packaged w
 
 #### Specification
 * Safety: can a guest other than the room's occupant enter that room?
+* The property only holds if a "no intervening" constraint is enforced.
 
 _Comments:_
 * The original model, by Daniel Jackson, is a running example in the book *Software Abstractions: Logic, Language, and Analysis* and is distributed with the Alloy Analyzer.
-* The specification is broken depending on whether a "no intervening" constraint is enforced.
-* The original Alloy model considers a variable scope for guests and rooms. This encumbers other model checkers, so an alternative version with exact scopes is provided (files with `exact` suffix).
-
+* The original Alloy model considers a variable universe for guests and rooms. This encumbers other model checkers, so an alternative version with exact scopes is provided [here](../HotelLocking_fixcfg).
 ---
 
 * Language: [[Alloy](https://github.com/nmacedo/MSV/wiki/By-Language#alloy)] [[TLA+](https://github.com/nmacedo/MSV/wiki/By-Language#tla)] [[Electrum](https://github.com/nmacedo/MSV/wiki/By-Language#electrum)] [[B](https://github.com/nmacedo/MSV/wiki/By-Language#b)]
