@@ -21,7 +21,7 @@ A simple adaptation of the hotel room locking system model that comes packaged w
 _Comments:_
 * The original model, by Daniel Jackson, is a running example in the book *Software Abstractions: Logic, Language, and Analysis* and is distributed with the Alloy Analyzer.
 * The original Alloy model considers a variable universe for guests and rooms. This encumbers other model checkers, so an alternative version with exact scopes is provided (models with suffix `exact`).
-* Modes for fixed configurations are also available [here](../HotelLocking_fixcfg), that require only dynamic analysis.
+* Models for fixed configurations are also available [here](../HotelLocking_fixcfg), that require only dynamic analysis.
 
 ---
 
