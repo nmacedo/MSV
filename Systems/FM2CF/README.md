@@ -3,7 +3,7 @@
 A very minimal example related to SPL engineering.
 
 ### Description
-The [fm2cfs.qvtr](Resources/fm2cfs.qvtr) transformation is a (very) simplified SPL scenario between a feature model and 2 system configurations.
+The [fm2cfs.qvtr](Resources/fm2cfs.qvtr) transformation is a (very) simplified Software Product Line (SPL) development scenario between a feature model and 2 system configurations.
 
 Every mandatory feature on the feature model must be present in the configurations, while every feature selected in the configuration must belong to the feature model.
 
