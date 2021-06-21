@@ -1,6 +1,12 @@
-# I am my own grandpa
+# I'm my own grandpa
 
-A model of the song "I Am My Own Grandpa" by Dwight B. Latham and Moe Jaffe, with minor adaptations from the model that comes packaged with the Alloy Analyzer, proposed by D. Jackson in _Software Abstractions: Logic, Language, and Analysis_.
+Models for solving the "I'm My Own Grandpa" riddle.
+
+### Description
+
+A model of the song "[I'm My Own Grandpa](https://en.wikipedia.org/wiki/I%27m_My_Own_Grandpa)" by Dwight B. Latham and Moe Jaffe, with minor adaptations from the model that comes packaged with the Alloy Analyzer, proposed by D. Jackson in _Software Abstractions: Logic, Language, and Analysis_.
+
+The models try to solve whether it is possible for someone to be their own grandpa, given different assumptions.
 
 ### Development history
 * The original model, by Daniel Jackson, is a running example in the book *Software Abstractions: Logic, Language, and Analysis* and is distributed with the Alloy Analyzer.
