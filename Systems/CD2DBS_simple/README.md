@@ -17,7 +17,7 @@ The provided Alloy models provide an encoding of the class diagram and database 
 | --- | --- |
 | <img src="Resources/images/UML_company.png" alt="UML company" width="90%" align="middle"/> | <img src="Resources/images/RDB_company.png" alt="RDB company" width="90%" align="middle"/> |
 
-### History
+### Development history
 * This example is a simplified version of the example illustrating the *MOF 2.0 Query/View/Transformation Specification*. 
 * This example has been used to illustrate the SoSyM *[Least-change bidirectional model transformation with QVT-R and ATL](http://nmacedo.github.io/pubs.html#sosym16)* and FASE'13 *[Implementing QVT-R bidirectional model transformations using Alloy](http://nmacedo.github.io/pubs.html#fase13)* papers, and N. Macedo's *[PhD Thesis](http://nmacedo.github.io/pubs.html#phd14)*.
 * A version with [associations and keys](../CD2DBS_keys) has been used to illustrate the ASE'13 *[Model repair and transformation with Echo](http://nmacedo.github.io/pubs.html#ase13)* paper.
