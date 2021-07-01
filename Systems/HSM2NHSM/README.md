@@ -1,6 +1,6 @@
 # Expand/collapse hierarchical state machines
 
-The HSM2NHSM transformation specifies the collapse/expansion of hierarchical state diagrams.
+The HSM2NHSM transformation specifies the collapse/expansion of [hierarchical state diagrams](https://en.wikipedia.org/wiki/UML_state_machine#Hierarchically_nested_states).
 
 ### Description
 Every top-level State on the expanded state diagram is matched to a State in the collapsed state diagram with the same name. Transitions at the expanded sate diagram pushed up from nested States to the top-level States at the collapsed state diagram.

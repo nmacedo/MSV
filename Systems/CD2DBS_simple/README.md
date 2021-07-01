@@ -1,6 +1,6 @@
 # Object-relational mapping (without associations/keys)
 
-A simplified version of the object-relational mapping in EMF along with models demonstrating a solver-based approach to bidirectional transformation. 
+A simplified version of the [object-relational mapping](https://en.wikipedia.org/wiki/Object%E2%80%93relational_mapping) in EMF along with models demonstrating a solver-based approach to bidirectional transformation. 
 
 ### Description
 The [uml2rdbms_simple.qvtr](Resources/uml2rdbms_simple.qvtr) transformation is a (very) simplified version of the classical object-relational mapping, between class diagrams and database schemes, used as a running example in the QVT standard.

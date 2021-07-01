@@ -1,6 +1,6 @@
-# SPL development (minimal)
+# SPL engineering (minimal)
 
-A very minimal example related to SPL engineering.
+A very minimal example related to [Software Product Line](https://en.wikipedia.org/wiki/Software_product_line) (SPL) engineering.
 
 ### Description
 The [fm2cfs.qvtr](Resources/fm2cfs.qvtr) transformation is a (very) simplified Software Product Line (SPL) development scenario between a feature model and 2 system configurations.
