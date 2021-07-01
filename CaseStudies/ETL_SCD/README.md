@@ -10,7 +10,7 @@ The model
 ## History
 
 * This model has been originally developed for the MEDI'16 *[Towards a formal validation of ETL patterns behavior](http://nmacedo.github.io/pubs.html#medi16)* paper.
-* All models have been developed and analyzed under the *Alloy Analyzer 4.2_2015-02-22*.
+* Alloy models have been developed and analyzed under the *Alloy Analyzer 4.2_2015-02-22*.
 
 ---
 

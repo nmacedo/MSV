@@ -5,7 +5,7 @@ SETS
   ROOM_ = {r1,r2,r3,r4/*,r5*/}
 
 DEFINITIONS
-/*  ASSERT_LTLa  == "G ( {!r,k,g.(g:GUEST & r:ROOM & k:KEY & k: g_keys(g) & (k = current(r) or k : (keys(r)-(0..current(r)))) & occupant(r) /= {} => g : occupant(r)) })"; */
+/*  ASSERT_LTLa  == "G ( {!r,k,g.(g:GUEST & r:ROOM & k:KEY & k: g_keys(g) & (k = current(r) or k : (keys([{r}])-(0..current(r)))) & occupant(r) /= {} => g : occupant(r)) })"; */
   ASSERT_LTL  == "G ( 
 			(([Entry(g1,r1,1)] & {occupant(r1) /= {}}) => {g1 : occupant(r1)}) & 
 			(([Entry(g1,r1,2)] & {occupant(r1) /= {}}) => {g1 : occupant(r1)}) &
