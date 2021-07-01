@@ -2,7 +2,7 @@
 
 Different versions of the hotel room locking system model that comes packaged with the Alloy Analyzer, proposed by D. Jackson in _Software Abstractions: Logic, Language, and Analysis_.
 
-###
+### Description
 
 These models were developed with the goal of exploring analysis rich in structural and behavioral constraints.
 

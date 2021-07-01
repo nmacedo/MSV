@@ -2,8 +2,8 @@ MACHINE hotel
 /** author: Nuno Macedo, 2016 */
 
 SETS
-  GUEST_ = {g1,g2,g3,g4/*,g5*/};
-  ROOM_ = {r1,r2,r3,r4/*,r5*/}
+  GUEST_ = {g1,g2,g3};
+  ROOM_ = {r1,r2,r3}
 
 DEFINITIONS
   /** Universal quantifications can only be used in atomic propositions, so calls to operations must be expanded. */
