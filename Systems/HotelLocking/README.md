@@ -34,7 +34,7 @@ In ProB the number of checked configurations is limited by the value of the `MAX
 * Alloy models have been developed and analyzed under _Alloy Analyzer 4.2_2015-02-22_.
 * B models have been developed and analyzed under _ProB 1.5.0_.
 * TLA+ models have been developed and analyzed under _TLC 2.0.8_.
-
+* Electrum models have been developed and analyzed under _Electrum Analyzer 0.1_ but have been checked to work up to _Electrum Analyzer 1.2.2_.
 
 ---
 
