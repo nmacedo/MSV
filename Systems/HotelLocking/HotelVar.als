@@ -1,5 +1,10 @@
 module hotel
 
+/* 
+ * author: Daniel Jackson,
+ * modified: Nuno Macedo, 2016
+ */
+
 open util/ordering[Time] as to
 open util/ordering[Key] as ko
 

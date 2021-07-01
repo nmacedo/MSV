@@ -1,8 +1,10 @@
 # Hotel room locking system (free configurations)
 
-A simple adaptation of the hotel room locking system model that comes packaged with the Alloy Analyzer, proposed by D. Jackson in _Software Abstractions: Logic, Language, and Analysis_.
+Different versions of the hotel room locking system model that comes packaged with the Alloy Analyzer, proposed by D. Jackson in _Software Abstractions: Logic, Language, and Analysis_.
 
-<http://alloy.mit.edu/alloy/download.html>
+###
+
+These models were developed with the goal of exploring analysis rich in structural and behavioral constraints.
 
 #### Structural model
 * the universe of guests and rooms is variable;
@@ -18,10 +20,20 @@ A simple adaptation of the hotel room locking system model that comes packaged w
 
 #### Specification
 * Safety: can a guest other than the room's occupant enter that room?
+* The property only holds if a "no intervening" constraint is enforced.
 
-_Comments:_
-* The specification is broken depending on whether a "no intervening" constraint is enforced.
-* The original Alloy model considers a variable scope for guests and rooms. This encumbers other model checkers, so an alternative version with exact scopes is provided (files with `exact` suffix).
+The original Alloy model considers a variable universe for guests and rooms. This encumbers other model checkers, so an alternative version with exact scopes is provided (models with suffix `exact`).
+
+In ProB the number of checked configurations is limited by the value of the `MAX_INITIALISATIONS` parameter; if this parameter is two low, a configuration for which there are counter-examples may not be analyzed. Moreover, universal quantifications are atomic propositions and operations cannot be called within; thus, the assertions had to be expanded. 
+
+### Development history
+* The original model, by Daniel Jackson, is a running example in the book *Software Abstractions: Logic, Language, and Analysis* and is distributed with the Alloy Analyzer.
+* The Alloy and TLA+ models were developed for the paper [_Alloy meets TLA+: An exploratory study_](http://macedo.github.io/pubs/CoRR16.pdf), and used as running examples and in the benchmarks.
+* The Electrum model was developed for the paper [_Lightweight specification and analysis of dynamic systems with rich configurations_](http://macedo.github.io/pubs/FSE16.pdf), and used as running examples and in the benchmarks.
+* Models for fixed configurations after enumeration are also available [here](../HotelLocking_fixcfg), that require only dynamic analysis.
+* Alloy models have been developed and analyzed under _Alloy Analyzer 4.2_2015-02-22_.
+* B models have been developed and analyzed under _ProB 1.5.0_.
+* TLA+ models have been developed and analyzed under _TLC 2.0.8_.
 
 ---
 

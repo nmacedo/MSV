@@ -1,6 +1,6 @@
 \* Author: Nuno Macedo
 
-------------------------------- MODULE HotelExactScope -------------------------------
+------------------------------- MODULE HotelExact -------------------------------
 EXTENDS Naturals 
 CONSTANT KEY, Room, Guest
 ASSUME KEY \in Nat

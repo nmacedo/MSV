@@ -1,123 +1,107 @@
 MACHINE hotel
+/** author: Nuno Macedo, 2016 */
 
 SETS
   GUEST_ = {g1,g2,g3,g4/*,g5*/};
   ROOM_ = {r1,r2,r3,r4/*,r5*/}
 
 DEFINITIONS
-/*  ASSERT_LTLa  == "G ( {!r,k,g.(g:GUEST & r:ROOM & k:KEY & k: g_keys(g) & (k = current(r) or k : (keys(r)-(0..current(r)))) & occupant(r) /= {} => g : occupant(r)) })"; */
-  ASSERT_LTL  == "G ( 
-			(([Entry(g1,r1,1)] & {occupant(r1) /= {}}) => {g1 : occupant(r1)}) & 
+  /** Universal quantifications can only be used in atomic propositions, so calls to operations must be expanded. */
+  ASSERT_LTL_BAD  == "G (
+			(([Entry(g1,r1,1)] & {occupant(r1) /= {}}) => {g1 : occupant(r1)}) &
 			(([Entry(g1,r1,2)] & {occupant(r1) /= {}}) => {g1 : occupant(r1)}) &
 			(([Entry(g1,r1,3)] & {occupant(r1) /= {}}) => {g1 : occupant(r1)}) &
-
-			(([Entry(g1,r2,1)] & {occupant(r2) /= {}}) => {g1 : occupant(r2)}) & 
+			(([Entry(g1,r1,4)] & {occupant(r1) /= {}}) => {g1 : occupant(r1)}) &
+			(([Entry(g1,r2,1)] & {occupant(r2) /= {}}) => {g1 : occupant(r2)}) &
 			(([Entry(g1,r2,2)] & {occupant(r2) /= {}}) => {g1 : occupant(r2)}) &
 			(([Entry(g1,r2,3)] & {occupant(r2) /= {}}) => {g1 : occupant(r2)}) &
-
-			(([Entry(g1,r3,1)] & {occupant(r3) /= {}}) => {g1 : occupant(r3)}) & 
+			(([Entry(g1,r2,4)] & {occupant(r2) /= {}}) => {g1 : occupant(r2)}) &
+			(([Entry(g1,r3,1)] & {occupant(r3) /= {}}) => {g1 : occupant(r3)}) &
 			(([Entry(g1,r3,2)] & {occupant(r3) /= {}}) => {g1 : occupant(r3)}) &
 			(([Entry(g1,r3,3)] & {occupant(r3) /= {}}) => {g1 : occupant(r3)}) &
-
-			(([Entry(g2,r1,1)] & {occupant(r1) /= {}}) => {g2 : occupant(r1)}) & 
+			(([Entry(g1,r3,4)] & {occupant(r3) /= {}}) => {g1 : occupant(r3)}) &
+		
+			(([Entry(g2,r1,1)] & {occupant(r1) /= {}}) => {g2 : occupant(r1)}) &
 			(([Entry(g2,r1,2)] & {occupant(r1) /= {}}) => {g2 : occupant(r1)}) &
 			(([Entry(g2,r1,3)] & {occupant(r1) /= {}}) => {g2 : occupant(r1)}) &
-
-			(([Entry(g2,r2,1)] & {occupant(r2) /= {}}) => {g2 : occupant(r2)}) & 
+			(([Entry(g2,r1,4)] & {occupant(r1) /= {}}) => {g2 : occupant(r1)}) &
+			(([Entry(g2,r2,1)] & {occupant(r2) /= {}}) => {g2 : occupant(r2)}) &
 			(([Entry(g2,r2,2)] & {occupant(r2) /= {}}) => {g2 : occupant(r2)}) &
 			(([Entry(g2,r2,3)] & {occupant(r2) /= {}}) => {g2 : occupant(r2)}) &
-
-			(([Entry(g2,r3,1)] & {occupant(r3) /= {}}) => {g2 : occupant(r3)}) & 
+			(([Entry(g2,r2,4)] & {occupant(r2) /= {}}) => {g2 : occupant(r2)}) &
+			(([Entry(g2,r3,1)] & {occupant(r3) /= {}}) => {g2 : occupant(r3)}) &
 			(([Entry(g2,r3,2)] & {occupant(r3) /= {}}) => {g2 : occupant(r3)}) &
 			(([Entry(g2,r3,3)] & {occupant(r3) /= {}}) => {g2 : occupant(r3)}) &
-		
-			(([Entry(g3,r1,1)] & {occupant(r1) /= {}}) => {g3 : occupant(r1)}) & 
+			(([Entry(g2,r3,4)] & {occupant(r3) /= {}}) => {g2 : occupant(r3)}) &
+
+			(([Entry(g3,r1,1)] & {occupant(r1) /= {}}) => {g3 : occupant(r1)}) &
 			(([Entry(g3,r1,2)] & {occupant(r1) /= {}}) => {g3 : occupant(r1)}) &
 			(([Entry(g3,r1,3)] & {occupant(r1) /= {}}) => {g3 : occupant(r1)}) &
-		
-			(([Entry(g3,r2,1)] & {occupant(r2) /= {}}) => {g3 : occupant(r2)}) & 
+			(([Entry(g3,r1,4)] & {occupant(r1) /= {}}) => {g3 : occupant(r1)}) &
+			(([Entry(g3,r2,1)] & {occupant(r2) /= {}}) => {g3 : occupant(r2)}) &
 			(([Entry(g3,r2,2)] & {occupant(r2) /= {}}) => {g3 : occupant(r2)}) &
 			(([Entry(g3,r2,3)] & {occupant(r2) /= {}}) => {g3 : occupant(r2)}) &
-		
-			(([Entry(g3,r3,1)] & {occupant(r3) /= {}}) => {g3 : occupant(r3)}) & 
+			(([Entry(g3,r2,4)] & {occupant(r2) /= {}}) => {g3 : occupant(r2)}) &
+			(([Entry(g3,r3,1)] & {occupant(r3) /= {}}) => {g3 : occupant(r3)}) &
 			(([Entry(g3,r3,2)] & {occupant(r3) /= {}}) => {g3 : occupant(r3)}) &
 			(([Entry(g3,r3,3)] & {occupant(r3) /= {}}) => {g3 : occupant(r3)}) &
+			(([Entry(g3,r3,4)] & {occupant(r3) /= {}}) => {g3 : occupant(r3)}) )";
 
-				(([Entry(g2,r4,1)] & {occupant(r4) /= {}}) => {g2 : occupant(r4)}) & 
-			(([Entry(g2,r4,2)] & {occupant(r4) /= {}}) => {g2 : occupant(r4)}) &
-			(([Entry(g2,r4,3)] & {occupant(r4) /= {}}) => {g2 : occupant(r4)}) &
+  ASSERT_LTL_GOOD  == "G ( 
+  		([CheckIn(g1,r1)] => X ([Entry(g1,r1,1)] or [Entry(g1,r1,2)] or [Entry(g1,r1,3)] or [Entry(g1,r1,4)])) &
+  		([CheckIn(g1,r2)] => X ([Entry(g1,r2,1)] or [Entry(g1,r2,2)] or [Entry(g1,r2,3)] or [Entry(g1,r2,4)])) &
+  		([CheckIn(g1,r3)] => X ([Entry(g1,r3,1)] or [Entry(g1,r3,2)] or [Entry(g1,r3,3)] or [Entry(g1,r3,4)])) &
+
+		([CheckIn(g2,r1)] => X ([Entry(g2,r1,1)] or [Entry(g2,r1,2)] or [Entry(g2,r1,3)] or [Entry(g2,r1,4)])) &
+  		([CheckIn(g2,r2)] => X ([Entry(g2,r2,1)] or [Entry(g2,r2,2)] or [Entry(g2,r2,3)] or [Entry(g2,r2,4)])) &
+  		([CheckIn(g2,r3)] => X ([Entry(g2,r3,1)] or [Entry(g2,r3,2)] or [Entry(g2,r3,3)] or [Entry(g2,r3,4)])) &
+
+  		([CheckIn(g3,r1)] => X ([Entry(g3,r1,1)] or [Entry(g3,r1,2)] or [Entry(g3,r1,3)] or [Entry(g3,r1,4)])) &
+  		([CheckIn(g3,r2)] => X ([Entry(g3,r2,1)] or [Entry(g3,r2,2)] or [Entry(g3,r2,3)] or [Entry(g3,r2,4)])) &
+  		([CheckIn(g3,r3)] => X ([Entry(g3,r3,1)] or [Entry(g3,r3,2)] or [Entry(g3,r3,3)] or [Entry(g3,r3,4)])) 
+
+  		) => G (
+			(([Entry(g1,r1,1)] & {occupant(r1) /= {}}) => {g1 : occupant(r1)}) &
+			(([Entry(g1,r1,2)] & {occupant(r1) /= {}}) => {g1 : occupant(r1)}) &
+			(([Entry(g1,r1,3)] & {occupant(r1) /= {}}) => {g1 : occupant(r1)}) &
+			(([Entry(g1,r1,4)] & {occupant(r1) /= {}}) => {g1 : occupant(r1)}) &
+			(([Entry(g1,r2,1)] & {occupant(r2) /= {}}) => {g1 : occupant(r2)}) &
+			(([Entry(g1,r2,2)] & {occupant(r2) /= {}}) => {g1 : occupant(r2)}) &
+			(([Entry(g1,r2,3)] & {occupant(r2) /= {}}) => {g1 : occupant(r2)}) &
 			(([Entry(g1,r2,4)] & {occupant(r2) /= {}}) => {g1 : occupant(r2)}) &
-			(([Entry(g1,r2,4)] & {occupant(r2) /= {}}) => {g1 : occupant(r2)}) &
+			(([Entry(g1,r3,1)] & {occupant(r3) /= {}}) => {g1 : occupant(r3)}) &
+			(([Entry(g1,r3,2)] & {occupant(r3) /= {}}) => {g1 : occupant(r3)}) &
+			(([Entry(g1,r3,3)] & {occupant(r3) /= {}}) => {g1 : occupant(r3)}) &
 			(([Entry(g1,r3,4)] & {occupant(r3) /= {}}) => {g1 : occupant(r3)}) &
-			(([Entry(g1,r4,4)] & {occupant(r4) /= {}}) => {g1 : occupant(r4)}) &
+		
+			(([Entry(g2,r1,1)] & {occupant(r1) /= {}}) => {g2 : occupant(r1)}) &
+			(([Entry(g2,r1,2)] & {occupant(r1) /= {}}) => {g2 : occupant(r1)}) &
+			(([Entry(g2,r1,3)] & {occupant(r1) /= {}}) => {g2 : occupant(r1)}) &
 			(([Entry(g2,r1,4)] & {occupant(r1) /= {}}) => {g2 : occupant(r1)}) &
+			(([Entry(g2,r2,1)] & {occupant(r2) /= {}}) => {g2 : occupant(r2)}) &
+			(([Entry(g2,r2,2)] & {occupant(r2) /= {}}) => {g2 : occupant(r2)}) &
+			(([Entry(g2,r2,3)] & {occupant(r2) /= {}}) => {g2 : occupant(r2)}) &
 			(([Entry(g2,r2,4)] & {occupant(r2) /= {}}) => {g2 : occupant(r2)}) &
+			(([Entry(g2,r3,1)] & {occupant(r3) /= {}}) => {g2 : occupant(r3)}) &
+			(([Entry(g2,r3,2)] & {occupant(r3) /= {}}) => {g2 : occupant(r3)}) &
+			(([Entry(g2,r3,3)] & {occupant(r3) /= {}}) => {g2 : occupant(r3)}) &
 			(([Entry(g2,r3,4)] & {occupant(r3) /= {}}) => {g2 : occupant(r3)}) &
-			(([Entry(g2,r4,4)] & {occupant(r4) /= {}}) => {g2 : occupant(r4)}) &
-			(([Entry(g1,r4,1)] & {occupant(r4) /= {}}) => {g1 : occupant(r4)}) & 
-			(([Entry(g1,r4,2)] & {occupant(r4) /= {}}) => {g1 : occupant(r4)}) &
-			(([Entry(g1,r4,3)] & {occupant(r4) /= {}}) => {g1 : occupant(r4)}) &
-			(([Entry(g3,r4,1)] & {occupant(r4) /= {}}) => {g3 : occupant(r4)}) & 
-			(([Entry(g3,r4,2)] & {occupant(r4) /= {}}) => {g3 : occupant(r4)}) &
-			(([Entry(g3,r4,3)] & {occupant(r4) /= {}}) => {g3 : occupant(r4)}) &
+
+			(([Entry(g3,r1,1)] & {occupant(r1) /= {}}) => {g3 : occupant(r1)}) &
+			(([Entry(g3,r1,2)] & {occupant(r1) /= {}}) => {g3 : occupant(r1)}) &
+			(([Entry(g3,r1,3)] & {occupant(r1) /= {}}) => {g3 : occupant(r1)}) &
 			(([Entry(g3,r1,4)] & {occupant(r1) /= {}}) => {g3 : occupant(r1)}) &
+			(([Entry(g3,r2,1)] & {occupant(r2) /= {}}) => {g3 : occupant(r2)}) &
+			(([Entry(g3,r2,2)] & {occupant(r2) /= {}}) => {g3 : occupant(r2)}) &
+			(([Entry(g3,r2,3)] & {occupant(r2) /= {}}) => {g3 : occupant(r2)}) &
 			(([Entry(g3,r2,4)] & {occupant(r2) /= {}}) => {g3 : occupant(r2)}) &
-			(([Entry(g3,r3,4)] & {occupant(r3) /= {}}) => {g3 : occupant(r3)}) &
-			(([Entry(g3,r4,4)] & {occupant(r4) /= {}}) => {g3 : occupant(r4)}) &
-			(([Entry(g4,r1,1)] & {occupant(r1) /= {}}) => {g4 : occupant(r1)}) & 
-			(([Entry(g4,r1,2)] & {occupant(r1) /= {}}) => {g4 : occupant(r1)}) &
-			(([Entry(g4,r1,3)] & {occupant(r1) /= {}}) => {g4 : occupant(r1)}) &
-			(([Entry(g4,r1,4)] & {occupant(r1) /= {}}) => {g4 : occupant(r1)}) &
-			(([Entry(g4,r2,1)] & {occupant(r2) /= {}}) => {g4 : occupant(r2)}) & 
-			(([Entry(g4,r2,2)] & {occupant(r2) /= {}}) => {g4 : occupant(r2)}) &
-			(([Entry(g4,r2,3)] & {occupant(r2) /= {}}) => {g4 : occupant(r2)}) &
-			(([Entry(g4,r2,4)] & {occupant(r2) /= {}}) => {g4 : occupant(r2)}) &
-			(([Entry(g4,r3,1)] & {occupant(r3) /= {}}) => {g4 : occupant(r3)}) & 
-			(([Entry(g4,r3,2)] & {occupant(r3) /= {}}) => {g4 : occupant(r3)}) &
-			(([Entry(g4,r3,3)] & {occupant(r3) /= {}}) => {g4 : occupant(r3)}) &
-			(([Entry(g4,r3,4)] & {occupant(r3) /= {}}) => {g4 : occupant(r3)}) &
-			(([Entry(g4,r4,1)] & {occupant(r4) /= {}}) => {g4 : occupant(r4)}) & 
-			(([Entry(g4,r4,2)] & {occupant(r4) /= {}}) => {g4 : occupant(r4)}) &
-			(([Entry(g4,r4,3)] & {occupant(r4) /= {}}) => {g4 : occupant(r4)}) &
-			(([Entry(g4,r4,4)] & {occupant(r4) /= {}}) => {g4 : occupant(r4)}) 
-
-		
-			
+			(([Entry(g3,r3,1)] & {occupant(r3) /= {}}) => {g3 : occupant(r3)}) &
+			(([Entry(g3,r3,2)] & {occupant(r3) /= {}}) => {g3 : occupant(r3)}) &
+			(([Entry(g3,r3,3)] & {occupant(r3) /= {}}) => {g3 : occupant(r3)}) &
+			(([Entry(g3,r3,4)] & {occupant(r3) /= {}}) => {g3 : occupant(r3)}) )";
 
 
-)";
-  KEY == {1,2,3,4/*,5*/};
-
-
-/*&
-
-		
-
-			(([Entry(g1,r1,5)] & {occupant(r1) /= {}}) => {g1 : occupant(r1)}) &
-			(([Entry(g1,r2,5)] & {occupant(r2) /= {}}) => {g1 : occupant(r2)}) &
-			(([Entry(g1,r3,5)] & {occupant(r3) /= {}}) => {g1 : occupant(r3)}) &
-			(([Entry(g1,r4,5)] & {occupant(r4) /= {}}) => {g1 : occupant(r4)}) &
-			(([Entry(g1,r5,5)] & {occupant(r5) /= {}}) => {g1 : occupant(r5)}) &
-			(([Entry(g2,r1,5)] & {occupant(r1) /= {}}) => {g2 : occupant(r1)}) &
-			(([Entry(g2,r2,5)] & {occupant(r2) /= {}}) => {g2 : occupant(r2)}) &
-			(([Entry(g2,r3,5)] & {occupant(r3) /= {}}) => {g2 : occupant(r3)}) &
-			(([Entry(g2,r4,5)] & {occupant(r4) /= {}}) => {g2 : occupant(r4)}) &
-			(([Entry(g2,r5,5)] & {occupant(r5) /= {}}) => {g2 : occupant(r5)}) &
-			(([Entry(g3,r1,5)] & {occupant(r1) /= {}}) => {g3 : occupant(r1)}) &
-			(([Entry(g3,r2,5)] & {occupant(r2) /= {}}) => {g3 : occupant(r2)}) &
-			(([Entry(g3,r3,5)] & {occupant(r3) /= {}}) => {g3 : occupant(r3)}) &
-			(([Entry(g3,r4,5)] & {occupant(r4) /= {}}) => {g3 : occupant(r4)}) &
-			(([Entry(g3,r5,5)] & {occupant(r5) /= {}}) => {g3 : occupant(r5)}) &
-			(([Entry(g4,r1,5)] & {occupant(r1) /= {}}) => {g4 : occupant(r1)}) &
-			(([Entry(g4,r2,5)] & {occupant(r2) /= {}}) => {g4 : occupant(r2)}) &
-			(([Entry(g4,r3,5)] & {occupant(r3) /= {}}) => {g4 : occupant(r3)}) &
-			(([Entry(g4,r4,5)] & {occupant(r4) /= {}}) => {g4 : occupant(r4)}) &
-			(([Entry(g4,r5,5)] & {occupant(r5) /= {}}) => {g4 : occupant(r5)}) &
-			(([Entry(g5,r1,5)] & {occupant(r1) /= {}}) => {g5 : occupant(r1)}) &
-			(([Entry(g5,r2,5)] & {occupant(r2) /= {}}) => {g5 : occupant(r2)}) &
-			(([Entry(g5,r3,5)] & {occupant(r3) /= {}}) => {g5 : occupant(r3)}) &
-			(([Entry(g5,r4,5)] & {occupant(r4) /= {}}) => {g5 : occupant(r4)}) &
-			(([Entry(g5,r5,5)] & {occupant(r5) /= {}}) => {g5 : occupant(r5)}) */
+  KEY == {1,2,3,4};
 
 
 VARIABLES
@@ -135,7 +119,6 @@ INVARIANT
   !r.(r:ROOM => prev(r) : keys[{r}]) &
   occupant : ROOM_ --> POW(GUEST) 
 
-
 INITIALISATION 
 	ANY gs,rs,ks WHERE
 	gs : POW1(GUEST_) & rs : POW1(ROOM_) &
@@ -150,8 +133,6 @@ INITIALISATION
     occupant :=  %s.(s:ROOM_ | {}) 
     END
 
-
-  
 OPERATIONS
   CheckIn(g,r) =
     PRE g:GUEST & r:ROOM & 
@@ -171,8 +152,7 @@ OPERATIONS
   Entry(g,r,k) =
     PRE g:GUEST & r:ROOM & 
 	k:g_keys(g) & 
-	(k = current(r) or k : (keys[{r}]-(0..current(r)))) /*&
-	g : occupant(r)*/    THEN
+	(k = current(r) or k : (keys[{r}]-(0..current(r)))) THEN
     current(r) := k
     END
 
