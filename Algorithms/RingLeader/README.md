@@ -1,10 +1,9 @@
 # Ring leader election algorithm
 
-Simple implementation of the leader election in networks with ring topology for processes with unique identifiers.
+Simple implementation of the [leader election](https://en.wikipedia.org/wiki/Leader_election#Rings_with_unique_IDs) in networks with ring topology for processes with unique identifiers.
 
-<https://en.wikipedia.org/wiki/Leader_election#Rings_with_unique_IDs>
+### Description
 
-Comments:
 * In the SMV models, the a model must be specified for each distinct number of processes due to the lack of first-order quantifications.
 * In TLA the transitive closure needed to enforce the ring topology is not natively defined.
 
