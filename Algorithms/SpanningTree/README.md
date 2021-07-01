@@ -1,6 +1,10 @@
 # Spanning tree algorithm 
 
-### History
+Models of a [spanning tree](https://en.wikipedia.org/wiki/Spanning_tree) algorithm, inspired by the version distributed with the Alloy Analyzer,
+
+### Description
+
+### Development history
 * The original model is distributed with the Alloy Analyzer.
 * The Alloy/Electrum models are a slight variation of the original, and have been used in the benchmarks of the FSE'16 *[Lightweight specification and analysis of dynamic systems with rich configurations](http://nmacedo.github.io/pubs.html#fse16)* paper.
 * The TLA+ model is also inspired by the the original Alloy model.
