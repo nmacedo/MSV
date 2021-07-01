@@ -4,6 +4,8 @@ Models of a [spanning tree](https://en.wikipedia.org/wiki/Spanning_tree) algorit
 
 ### Description
 
+The models assume an arbitrary network (the configuration of the problem) over which the spanning tree is calculated dynamically.
+
 ### Development history
 * The original model is distributed with the Alloy Analyzer.
 * The Alloy/Electrum models are a slight variation of the original, and have been used in the benchmarks of the FSE'16 *[Lightweight specification and analysis of dynamic systems with rich configurations](http://nmacedo.github.io/pubs.html#fse16)* paper.
