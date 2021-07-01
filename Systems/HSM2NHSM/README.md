@@ -26,7 +26,7 @@ The provided Alloy models provide an encoding of the hierarchical and non-hierar
 ### Development history
 * This example is based on the running example from the paper *JTL: a bidirectional and change propagating transformation language* by A. Cicchetti, D. Di Ruscio, R. Eramo and A. Pierantonio.
 * This example has been used to illustrate the SoSyM *[Least-change bidirectional model transformation with QVT-R and ATL](http://nmacedo.github.io/pubs.html#sosym16)* paper and N. Macedo's *[PhD Thesis](http://nmacedo.github.io/pubs.html#phd14)*.
-* All models have been developed and analyzed under the *Alloy Analyzer 4.2_2012-09-25*, and subsequently updated and tested for support under version *5.0.0.201804081720*.
+* Alloy models have been developed and analyzed under the *Alloy Analyzer 4.2_2012-09-25*, and subsequently updated and tested for support under version *5.0.0.201804081720*.
 
 ---
 
