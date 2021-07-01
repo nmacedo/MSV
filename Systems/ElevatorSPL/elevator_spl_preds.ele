@@ -13,7 +13,7 @@ one sig FEmpty, FThird, FOverload, FIdle, FExecutive, FPark extends Feature {}
 sig Product in Feature {}
 
 fact {
-FIdle + FExecutive not in Product
+  FIdle + FPark not in Product
 }
 
 abstract sig Load {}
