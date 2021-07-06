@@ -14,7 +14,7 @@ Data in the tables is abstracted away, each rule has a performance field for the
 
 ### Development history
 
-* This model has been originally developed for the CONFENIS'17 *[Checking the correctness of what-if scenarios](http://nmacedo.github.io/pubs.html#confenis17)* presentation.
+* These models have been originally developed for the CONFENIS'17 presentation *[Checking the correctness of what-if scenarios](http://nmacedo.github.io/pubs.html#confenis17)*.
 * Alloy models have been developed and analyzed under the *Alloy Analyzer 4.2_2015-02-22*.
 
 ---
