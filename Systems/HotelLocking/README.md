@@ -38,8 +38,8 @@ A model for the Electrum extension with explicit actions is also available (suff
 * Alloy models have been developed and analyzed under _Alloy Analyzer 4.2_2015-02-22_.
 * B models have been developed and analyzed under _ProB 1.5.0_.
 * TLA+ models have been developed and analyzed under _TLC 2.07_ (and _TLA Toolbox 1.5.1_).
-* Electrum models have been developed and analyzed under the *Electrum Analyzer 0.1*., and subsequently tested for support under version *1.2*.
-* Electrum models for the action extension have been developed and analyzed under *Electrum Analyzer 1.0 with actions*. The version for the F-IDE@FM'19 version had a slight variation and was developed for *Electrum Analyzer 1.1 with simulator*.
+* Electrum models have been developed and analyzed under the *Electrum Analyzer 0.1*, and subsequently tested for support under version *1.2*.
+* Electrum models for the action extension have been developed and analyzed under *Electrum Analyzer 1.0 with actions*, and subsequently tested for support under version *1.2*. The version for the F-IDE@FM'19 version, available [here](https://github.com/nmacedo/MSV/tree/db109b740350a038b1ee326f7d03d3b432aeb358/Systems/HotelLocking), had a slight variation and was developed for *Electrum Analyzer 1.1 with simulator*.
 
 ---
 
