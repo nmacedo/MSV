@@ -19,8 +19,8 @@ There are several safety and liveness properties that can be checked about this 
 Electrum models are provided in a predicate-as-operations idiom and in a event-idiom. The corresponding Alloy version in the event-idiom is also provided. 
 
 ### Development history
-* This example is based on the benchmarks from the paper *Symbolic Model Checking of Software Product Lines* by A. Classen and A. Legay, itself adapted from *Feature integration using a feature construct* by M. Plath and M. Ryan.
-* The model has been used as a running example and in the benchmarks of the FSE'16 *[Lightweight specification and analysis of dynamic systems with rich configurations](http://nmacedo.github.io/pubs.html#fse16)* paper.
+* This example is based on the benchmarks from the paper *Symbolic Model Checking of Software Product Lines* by A. Classen and A. Legay, itself adapted from the paper *Feature integration using a feature construct* by M. Plath and M. Ryan.
+* The example has been used as a running example and in the benchmarks of the FSE'16 paper *[Lightweight specification and analysis of dynamic systems with rich configurations](http://nmacedo.github.io/pubs.html#fse16)*.
 * Alloy models have been developed and analyzed under the *Alloy Analyzer 4.2_2015-02-22*.
 * Electrum models have been developed and analyzed under the *Electrum Analyzer 0.1*., and subsequently tested for support under version *1.2*.
 
