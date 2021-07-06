@@ -32,7 +32,7 @@ Since the group of similar works now shares UIDs with both productions at the PT
 
 ### History
 
-* These case study has been originally developed for the PTCRISync project commisioned by the FCCN|FCT.
+* This case study has been originally developed for the PTCRISync project commisioned by the FCCN|FCT.
 * Version 0.4.3 is described in the ORCID-CASRAI'15 paper *[An ORCID-based synchronization framework for a national CRIS ecosystem](http://nmacedo.github.io/pubs.html#f1000r15)* and the *[PTCRISync specification: An ORCID-based synchronization framework for PTCRIS](http://nmacedo.github.io/pubs.html#inesctec15)* report.
 * Alloy models have been developed and analyzed under the *Alloy Analyzer 4.2_2015-02-22*.
 
