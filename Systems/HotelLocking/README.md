@@ -30,9 +30,9 @@ A model for the Electrum extension with explicit actions is also available (suff
 
 ### Development history
 * The original model, by Daniel Jackson, is a running example in the book *Software Abstractions: Logic, Language, and Analysis* and is distributed with the Alloy Analyzer.
-* The Alloy and TLA+ models were developed for the paper [_Alloy meets TLA+: An exploratory study_](http://macedo.github.io/pubs/CoRR16.pdf), and used as running examples and in the benchmarks.
-* The Electrum model was developed for the paper [_Lightweight specification and analysis of dynamic systems with rich configurations_](http://macedo.github.io/pubs/FSE16.pdf), and used as a running example and in the benchmarks.
-* The Electrum model for the action extension was developed for the paper [_Proposition of an action layer for Electrum_](http://macedo.github.io/pubs/ABZ18b.pdf), and used as a running example
+* Alloy and TLA+ models were developed for the tech report [_Alloy meets TLA+: An exploratory study_](http://macedo.github.io/pubs/CoRR16.pdf), and used as running examples and in the benchmarks.
+* Electrum models were developed for the FSE'16 paper [_Lightweight specification and analysis of dynamic systems with rich configurations_](http://macedo.github.io/pubs/FSE16.pdf), and used as a running example and in the benchmarks.
+* Electrum models for the action extension was developed for the ABZ'18 paper [_Proposition of an action layer for Electrum_](http://macedo.github.io/pubs/ABZ18b.pdf), and used as a running example
 * Models for fixed configurations after enumeration are also available [here](../HotelLocking_fixcfg), that require only dynamic analysis.
 * Alloy models have been developed and analyzed under _Alloy Analyzer 4.2_2015-02-22_.
 * B models have been developed and analyzed under _ProB 1.5.0_.
