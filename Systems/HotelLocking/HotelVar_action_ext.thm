@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<alloy>
+
+<view>
+
+<defaultnode/>
+
+<defaultedge/>
+
+<node>
+   <type name="_Action"/>
+   <type name="_Dummy"/>
+   <type name="_E"/>
+   <type name="_Entry"/>
+   <type name="_In"/>
+   <type name="_Out"/>
+   <type name="_Reentry"/>
+   <type name="Int"/>
+   <type name="Key"/>
+   <type name="String"/>
+   <type name="univ"/>
+   <type name="ordering/Ord"/>
+   <set name="this/_Arg" type="_Dummy"/>
+   <set name="this/_Arg" type="Guest"/>
+   <set name="this/_Arg" type="Key"/>
+   <set name="this/_Arg" type="Room"/>
+</node>
+
+<node color="Gray">
+   <type name="Desk"/>
+</node>
+
+<node color="Green">
+   <type name="Guest"/>
+</node>
+
+<node color="Red">
+   <type name="Room"/>
+</node>
+
+<node numberatoms="inherit">
+   <type name="seq/Int"/>
+</node>
+
+<node showlabel="no">
+   <set name="$NoBadEntry_g" type="Guest"/>
+   <set name="$NoBadEntry_k" type="Key"/>
+   <set name="$NoBadEntry_r" type="Room"/>
+</node>
+
+</view>
+
+</alloy>

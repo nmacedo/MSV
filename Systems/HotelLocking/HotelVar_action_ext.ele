@@ -1,0 +1,108 @@
+/*
+ * Hotel room locking system from "Software Abstractions: Logic, 
+ * Language, and Analysis" by Daniel Jackson.
+ *
+ * model author: Daniel Jackson
+ * electrum with actions version: Brunel, Chemouil, Cunha, Macedo, 2018
+ */
+
+ // STRUCTURE
+open util/ordering[Key]
+
+sig Key {}
+
+sig Room {
+	keys: set Key,
+	var current: one keys
+}
+
+fact DisjointKeySets {
+	keys in Room lone-> Key
+}
+
+one sig Desk {
+	var lastKey: Room -> lone Key,
+	var occupant: Room -> Guest
+}
+
+sig Guest {
+	var gkeys: set Key
+}
+
+fun nextKey [k: Key, ks: set Key]: set Key { 
+	min [nexts[k] & ks]
+}
+
+// ACTIONS
+act In [g: Guest, r: Room, k: Key] modifies gkeys, occupant, lastKey {
+	no r.(Desk.occupant)
+	k = nextKey [r.(Desk.lastKey), r.keys]
+	gkeys' = gkeys + g -> k	
+	occupant' = occupant + Desk->r->g
+	Desk.lastKey' = Desk.lastKey ++ r->k
+}
+
+act Entry [g: Guest, r: Room, k: Key] modifies current {
+	k in g.gkeys
+	k = nextKey[r.current, r.keys]
+	current' = current ++ r -> k
+}
+
+act Reentry  [g: Guest, r: Room, k: Key] {
+	k in g.gkeys
+	k = r.current
+}
+
+act Out [g: Guest] modifies occupant {
+	some Desk.occupant.g
+	occupant' = occupant - Desk -> Room -> g
+}
+
+
+fact init {
+	Room.keys = Key
+	all r : Room | r.current = min[r.keys]
+	no Guest.gkeys
+	no Desk.occupant
+	all r: Room | r.(Desk.lastKey) = r.current
+}
+
+// COMMANDS
+
+pred Scenario {
+	eventually Out
+}
+
+pred NoBadEntry {
+	always { all r: Room, g: Guest, k: Key |
+			(Entry [g, r, k] or Reentry [g, r, k]) 
+				and some r.(Desk.occupant) => g in r.(Desk.occupant) }
+}
+
+assert BadSafety {
+	NoBadEntry
+}
+
+
+pred NoIntervening {
+	always {
+		all g: Guest, r: Room, k: Key |
+			In [g, r, k] => 
+			after { Entry [g, r, k] 
+				or Reentry [g, r, k] }}
+}
+assert GoodSafety {
+	NoIntervening => NoBadEntry
+}
+
+// Hotel (0) scenario
+run Scenario for 4 but 10 Time
+
+// Hotel (1) scenario
+check BadSafety for 4 but 10 Time
+
+// Hotel (2) scenario
+check GoodSafety for 4 but 10 Time
+
+
+

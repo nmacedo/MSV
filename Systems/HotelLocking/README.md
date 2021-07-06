@@ -22,19 +22,23 @@ These models were developed with the goal of exploring analysis rich in structur
 * Safety: can a guest other than the room's occupant enter that room?
 * The property only holds if a "no intervening" constraint is enforced.
 
-The original Alloy model considers a variable universe for guests and rooms. This encumbers other model checkers, so an alternative version with exact scopes is provided (models with suffix `exact`).
+The original Alloy model considers a variable universe for guests and rooms. This encumbers other model checkers, so an alternative version with exact scopes is provided (models with suffix `Exact`).
 
 In ProB the number of checked configurations is limited by the value of the `MAX_INITIALISATIONS` parameter; if this parameter is two low, a configuration for which there are counter-examples may not be analyzed. Moreover, universal quantifications are atomic propositions and operations cannot be called within; thus, the assertions had to be expanded. 
+
+A model for the Electrum extension with explicit actions is also available (suffix `action_ext`).
 
 ### Development history
 * The original model, by Daniel Jackson, is a running example in the book *Software Abstractions: Logic, Language, and Analysis* and is distributed with the Alloy Analyzer.
 * The Alloy and TLA+ models were developed for the paper [_Alloy meets TLA+: An exploratory study_](http://macedo.github.io/pubs/CoRR16.pdf), and used as running examples and in the benchmarks.
-* The Electrum model was developed for the paper [_Lightweight specification and analysis of dynamic systems with rich configurations_](http://macedo.github.io/pubs/FSE16.pdf), and used as running examples and in the benchmarks.
+* The Electrum model was developed for the paper [_Lightweight specification and analysis of dynamic systems with rich configurations_](http://macedo.github.io/pubs/FSE16.pdf), and used as a running example and in the benchmarks.
+* The Electrum model for the action extension was developed for the paper [_Proposition of an action layer for Electrum_](http://macedo.github.io/pubs/ABZ18b.pdf), and used as a running example
 * Models for fixed configurations after enumeration are also available [here](../HotelLocking_fixcfg), that require only dynamic analysis.
 * Alloy models have been developed and analyzed under _Alloy Analyzer 4.2_2015-02-22_.
 * B models have been developed and analyzed under _ProB 1.5.0_.
 * TLA+ models have been developed and analyzed under _TLC 2.0.8_.
 * Electrum models have been developed and analyzed under the *Electrum Analyzer 0.1*., and subsequently tested for support under version *1.2*.
+* Electrum models for the action extension have been developed and analyzed under the *Electrum Analyzer 1.0 with actions*.
 
 ---
 
