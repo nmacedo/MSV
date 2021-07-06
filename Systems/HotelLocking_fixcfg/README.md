@@ -24,7 +24,7 @@ These models were developed with to measure the impact of the structural solving
 
 ### Development history
 * The original model, by Daniel Jackson, is a running example in the book *Software Abstractions: Logic, Language, and Analysis* and is distributed with the Alloy Analyzer.
-* The Alloy and TLA+ models were developed for the paper [_Alloy meets TLA+: An exploratory study_](http://macedo.github.io/pubs/CoRR16.pdf), and used as running examples and in the benchmarks.
+* The Alloy and TLA+ models were developed for the tech report [_Alloy meets TLA+: An exploratory study_](http://macedo.github.io/pubs/CoRR16.pdf), and used as running examples and in the benchmarks.
 * Models where configurations are part of the problem are available [here](../HotelLocking), requiring also structural solving.
 * Alloy models have been developed and analyzed under _Alloy Analyzer 4.2_2015-02-22_.
 * B models have been developed and analyzed under _ProB 1.5.0_.
