@@ -21,7 +21,7 @@ The provided Alloy models provide an encoding of the class diagram and database 
 | --- | --- | --- |
 
 ### Development history
-* This example has been used to illustrate the BX'14 *[Towards a framework for multi-directional model transformations](http://nmacedo.github.io/pubs.html#bx14)* paper and N. Macedo's *[PhD Thesis](http://nmacedo.github.io/pubs.html#phd14)*.
+* This example has been used to illustrate the BX'14 paper *[Towards a framework for multi-directional model transformations](http://nmacedo.github.io/pubs.html#bx14)* and N. Macedo's *[PhD Thesis](http://nmacedo.github.io/pubs.html#phd14)*.
 * Alloy models have been developed and analyzed under the *Alloy Analyzer 4.2_2012-09-25*, and subsequently tested for support under version *5.0.0.201804081720*.
 
 ---
