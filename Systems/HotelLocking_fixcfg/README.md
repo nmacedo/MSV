@@ -28,7 +28,7 @@ These models were developed with to measure the impact of the structural solving
 * Models where configurations are part of the problem are available [here](../HotelLocking), requiring also structural solving.
 * Alloy models have been developed and analyzed under _Alloy Analyzer 4.2_2015-02-22_.
 * B models have been developed and analyzed under _ProB 1.5.0_.
-* TLA+ models have been developed and analyzed under _TLC 2.0.8_.
+* TLA+ models have been developed and analyzed under _TLC 2.07_ (and _TLA Toolbox 1.5.1_).
 
 ---
 

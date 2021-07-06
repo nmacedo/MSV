@@ -8,6 +8,7 @@ The model consists of an elevator and a set of floors; at each floor there is a 
   * a parking feature moves the elevator to the first floor when there are no button calls; 
   * an idle feature forces the elevator to open the door when there are no button calls; 
   * an executive floor feature prioritizes calls to one of the floors over the others. 
+  
 Multiple interfering features, under some restrictions, may be selected. A feature model can impose simple dependencies/conflicts between the features restricts some combinations, namely:
   * since the idle and the parking features have conflicting behavior their choice is forced to be exclusive. 
 
