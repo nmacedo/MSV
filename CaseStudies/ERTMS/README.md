@@ -19,5 +19,5 @@ The original model, as published in ABZ'18, was developed for version [1A](http:
 
 * Language: [[Alloy](https://github.com/nmacedo/MSV/wiki/By-Language#alloy)] [[Electrum](https://github.com/nmacedo/MSV/wiki/By-Language#electrum)]
 * Theme: [[Industrial](https://github.com/nmacedo/MSV/wiki/By-Theme#industrial)] [[Transportation](https://github.com/nmacedo/MSV/wiki/By-Theme#transportation)] [[Structural](https://github.com/nmacedo/MSV/wiki/By-Theme#rich-structural-model)] [[Behavioral](https://github.com/nmacedo/MSV/wiki/By-Theme#rich-behavioral-model)]
-* Venue: [[ABZ18a](https://github.com/nmacedo/MSV/wiki/By-Venue#abz18a)] [[ASE18](https://github.com/nmacedo/MSV/wiki/By-Venue#ase18)] [[STTT19](https://github.com/nmacedo/MSV/wiki/By-Venue#sttt19)]
+* Venue: [[ABZ18a](https://github.com/nmacedo/MSV/wiki/By-Venue#abz18a)] [[ASE18](https://github.com/nmacedo/MSV/wiki/By-Venue#ase18)] [[FIDE18](https://github.com/nmacedo/MSV/wiki/By-Venue#fide18)] [[STTT19](https://github.com/nmacedo/MSV/wiki/By-Venue#sttt19)]
 
