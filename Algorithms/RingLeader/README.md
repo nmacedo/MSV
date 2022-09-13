@@ -10,6 +10,7 @@ Simple implementation of the [leader election](https://en.wikipedia.org/wiki/Lea
 ### Development history
 * The original model is used as a running example in the  _Software Abstractions: Logic, Language, and Analysis_ book by D. Jackson, and is distributed with the Alloy Analyzer.
 * The Alloy/Electrum models are a variation of the original, and have been used in the benchmarks of the FSE'16 *[Lightweight specification and analysis of dynamic systems with rich configurations](http://nmacedo.github.io/pubs.html#fse16)* and ASE'18 *[The Electrum Analyzer: Model checking relational first-order temporal specifications](http://nmacedo.github.io/pubs.html#ase18)* papers.
+* The Electrum version has also been used as the running example of the ASE'18 *[The Electrum Analyzer: Model checking relational first-order temporal specifications](http://nmacedo.github.io/pubs.html#ase18)* tool demo.
 * The TLA+ and SMV models are also inspired by the the original Alloy model.
 * Alloy models have been developed and analyzed under the *Alloy Analyzer 4.2_2015-02-22*.
 * Electrum models have been developed and analyzed under the *Electrum Analyzer 0.1*, and subsequently tested for support under version *1.2*.
