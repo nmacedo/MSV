@@ -1,4 +1,4 @@
-# Leader election in the Firewire protocol
+# Dijkstra's mutex ordering criterion
 
 ### Development history
 * The original model is distributed with the Alloy Analyzer.
