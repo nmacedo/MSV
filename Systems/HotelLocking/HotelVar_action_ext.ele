@@ -34,7 +34,7 @@ fun nextKey [k: Key, ks: set Key]: set Key {
 }
 
 // ACTIONS
-act In [g: Guest, r: Room, k: Key] modifies gkeys, occupant, lastKey {
+event In [g: Guest, r: Room, k: Key] modifies gkeys, occupant, lastKey {
 	no r.(Desk.occupant)
 	k = nextKey [r.(Desk.lastKey), r.keys]
 	gkeys' = gkeys + g -> k	
@@ -42,18 +42,18 @@ act In [g: Guest, r: Room, k: Key] modifies gkeys, occupant, lastKey {
 	Desk.lastKey' = Desk.lastKey ++ r->k
 }
 
-act Entry [g: Guest, r: Room, k: Key] modifies current {
+event Entry [g: Guest, r: Room, k: Key] modifies current {
 	k in g.gkeys
 	k = nextKey[r.current, r.keys]
 	current' = current ++ r -> k
 }
 
-act Reentry  [g: Guest, r: Room, k: Key] {
+event Reentry  [g: Guest, r: Room, k: Key] {
 	k in g.gkeys
 	k = r.current
 }
 
-act Out [g: Guest] modifies occupant {
+event Out [g: Guest] modifies occupant {
 	some Desk.occupant.g
 	occupant' = occupant - Desk -> Room -> g
 }

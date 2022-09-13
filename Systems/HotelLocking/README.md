@@ -40,11 +40,11 @@ A model for the Electrum extension with explicit actions is also available (suff
 * B models have been developed and analyzed under _ProB 1.5.0_.
 * TLA+ models have been developed and analyzed under _TLC 2.07_ (and _TLA Toolbox 1.5.1_).
 * Electrum models have been developed and analyzed under the *Electrum Analyzer 0.1*, and subsequently tested for support under version *1.2*.
-* Electrum models for the action extension have been developed and analyzed under *Electrum Analyzer 1.0 with actions*, and subsequently tested for support under version *1.2*. The version for the F-IDE@FM'19 version, available [here](https://github.com/nmacedo/MSV/tree/fide19/Systems/HotelLocking), had a slight variation and was developed for *Electrum Analyzer 1.1 with simulator*.
+* Electrum models for the action extension have been developed and analyzed under *Electrum Analyzer 1.0 with actions*, and subsequently tested and updted for support under version *1.2 with actions* (and F-IDE@FM'19 version *1.1 with simulator*).
 
 ---
 
 * Language: [[Alloy](https://github.com/nmacedo/MSV/wiki/By-Language#alloy)] [[TLA+](https://github.com/nmacedo/MSV/wiki/By-Language#tla)] [[Electrum](https://github.com/nmacedo/MSV/wiki/By-Language#electrum)] [[B](https://github.com/nmacedo/MSV/wiki/By-Language#b)]
 * Theme: [[Rich Structure](https://github.com/nmacedo/MSV/wiki/By-Theme#rich-structure)] [[Rich Behaviour](https://github.com/nmacedo/MSV/wiki/By-Theme#rich-behaviour)]
-* Venue: [[FSE16](https://github.com/nmacedo/MSV/wiki/By-Venue#fse16)] [[CoRR16](https://github.com/nmacedo/MSV/wiki/By-Venue#corr16)] [[ABZ18b](https://github.com/nmacedo/MSV/wiki/By-Venue#abz18b)] [[ASE18](https://github.com/nmacedo/MSV/wiki/By-Venus#ase18)]
+* Venue: [[FSE16](https://github.com/nmacedo/MSV/wiki/By-Venue#fse16)] [[CoRR16](https://github.com/nmacedo/MSV/wiki/By-Venue#corr16)] [[ABZ18b](https://github.com/nmacedo/MSV/wiki/By-Venue#abz18b)] [[ASE18](https://github.com/nmacedo/MSV/wiki/By-Venus#ase18)] [[FIDE19](https://github.com/nmacedo/MSV/wiki/By-Venus#fide19)]
 
