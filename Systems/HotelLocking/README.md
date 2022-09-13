@@ -32,6 +32,7 @@ A model for the Electrum extension with explicit actions is also available (suff
 * The original model, by Daniel Jackson, is a running example in the book *Software Abstractions: Logic, Language, and Analysis* and is distributed with the Alloy Analyzer.
 * Alloy and TLA+ models were developed for the tech report [_Alloy meets TLA+: An exploratory study_](http://nmacedo.github.io/pubs/CoRR16.pdf), and used as running examples and in the benchmarks.
 * Electrum models were developed for the FSE'16 paper [_Lightweight specification and analysis of dynamic systems with rich configurations_](http://nmacedo.github.io/pubs/FSE16.pdf), and used as a running example and in the benchmarks.
+* They were also used as in the benchmarks of the ASE'18 *[The Electrum Analyzer: Model checking relational first-order temporal specifications](http://nmacedo.github.io/pubs.html#ase18)* paper.
 * Electrum models for the action extension were developed for the ABZ'18 paper [_Proposition of an action layer for Electrum_](http://nmacedo.github.io/pubs/ABZ18b.pdf), and used as a running example.
 * Electrum models for the action extension were also used as a running example for the F-IDE@FM'19 paper [_Simulation under arbitrary temporal logic constraints_](http://nmacedo.github.io/pubs/FIDE19.pdf).
 * Models for fixed configurations after enumeration are also available [here](../HotelLocking_fixcfg), that require only dynamic analysis.
@@ -45,5 +46,5 @@ A model for the Electrum extension with explicit actions is also available (suff
 
 * Language: [[Alloy](https://github.com/nmacedo/MSV/wiki/By-Language#alloy)] [[TLA+](https://github.com/nmacedo/MSV/wiki/By-Language#tla)] [[Electrum](https://github.com/nmacedo/MSV/wiki/By-Language#electrum)] [[B](https://github.com/nmacedo/MSV/wiki/By-Language#b)]
 * Theme: [[Rich Structure](https://github.com/nmacedo/MSV/wiki/By-Theme#rich-structure)] [[Rich Behaviour](https://github.com/nmacedo/MSV/wiki/By-Theme#rich-behaviour)]
-* Venue: [[FSE16](https://github.com/nmacedo/MSV/wiki/By-Venue#fse16)] [[CoRR16](https://github.com/nmacedo/MSV/wiki/By-Venue#corr16)] [[ABZ18b](https://github.com/nmacedo/MSV/wiki/By-Venue#abz18b)]
+* Venue: [[FSE16](https://github.com/nmacedo/MSV/wiki/By-Venue#fse16)] [[CoRR16](https://github.com/nmacedo/MSV/wiki/By-Venue#corr16)] [[ABZ18b](https://github.com/nmacedo/MSV/wiki/By-Venue#abz18b)] [[ASE18](https://github.com/nmacedo/MSV/wiki/By-Venus#ase18)]
 

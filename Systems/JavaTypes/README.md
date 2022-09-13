@@ -1,4 +1,4 @@
-# Dijkstra's mutex ordering criterion
+# Java type system
 
 ### Development history
 * The original model is distributed with the Alloy Analyzer.
@@ -8,6 +8,5 @@
 ---
 
 * Language: [[Electrum](https://github.com/nmacedo/MSV/wiki/By-Language#electrum)]
-* Theme: [[Concurrency](https://github.com/nmacedo/MSV/wiki/By-Theme#concurrency)] [[Rich Structure](https://github.com/nmacedo/MSV/wiki/By-Theme#rich-structure)] [[Rich Behaviour](https://github.com/nmacedo/MSV/wiki/By-Theme#rich-behavioural)]
-* Venue: 
-
+* Theme: [[Rich Structure](https://github.com/nmacedo/MSV/wiki/By-Theme#rich-structure)] [[Rich Behaviour](https://github.com/nmacedo/MSV/wiki/By-Theme#rich-behavioural)]
+* Venue: [[ASE18](https://github.com/nmacedo/MSV/wiki/By-Venus#ase18)]
