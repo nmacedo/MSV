@@ -8,10 +8,10 @@ A formalization of the data structures behind [Alloy4Fun](https://alloy4fun.ines
 - Alloy4Fun stores all models executed and shared in the platform, keeping the derivation tree of the submissions so that solving sessions can be studied.
 - It also has support for the specification of challenges by marking certain model elements as *secret*. Models with secrets can be shared through a private link (the full model) or through a public link (secrets hidden).
 - The model was initially developed to explore different features during design, namely:
-  1 - whether to store derivation trees
-  2 - whether to support models with secrets
-  3 - whether to store models when executing commands
-  4 - whether to allow permalinks to instances
+  1. whether to store derivation trees
+  2. whether to support models with secrets
+  3. whether to store models when executing commands
+  4. whether to allow permalinks to instances
 
 ### Development history
 
