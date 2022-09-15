@@ -1,0 +1,63 @@
+sig Timestamp, Id, Object {}
+
+sig Paragraph {}
+sig Command extends Paragraph {}
+sig Secret in Paragraph {}
+
+abstract sig Entry {
+  id : one Id }
+
+abstract sig Model extends Entry {
+  time   : one Timestamp,
+  spec   : set Paragraph,
+  parent : lone Id,
+  root   : one Id }
+
+sig Share extends Model {
+  theme : one Object }
+
+abstract sig Result {}
+one sig Sat, Unsat, Error extends Result {}
+sig Execution extends Model {
+  command : one Command,
+  result  : one Result }
+sig HasWarnings in Execution {}
+
+sig Instance extends Entry {
+  model : one Id,
+  graph : one Object }
+
+abstract sig Link extends Entry {
+  model : one Id }
+sig Private, Public extends Link {}
+
+pred inv {
+  id in Entry lone -> Id                                 // uniqueness of keys  
+  all i: Model.(parent+root) | some id.i&Model        // referential integrity
+  all i: Instance.model+Link.model | some id.i&Share  // referential integrity
+  no iden&^(parent.~id)                             // no circular derivations
+  root.~id in *(parent.~id)                        // root is ancestor or self  
+  all m: Model, i: ^(~id.parent).(m.root)&(m.id).*(~id.parent) | 
+    some (id.i).spec&Secret implies i = m.root    // no secrets after the root
+  all m: Execution | m.command in (m+m.root.~id).spec                      // valid command
+  all m: Share | some Link<:model.(m.id)          // all shares have some link
+  all m: Instance | 
+    (m.model.~id).parent.~id.result = Sat     // instances are from sat models
+  Private.model in Public.model           // public links are always generated
+  all l: Private | 
+    some (l.model).~id.spec&Secret               // private links have secrets
+}
+
+fun parentM : Model -> Model {
+	{ m1:Model,m2:m1.parent.~id } }
+
+fun rootM : Model -> Model {
+	{ m1:Model,m2:m1.root.~id } } 
+
+fun linkM : Link -> Model {
+	{ m1:Link,m2:m1.model.~id } }
+
+fun instM : Instance -> Model {
+	{ m1:Instance,m2:m1.model.~id } }
+
+run { inv and some Instance and some Private and  one rootM & iden } for 7

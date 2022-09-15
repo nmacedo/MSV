@@ -1,0 +1,194 @@
+sig Timestamp, Id, Object {}
+
+sig Paragraph {}
+sig Command extends Paragraph {}
+sig Secret in Paragraph {}
+
+abstract sig Entry {
+  id : one Id }
+
+abstract sig Model extends Entry {
+  time   : one Timestamp,
+  spec   : set Paragraph,
+  parent : lone Id,
+  root   : one Id }
+
+sig Share extends Model {
+  theme : one Object }
+
+abstract sig Result {}
+one sig Sat, Unsat, Error extends Result {}
+sig Execution extends Model {
+  command : one Command,
+  result  : one Result }
+sig HasWarnings in Execution {}
+
+sig Instance extends Entry {
+  model : one Id,
+  graph : one Object }
+
+abstract sig Link extends Entry {
+  model : one Id }
+sig Private, Public extends Link {}
+
+pred inv {
+  id in Entry lone -> Id                                 // uniqueness of keys  
+  all i: (A4F.db&Model).(parent+root) | some id.i&Model&A4F.db        // referential integrity
+  all i: Instance.model+Link.model | some id.i&Share  // referential integrity
+  no iden&^(parent.~id)                             // no circular derivations
+  root.~id in *(parent.~id)                        // root is ancestor or self  
+  all m: Model, i: ^(~id.parent).(m.root)&(m.id).*(~id.parent) | 
+    some (id.i).spec&Secret implies i = m.root    // no secrets after the root
+  all m: A4F.db&Execution | m.command in m.spec                      // valid command
+  all m: A4F.db&Share | some Link<:model.(m.id)          // all shares have some link
+  all m: A4F.db&Instance | 
+    (m.model.~id).parent.~id.result = Sat     // instances are from sat models
+  (A4F.db&Private).model in (A4F.db&Public).model           // public links are always generated
+  all l: A4F.db&Private | 
+    some (l.model).~id.spec&Secret               // private links have secrets
+}
+
+fun parentM : Model -> Model {
+	{ m1:Model,m2:m1.parent.~id } }
+
+fun rootM : Model -> Model {
+	{ m1:Model,m2:m1.root.~id } } 
+
+fun linkM : Link -> Model {
+	{ m1:Link,m2:m1.model.~id } }
+
+fun instM : Instance -> Model {
+	{ m1:Instance,m2:m1.model.~id } }
+
+run { inv and some Execution and some Instance and some Private } for 2 but 5 Entry, 5 Id
+
+one sig A4F {
+	var db : set Entry,
+	var time : one Timestamp,
+	var editor : set Paragraph,
+	var theme : one Object,
+	var current : one Id,
+	followed : lone Id,
+	var graph : lone Object,
+} { 
+	some current.~id & db&Model 
+	some followed => some followed.~id & db&Link 
+}
+
+pred downloadTree[link:Id] { }
+
+pred sameA4F {
+	A4F <: time = time'
+	editor = editor'
+	A4F <: theme = theme'
+	A4F <: graph = graph'
+}
+/*
+pred shareOp[new1,new2,new3:Id] {
+	sameA4F
+	Alloy4Fun.current' = new3
+
+	some m:SharedModel {
+
+		some l:Public {
+			l._id = new1
+			l.model = m._id
+			l not in Alloy4Fun.db
+			(Alloy4Fun.db&Public)' = (Alloy4Fun.db&Public)+l
+		}
+	
+		Alloy4Fun.editor in HasSecrets => 
+			(some l:Private {
+				l._id = new2
+				l.model = m._id
+				l not in Alloy4Fun.db
+				(Alloy4Fun.db&Private)' = (Alloy4Fun.db&Private)+l
+			})
+		else (Alloy4Fun.db&Private)' = (Alloy4Fun.db&Private)
+
+		m not in (Alloy4Fun.db&SharedModel)
+		(Alloy4Fun.db&SharedModel)' = (Alloy4Fun.db&SharedModel) + m
+		m._id = new3
+		m.time = Alloy4Fun.time
+		m.code = Alloy4Fun.editor
+		m.derivationOf = Alloy4Fun.current
+		m.original = ((Alloy4Fun.editor in HasSecrets or no Alloy4Fun.current.~_id.original or some Alloy4Fun.followed.~_id&Private) => new3 else Alloy4Fun.current.~_id.original)
+		m.theme = Alloy4Fun.theme
+	}
+
+	(Alloy4Fun.db&Execution)' = (Alloy4Fun.db&Execution)
+}
+
+pred shareModel[new1,new2,new3:Id] { 
+	shareOp[new1,new2,new3]
+
+	(Alloy4Fun.db&SharedInstance)' = (Alloy4Fun.db&SharedInstance)
+}
+
+pred nop {
+	current' = current
+	Alloy4Fun.db' = Alloy4Fun.db
+}
+
+check {always inv} for 2 but 5 Collection, 5 Id
+
+fact {
+	init
+	always (some i1,i2,i3,i4:Id | nop or execute[i1] or shareModel[i1,i2,i3] or shareInstance[i1,i2,i3,i4])
+}
+
+pred init {
+	inv
+	let m = ((Alloy4Fun.current).~_id) {
+		(m.code not in HasSecrets or some Alloy4Fun.followed.~_id&Private) => Alloy4Fun.editor = m.code else Alloy4Fun.editor not in HasSecrets
+		Alloy4Fun.theme = m.theme
+		Alloy4Fun.graph = m.graph
+		some m&Alloy4Fun.db&SharedModel
+		Alloy4Fun.followed.~_id.(Link<:model) = Alloy4Fun.current
+	}
+}
+
+pred execute[new:Id] {
+	sameA4F
+	Alloy4Fun.current' = new
+
+	(Alloy4Fun.db&Link)' = (Alloy4Fun.db&Link)
+	(Alloy4Fun.db&SharedModel)' = (Alloy4Fun.db&SharedModel)
+	(Alloy4Fun.db&SharedInstance)' = (Alloy4Fun.db&SharedInstance)
+
+	some m:Execution {
+
+		m not in Alloy4Fun.db
+		(Alloy4Fun.db&Execution)' = (Alloy4Fun.db&Execution) + m
+		m._id = new
+		m.time = Alloy4Fun.time
+		m.code = Alloy4Fun.editor
+		m.derivationOf = Alloy4Fun.current
+		m.original = ((Alloy4Fun.editor in HasSecrets or no Alloy4Fun.current.~_id.original or some Alloy4Fun.followed.~_id&Private) => new else Alloy4Fun.current.~_id.original)
+	}
+
+
+}
+
+pred shareInstance[new1,new2,new3,new4:Id] {
+	Alloy4Fun.current.~_id.result = Sat
+
+	shareOp[new1,new2,new3]
+
+	some m:SharedInstance {
+		m not in Alloy4Fun.db
+		(Alloy4Fun.db&SharedInstance)' = (Alloy4Fun.db&SharedInstance) + m
+		m._id = new4
+		m.time = Alloy4Fun.time
+		m.model = new3
+		m.graph = Alloy4Fun.graph
+	}
+
+}
+*/
+
+pred init {
+  inv                                                              // valid database
+  A4F.followed.~id.(Link<:model) = A4F.current            // id of the followed link
+  A4F.editor = (A4F.followed.~id in Private implies  A4F.followed.~id.spec else A4F.followed.~id.spec - Secret)
+}

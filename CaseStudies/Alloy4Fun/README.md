@@ -17,11 +17,11 @@ A formalization of the data structures behind [Alloy4Fun](https://alloy4fun.ines
 
 * This case study was initially presented in the SETTA'19 paper *[Simplifying the analysis of software design variants with a colorful Alloy](http://nmacedo.github.io/pubs.html#setta19)*.
 * The Colorful and plain Alloy SPL versions of the model were developed for that same paper.
-* The single variant Alloy version was developed for the SCP paper *[Experiences on teaching Alloy with an automated assessment platform](http://nmacedo.github.io/pubs.html#scp21)*.
+* A more detailed, single variant, Alloy version was developed for the SCP paper *[Experiences on teaching Alloy with an automated assessment platform](http://nmacedo.github.io/pubs.html#scp21)*.
 * Plain Alloy models have been tested for support under *Alloy Analyzer 5.1.0*.
 * Colorful Alloy models have been developed and analyzed under first release of *Colorful Alloy Analyzer (July 2019)*.
 ---
 
-* Language: [[Alloy](https://github.com/nmacedo/MSV/wiki/By-Language#alloy)] [[Colorful Alloy](https://github.com/nmacedo/MSV/wiki/By-Language#colorful-alloy)]
+* Language: [[Alloy](https://github.com/nmacedo/MSV/wiki/By-Language#alloy)] [[Electrum](https://github.com/nmacedo/MSV/wiki/By-Language#electrum)] [[Colorful Alloy](https://github.com/nmacedo/MSV/wiki/By-Language#colorful-alloy)]
 * Theme: [[Rich Structure](https://github.com/nmacedo/MSV/wiki/By-Theme#rich-structure)] [[Variability](https://github.com/nmacedo/MSV/wiki/By-Theme#variability)]
-* Venue: [[SETTA19](https://github.com/nmacedo/MSV/wiki/By-Venue#setta19)] [[ABZ20a](https://github.com/nmacedo/MSV/wiki/By-Venue#abz20a)] [[SCP21](https://github.com/nmacedo/MSV/wiki/By-Venue#scp21)]
+* Venue: [[SETTA19](https://github.com/nmacedo/MSV/wiki/By-Venue#setta19)] [[SCP21](https://github.com/nmacedo/MSV/wiki/By-Venue#scp21)]

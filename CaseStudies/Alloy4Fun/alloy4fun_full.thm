@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<alloy>
+
+<view nodetheme="Martha">
+
+<projection> <type name="Alloy4Fun"/> </projection>
+
+<defaultnode/>
+
+<defaultedge/>
+
+<node>
+   <type name="Alloy4Fun"/>
+   <type name="Error"/>
+   <type name="Execution"/>
+   <type name="Int"/>
+   <type name="Link"/>
+   <type name="Model"/>
+   <type name="Sat"/>
+   <type name="String"/>
+   <type name="univ"/>
+   <type name="Unsat"/>
+   <type name="ordering/Ord"/>
+   <type name="seq/Int"/>
+   <set name="this/HasWarning" type="Execution"/>
+   <set name="$execute_m" type="Execution"/>
+   <set name="$execute_m&apos;" type="Execution"/>
+   <set name="$i1" type="Id"/>
+   <set name="$i2" type="Id"/>
+   <set name="$i3" type="Id"/>
+   <set name="$i4" type="Id"/>
+   <set name="$i5" type="Id"/>
+   <set name="$shareOp_l" type="Public"/>
+   <set name="$shareOp_m" type="SharedModel"/>
+</node>
+
+<node color="Blue">
+   <type name="SharedInstance"/>
+   <type name="SharedModel"/>
+</node>
+
+<node color="Green">
+   <type name="Public"/>
+</node>
+
+<node color="Red">
+   <type name="Private"/>
+</node>
+
+<node hideunconnected="no" style="Dashed">
+   <set name="current" type="Id"/>
+   <set name="graph" type="Object"/>
+   <set name="theme" type="Object"/>
+   <set name="time" type="Date"/>
+</node>
+
+<node hideunconnected="yes">
+   <type name="Code"/>
+   <type name="Date"/>
+   <type name="Id"/>
+</node>
+
+<node hideunconnected="yes" color="Gray">
+   <type name="Object"/>
+</node>
+
+<node shape="Ellipse">
+   <type name="Runnable"/>
+</node>
+
+<node style="Bold">
+   <set name="this/HasSecrets" type="Code"/>
+</node>
+
+<node style="Dashed">
+   <set name="followed" type="Id"/>
+</node>
+
+<node visible="no">
+   <type name="Collection"/>
+   <type name="Result"/>
+</node>
+
+<node visible="yes" hideunconnected="no" style="Dashed">
+   <set name="editor" type="Code"/>
+</node>
+
+<node visible="yes" style="Dashed">
+   <set name="db" type="Collection"/>
+</node>
+
+<edge visible="no">
+   <relation name="derivationOf"> <type name="Model"/> <type name="Id"/> </relation>
+   <relation name="model"> <type name="Link"/> <type name="Id"/> </relation>
+   <relation name="model"> <type name="SharedInstance"/> <type name="Id"/> </relation>
+   <relation name="original"> <type name="Model"/> <type name="Id"/> </relation>
+</edge>
+
+<edge visible="no" attribute="yes">
+   <relation name="_id"> <type name="Collection"/> <type name="Id"/> </relation>
+   <relation name="command"> <type name="Execution"/> <type name="Int"/> </relation>
+   <relation name="result"> <type name="Execution"/> <type name="Result"/> </relation>
+   <relation name="time"> <type name="Runnable"/> <type name="Date"/> </relation>
+</edge>
+
+</view>
+
+</alloy>
