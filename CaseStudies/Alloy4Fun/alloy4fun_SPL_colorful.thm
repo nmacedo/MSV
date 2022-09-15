@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<alloy>
+
+<view>
+
+<defaultnode/>
+
+<defaultedge/>
+
+<node>
+   <type name="_F1"/>
+   <type name="_F2"/>
+   <type name="_F3"/>
+   <type name="_F4"/>
+   <type name="_Feature_"/>
+   <type name="Int"/>
+   <type name="StoredModel"/>
+   <type name="String"/>
+   <type name="univ"/>
+   <type name="seq/Int"/>
+   <set name="this/_Product_" type="_Feature_"/>
+   <set name="$OneDerivation_m" type="StoredModel"/>
+</node>
+
+<node showlabel="no" color="Red">
+   <set name="this/Secret" type="StoredModel"/>
+</node>
+
+<node visible="no">
+   <type name="Instance"/>
+   <type name="Link"/>
+</node>
+
+<node visible="no" numberatoms="yes">
+   <type name="Command"/>
+</node>
+
+<edge attribute="yes">
+   <relation name="command"> <type name="StoredModel"/> <type name="Command"/> </relation>
+   <relation name="secret"> <type name="StoredModel"/> <type name="Link"/> </relation>
+</edge>
+
+<edge layout="yes">
+   <relation name="derivationOf"> <type name="StoredModel"/> <type name="StoredModel"/> </relation>
+   <relation name="instanceOf"> <type name="Instance"/> <type name="Command"/> </relation>
+</edge>
+
+<edge visible="no" attribute="yes">
+   <relation name="link"> <type name="Instance"/> <type name="Link"/> </relation>
+</edge>
+
+<edge visible="yes" attribute="yes">
+   <relation name="public"> <type name="StoredModel"/> <type name="Link"/> </relation>
+</edge>
+
+</view>
+
+</alloy>

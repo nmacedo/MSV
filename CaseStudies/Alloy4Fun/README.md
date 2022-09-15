@@ -19,7 +19,7 @@ A formalization of the data structures behind [Alloy4Fun](https://alloy4fun.ines
 * The Colorful and plain Alloy SPL versions of the model were developed for that same paper.
 * The single variant Alloy version was developed for the SCP paper *[Experiences on teaching Alloy with an automated assessment platform](http://nmacedo.github.io/pubs.html#scp21)*.
 * Plain Alloy models have been tested for support under *Alloy Analyzer 5.1.0*.
-* Colorful Alloy models have been developed and analyzed under first release of *Colorful Alloy Analyzer (March 2019)*.
+* Colorful Alloy models have been developed and analyzed under first release of *Colorful Alloy Analyzer (July 2019)*.
 ---
 
 * Language: [[Alloy](https://github.com/nmacedo/MSV/wiki/By-Language#alloy)] [[Colorful Alloy](https://github.com/nmacedo/MSV/wiki/By-Language#colorful-alloy)]
