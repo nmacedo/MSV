@@ -21,4 +21,4 @@ Data in the tables is abstracted away, each rule has a performance field for the
 
 * Language: [[Alloy](https://github.com/nmacedo/MSV/wiki/By-Language#alloy)]
 * Theme: [[Data Warehousing](https://github.com/nmacedo/MSV/wiki/By-Theme#data-warehousing)] [[Rich Structure](https://github.com/nmacedo/MSV/wiki/By-Theme#rich-structure)]
-* Venue: [[CONFENIS17](https://github.com/nmacedo/MSV/wiki/By-Venue#papers)]
+* Venue: [[CONFENIS17](https://github.com/nmacedo/MSV/wiki/By-Venue#research)]

@@ -5,7 +5,7 @@
 * Described in the paper
 * [1] B. Oliveira, O. Belo and N. Macedo. Towards a formal validation of ETL patterns behavior. MEDI 2016
 *
-* @author: Bruno Oliveira, Nuno Macedo, 05/2016
+* author: B. Oliveira, N. Macedo, 05/2016
 **/
 open util/ordering[State]
 

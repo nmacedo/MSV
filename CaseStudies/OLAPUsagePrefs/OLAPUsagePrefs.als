@@ -1,6 +1,11 @@
 /**
-@author: Mariana Carvalho, Nuno Macedo
-**/
+ * A formalization of the extraction of OLAP Cube usage preferences.
+ *
+ * Described in the paper
+ * [1] M. Carvalho, N. Macedo and O. Belo. Checking the correctness of what-if scenarios. CONFENIS 2017
+ *
+ * author: M. Carvalho, N. Macedo, 09/2017
+ **/
 module OLAPCube
 
 /** Data tables **/

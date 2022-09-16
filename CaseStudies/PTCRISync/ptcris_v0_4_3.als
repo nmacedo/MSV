@@ -1,5 +1,12 @@
 module ptcris
 
+/*
+ * A formalization of a an ORCID-based synchronization framework 
+ * for PTCRIS, as described in https://github.com/fccn/PTCRISync/wiki.
+ * 
+ * author: A. Cunha, N. Macedo, 09/2016 
+ */
+ 
 open util/ordering[ORCID]
 open util/ordering[PTCris]
 open util/ordering[Work]

@@ -10,7 +10,7 @@
  * Used as running example in
  * [1] N. Macedo and A. Cunha. Least-change bidirectional model transformation with QVT-R and ATL. SoSyM 2016
  * 
- * author: nmm, 10/2012
+ * author: N. Macedo, 10/2012
  */
 module HSM2NHSM_recursive
 

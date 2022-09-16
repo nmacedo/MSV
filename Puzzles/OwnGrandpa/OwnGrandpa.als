@@ -9,8 +9,8 @@
  * The full song lyrics, which describe an isomorophic solution,
  * are included at the end of this file.
  *
- * model author: Daniel Jackson
- * modified: alcino, nmm
+ * model author: D. Jackson
+ * modified: A. Cunha, N. Macedo
  */
 abstract sig Person {
     father : lone Man,

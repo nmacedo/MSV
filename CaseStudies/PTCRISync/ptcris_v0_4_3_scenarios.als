@@ -1,3 +1,10 @@
+/*
+ * A formalization of a an ORCID-based synchronization framework 
+ * for PTCRIS, as described in https://github.com/fccn/PTCRISync/wiki.
+ * 
+ * author: A. Cunha, N. Macedo 
+ */
+
 open ptcris_v0_4_3
 
 // Calculates the preferred works of an ORCID repository.

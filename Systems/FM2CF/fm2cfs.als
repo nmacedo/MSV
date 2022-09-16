@@ -8,7 +8,7 @@
  * Used as running example in
  * [1] N. Macedo, A. Cunha and H. Pacheco. Towards a framework for multi-directional model transformations. BX'14
  * 
- * author: nmm, 10/2013
+ * author: N. Macedo, 10/2013
  */
  module fm2cfs
 

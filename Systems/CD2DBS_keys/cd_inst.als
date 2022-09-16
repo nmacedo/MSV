@@ -8,7 +8,7 @@
  * Used as running example in
  * [1] N. Macedo, T. Guimarães and A. Cunha. Model repair and transformation with Echo. ASE 2013.
  * 
- * author: nmm, 10/2012
+ * author: N. Macedo, 10/2012
  */
 module C1 [Model]
 open CD[Model]

@@ -40,4 +40,4 @@ Since the group of similar works now shares UIDs with both productions at the PT
 
 * Language: [[Alloy](https://github.com/nmacedo/MSV/wiki/By-Language#alloy)]
 * Theme: [[Synchronization](https://github.com/nmacedo/MSV/wiki/By-Theme#synchronization)] [[CRIS](https://github.com/nmacedo/MSV/wiki/By-Theme#cris)] [[Rich Structure](https://github.com/nmacedo/MSV/wiki/By-Theme#rich-structure)] [[Rich Behaviour](https://github.com/nmacedo/MSV/wiki/By-Theme#rich-behaviour)]
-* Venue: [[ORCID-CASRAI15](https://github.com/nmacedo/MSV/wiki/By-Venue#orcid-casrai15)] [[INESCTEC15](https://github.com/nmacedo/MSV/wiki/By-Venue#inesctec15)]
+* Venue: [[ORCID-CASRAI15](https://github.com/nmacedo/MSV/wiki/By-Venue#research)] [[INESCTEC15](https://github.com/nmacedo/MSV/wiki/By-Venue#research)]

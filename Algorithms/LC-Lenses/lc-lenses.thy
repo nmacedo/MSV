@@ -4,7 +4,7 @@ Model of least-change lenses
 Demonstrations and properties for the paper:
 [1] N. Macedo, H. Pacheco, A. Cunha and J. N. Oliveira. Composing Least-change Lenses, 2013
   
-Author: alcino
+author: A. Cunha
 *}
  
  theory LeastChangeLenses

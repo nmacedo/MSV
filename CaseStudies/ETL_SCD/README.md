@@ -18,4 +18,4 @@ The model
 
 * Language: [[Alloy](https://github.com/nmacedo/MSV/wiki/By-Language#alloy)]
 * Theme: [[Data Warehousing](https://github.com/nmacedo/MSV/wiki/By-Theme#data-warehousing)] [[Rich Structure](https://github.com/nmacedo/MSV/wiki/By-Theme#rich-structure)]
-* Venue: [[MEDI16](https://github.com/nmacedo/MSV/wiki/By-Venue#towards-a-formal-validation-of-etl-patterns-behavior)]
+* Venue: [[MEDI16](https://github.com/nmacedo/MSV/wiki/By-Venue#research)]

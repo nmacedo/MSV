@@ -1,3 +1,10 @@
+/*
+ * A formalization of a an ORCID-based synchronization framework 
+ * for PTCRIS, as described in https://github.com/fccn/PTCRISync/wiki.
+ * 
+ * author: A. Cunha, N. Macedo, 05/2015
+ */
+
 open util/ordering[ORCID]
 open util/ordering[PTCris]
 

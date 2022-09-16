@@ -31,4 +31,4 @@ The provided Alloy models provide an encoding of the class diagram and database 
 
 * Language: [[Alloy](https://github.com/nmacedo/MSV/wiki/By-Language#alloy)] [[Ecore](https://github.com/nmacedo/MSV/wiki/By-Language#ecore)] [[QVT](https://github.com/nmacedo/MSV/wiki/By-Language#qvt)]
 * Theme: [[Synchronization](https://github.com/nmacedo/MSV/wiki/By-Theme#synchronization)] [[Bidirectional Transformation](https://github.com/nmacedo/MSV/wiki/By-Theme#bidirectional-transformation)] [[MDE](https://github.com/nmacedo/MSV/wiki/By-Theme#mde)]
-* Venue: [[ASE13](https://github.com/nmacedo/MSV/wiki/By-Venue#ase13)]
+* Venue: [[ASE13](https://github.com/nmacedo/MSV/wiki/By-Venue#research)]

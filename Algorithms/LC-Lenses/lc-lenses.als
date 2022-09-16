@@ -4,7 +4,7 @@
  * Demonstrations and properties for the paper:
  * [1] N. Macedo, H. Pacheco, A. Cunha and J. N. Oliveira. Composing Least-change Lenses, 2013
  * 
- * Author: Nuno Macedo 
+ * author: N. Macedo 
  */
 
 open util/natural

@@ -8,7 +8,7 @@
  * Used as running example in
  * [1] N. Macedo and A. Cunha. Implementing QVT-R bidirectional model transformations using Alloy. FASE 2013
  * 
- * author: nmm, 10/2012
+ * author: N. Macedo, 10/2012
  */
  module C1 [Model]
 open CD[Model]
