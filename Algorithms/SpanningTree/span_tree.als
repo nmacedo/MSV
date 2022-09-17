@@ -3,7 +3,7 @@
  * over arbitrary network topologies
  *
  * model author: Alloy Analyzer team
- * modified: nmm
+ * modified: N. Macedo, 03/2016
  */
 module examples/algorithms/opt_spantree
 

@@ -3,7 +3,7 @@
  * Checking of Software Product Lines" by A. Classen and A. Legay, itself adapted 
  * from "Feature integration using a feature construct" by M. Plath and M. Ryan.
  * 
- * author: Nuno Macedo
+ * author: N. Macedo
  */
 module Lift
 open util/ordering[Floor] 

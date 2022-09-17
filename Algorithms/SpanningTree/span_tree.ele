@@ -4,7 +4,7 @@
  * with the Alloy Analyzer.
  *
  * model author: Alloy Analyzer team
- * modified: nmm
+ * modified: N. Macedo, 03/2016
  */
 module span_tree
 

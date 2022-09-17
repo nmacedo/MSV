@@ -28,4 +28,4 @@ Electrum models are provided in a predicate-as-operations idiom and in a event-i
 
 * Language: [[Alloy](https://github.com/nmacedo/MSV/wiki/By-Language#alloy)] [[Electrum](https://github.com/nmacedo/MSV/wiki/By-Language#electrum)]
 * Theme: [[SPL](https://github.com/nmacedo/MSV/wiki/By-Theme#spl)] [[Rich Behavior](https://github.com/nmacedo/MSV/wiki/By-Theme#rich-behavior)] 
-* Venue: [[FSE16](https://github.com/nmacedo/MSV/wiki/By-Venus#fse16)]
+* Venue: [[FSE16](https://github.com/nmacedo/MSV/wiki/By-Venus#research)]

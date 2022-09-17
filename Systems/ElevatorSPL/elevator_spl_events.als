@@ -1,10 +1,10 @@
-/**
-Elevator system SPL based on the benchmarks from the paper "Symbolic Model 
-Checking of Software Product Lines" by A. Classen and A. Legay, itself adapted 
-from "Feature integration using a feature construct" by M. Plath and M. Ryan.
-
-@author: Nuno Macedo
-**/
+/*
+ * Elevator system SPL based on the benchmarks from the paper "Symbolic Model 
+ * Checking of Software Product Lines" by A. Classen and A. Legay, itself adapted 
+ * from "Feature integration using a feature construct" by M. Plath and M. Ryan.
+ * 
+ * author: N. Macedo
+ */
 open util/ordering[Floor] as fl
 open trace[State]
 

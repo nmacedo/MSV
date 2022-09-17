@@ -18,5 +18,5 @@ The models assume an arbitrary network (the configuration of the problem) over w
 
 * Language: [[Alloy](https://github.com/nmacedo/MSV/wiki/By-Language#alloy)] [[TLA+](https://github.com/nmacedo/MSV/wiki/By-Language#tla)] [[Electrum](https://github.com/nmacedo/MSV/wiki/By-Language#electrum)] 
 * Theme:  [[Rich Structure](https://github.com/nmacedo/MSV/wiki/By-Theme#rich-structure)] [[Rich Behavior](https://github.com/nmacedo/MSV/wiki/By-Theme#rich-behavior)] 
-* Venue: [[FSE16](https://github.com/nmacedo/MSV/wiki/By-Venus#fse16)] [[ASE18](https://github.com/nmacedo/MSV/wiki/By-Venus#ase18)]
+* Venue: [[FSE16](https://github.com/nmacedo/MSV/wiki/By-Venue#research)] [[ASE18](https://github.com/nmacedo/MSV/wiki/By-Venue#research)]
 
