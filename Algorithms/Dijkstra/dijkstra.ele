@@ -5,6 +5,8 @@ module examples/algorithms/dijkstra
  * how Dijkstra's mutex ordering criterion can prevent deadlocks.
  * This is a dynamic version of the model packaged with the Alloy
  * Analyzer.
+ *
+ * author: Electrum team, 05/2018
  */
 
 open util/ordering [Mutex] as mo

@@ -3,6 +3,8 @@ module firewire
 /*
  * A dynamic version of the model of leader election in the 
  * Firewire protocol packaged with the Alloy Analyzer.
+ *
+ * author: Electrum team, 05/2018 
  */
 
 abstract sig Msg {}

@@ -8,6 +8,9 @@ module alloy4fun
  * ➁allow models with secrets➁
  * ➂store models when executing commands➂
  * ➃allow permalinks to instances➃
+ *
+ * author: Alloy4Fun team, 07/2019
+ */
 */
 
 fact FeatureModel {

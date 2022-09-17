@@ -1,3 +1,7 @@
+/*
+ * author: Alloy4Fun team, ??/20??
+ */
+
 sig Timestamp, Id, Object {}
 
 sig Paragraph {}
