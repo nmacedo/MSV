@@ -3,7 +3,7 @@
  * Checking of Software Product Lines" by A. Classen and A. Legay, itself adapted 
  * from "Feature integration using a feature construct" by M. Plath and M. Ryan.
  * 
- * author: N. Macedo
+ * author: Electrum team, 03/2016
  */
 open util/ordering[Floor] as fl
 

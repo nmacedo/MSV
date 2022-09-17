@@ -6,6 +6,8 @@ module examples/systems/javatypes
  * then a field will cannot be assigned an incorrect type.
  * This is a dynamic version of the model packaged with the Alloy
  * Analyzer.
+ *
+ * author: Electrum team, 05/2018
  */
 
 open util/graph[Type] as graph
