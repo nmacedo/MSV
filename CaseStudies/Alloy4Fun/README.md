@@ -14,7 +14,8 @@ A formalization of the data structures behind [Alloy4Fun](https://alloy4fun.ines
   4. whether to allow permalinks to instances
 
 These features are organized according to the following feature model:
-![E-commerce feature model](/fm.png)
+
+<img src="fm.png" width="400">
 
 ### Development history
 
