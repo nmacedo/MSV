@@ -13,10 +13,13 @@ A formalization of the data structures behind [Alloy4Fun](https://alloy4fun.ines
   3. whether to store models when executing commands
   4. whether to allow permalinks to instances
 
+These features are organized according to the following feature model:
+![E-commerce feature model](/fm.png)
+
 ### Development history
 
 * This case study was initially presented in the SETTA'19 paper *[Simplifying the analysis of software design variants with a colorful Alloy](http://nmacedo.github.io/pubs.html#setta19)*.
-* The Colorful and plain Alloy SPL versions of the model were developed for that same paper.
+* The Colorful and plain Alloy SPL versions of the model were developed for that same paper, and used in the benchmarks.
 * A more detailed, single variant, Alloy version was developed for the SCP paper *[Experiences on teaching Alloy with an automated assessment platform](http://nmacedo.github.io/pubs.html#scp21)*.
 * Plain Alloy models have been tested for support under *Alloy Analyzer 5.1.0*.
 * Colorful Alloy models have been developed and analyzed under first release of *Colorful Alloy Analyzer (July 2019)*.
