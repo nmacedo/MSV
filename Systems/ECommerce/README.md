@@ -12,7 +12,7 @@ The model explores different features of the e-commerce platform, namely whether
 5. product thumbnails
 
 These features are organized according to the following feature model:
-<img src="fm" width="200">
+<img src="fm.png" width="200">
 
 ### Development history
 * The original ??? model is a running example in the paper _Verifying feature-based model templates against well-formedness OCL constraints_ by Czarnecki & Pietroszek.
