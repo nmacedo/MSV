@@ -12,6 +12,7 @@ The model explores different features of the e-commerce platform, namely whether
 5. product thumbnails
 
 These features are organized according to the following feature model:
+
 <img src="fm.png" width="400">
 
 ### Development history
