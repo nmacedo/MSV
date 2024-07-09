@@ -7,9 +7,7 @@ Example model generated from a ROS system annotated with HPL specifications, the
 [HAROS](https://github.com/git-afsantos/haros) is a framework for the quality assessment of ROS software, which automatically extracts computation graphs from ROS source code, and provides a user-friendly behavioural specification language (HPL) and a unified reporting interface. The paper cited above proposes an automatic translation into Electrum (now Alloy 6) of the architecture of a ROS system along with the HPL specifications.
 
 The Controller system is the paper's running example, and has the following architecture.
-
-These features are organized according to the following feature model:
-![E-commerce feature model](architecture.png)
+![Controller architecture](architecture.png)
 
 Moreoever, the behaviour of the system's nodes are encoded in HPL as follows.
 
