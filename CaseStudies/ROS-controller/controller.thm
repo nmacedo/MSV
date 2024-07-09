@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<alloy>
+
+<view nodetheme="Martha">
+
+<defaultnode/>
+
+<defaultedge/>
+
+<node>
+   <type name="Base"/>
+   <type name="cmd"/>
+   <type name="cmd_msg"/>
+   <type name="cmd_val"/>
+   <type name="Controller"/>
+   <type name="dat"/>
+   <type name="dat_val"/>
+   <type name="Int"/>
+   <type name="IntVal"/>
+   <type name="String"/>
+   <type name="StrVal"/>
+   <type name="tel"/>
+   <type name="tel_val"/>
+   <type name="Teleop"/>
+   <type name="Topic"/>
+   <type name="univ"/>
+   <type name="seq/Int"/>
+   <set name="$m0" type="Message"/>
+   <set name="Int_0" type="IntVal"/>
+   <set name="Int_0_10" type="IntVal"/>
+   <set name="Int_0_100" type="IntVal"/>
+   <set name="Int_1" type="IntVal"/>
+   <set name="Str_stop" type="StrVal"/>
+</node>
+
+<node hideunconnected="yes" shape="Hexagon" color="Green">
+   <type name="Message"/>
+</node>
+
+<node shape="Ellipse">
+   <type name="Node"/>
+</node>
+
+<node visible="no">
+   <type name="Field"/>
+   <type name="Value"/>
+</node>
+
+<edge attribute="yes">
+   <relation name="value"> <type name="Message"/> <type name="Field"/> <type name="Value"/> </relation>
+</edge>
+
+<edge layout="no">
+   <relation name="outbox"> <type name="Node"/> <type name="Message"/> </relation>
+</edge>
+
+<edge layout="yes">
+   <relation name="inbox"> <type name="Node"/> <type name="Message"/> </relation>
+   <relation name="subs"> <type name="Node"/> <type name="Topic"/> </relation>
+</edge>
+
+<edge visible="no" attribute="yes">
+   <relation name="topic"> <type name="Message"/> <type name="Topic"/> </relation>
+</edge>
+
+</view>
+
+</alloy>

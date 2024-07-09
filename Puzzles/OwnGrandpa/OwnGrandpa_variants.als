@@ -7,7 +7,7 @@ module owngrandpa
  * ➁ Marriage
  * ➂ Forbid incest
  *
- * author: C. Liu, A. Cunha, N. Macedo, 07/2019
+ * author: Colorful Alloy team, 07/2019
  */
 
 abstract sig Person {
